@@ -1,0 +1,43 @@
+fileFormatVersion: 2
+guid: 68aec8a319615be439071fe120dc994c
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: c5b4995c739cb6c41b2bb4a01104e430, type: 3}
+  textureSettings:
+    textureType: 8
+    pixelsPerUnit: 64
+    meshType: 1
+    extrudeEdges: 1
+    spritePivot: {x: 0.5, y: 0.5}
+    generatePhysics: 1
+    wrapMode: 1
+    filterMode: 0
+    tileSize: {x: 32, y: 32}
+    tilePadding: {x: 0, y: 0}
+    tileOffset: {x: 0, y: 0}
+  animationSettings:
+  - animationName: knightLegs
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 0; To: 0"
+  - animationName: knightTopwSword
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 19; To: 19"
+  - animationName: walkCycle
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 1; To: 18"
+  - animationName: Head
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 20; To: 20"
+  - animationName: swordPreSwing1
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 21; To: 26"
+  - animationName: swordSwing1
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 27; To: 33"
+  atlas: {fileID: -8328923581568760697, guid: 68aec8a319615be439071fe120dc994c, type: 3}
+  importType: 0
