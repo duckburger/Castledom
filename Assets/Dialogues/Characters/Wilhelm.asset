@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3446a875e24ac94b821827a133ab369, type: 3}
   m_Name: Wilhelm
   m_EditorClassIdentifier: 
-  charName: Wilhelm
+  charName: Speaker1
   icon: {fileID: 21300000, guid: 2f8c329d57814d349b1265bdb13e76d2, type: 3}
   textColor: {r: 1, g: 1, b: 1, a: 1}

@@ -5,14 +5,15 @@ using System;
 using UnityEditor;
 
 [Serializable]
-public class DialogueTransition 
+public class DialogueTransition: ISerializationCallbackReceiver
 {
+    ConversationAsset containingConversation;
     public NPCDialogueNode startNPCNode;
     public NPCDialogueNode endNPCNode;
     public PlayerDialogueNode startPlayerNode;
     public PlayerDialogueNode endPlayerNode;
 
-    public void Initialize(NPCDialogueNode fromNPCNode, PlayerDialogueNode fromPlayerNode, NPCDialogueNode toNPCNode, PlayerDialogueNode toPlayerNode)
+    public void Initialize(NPCDialogueNode fromNPCNode, PlayerDialogueNode fromPlayerNode, NPCDialogueNode toNPCNode, PlayerDialogueNode toPlayerNode, ConversationAsset convo)
     {
         Debug.Log($"Assigning new variables to transition");
         if (fromNPCNode != null)
@@ -36,6 +37,8 @@ public class DialogueTransition
             endPlayerNode = toPlayerNode;
             endNPCNode = null;
         }
+
+        containingConversation = convo;
     }
 
     public void Draw()
@@ -111,5 +114,44 @@ public class DialogueTransition
         // if (endPlayerNode == null && endNPCNode == null || string.IsNullOrEmpty(endPlayerNode.windowTitle) && string.IsNullOrEmpty(endNPCNode.windowTitle))
         GUI.changed = true;
     }
-   
+
+    public void OnBeforeSerialize()
+    {
+        if (startNPCNode != null && startNPCNode.id > 0)
+        {   
+            startNPCNode = containingConversation.GetNPCNodyByID(startNPCNode.id);
+        }
+        if (startPlayerNode != null && startPlayerNode.id > 0)
+        {
+            startPlayerNode = containingConversation.GetPlayerNodeByID(startPlayerNode.id);
+        }
+        if (endNPCNode != null && endNPCNode.id > 0)
+        {
+            endNPCNode = containingConversation.GetNPCNodyByID(endNPCNode.id);
+        }
+        if (endPlayerNode != null && endPlayerNode.id > 0)
+        {
+            endPlayerNode = containingConversation.GetPlayerNodeByID(endPlayerNode.id);
+        }
+    }
+
+    public void OnAfterDeserialize()
+    {
+        if (startNPCNode != null && startNPCNode.id > 0)
+        {   
+            startNPCNode = containingConversation.GetNPCNodyByID(startNPCNode.id);
+        }
+        if (startPlayerNode != null && startPlayerNode.id > 0)
+        {
+            startPlayerNode = containingConversation.GetPlayerNodeByID(startPlayerNode.id);
+        }
+        if (endNPCNode != null && endNPCNode.id > 0)
+        {
+            endNPCNode = containingConversation.GetNPCNodyByID(endNPCNode.id);
+        }
+        if (endPlayerNode != null && endPlayerNode.id > 0)
+        {
+            endPlayerNode = containingConversation.GetPlayerNodeByID(endPlayerNode.id);
+        }
+    }
 }

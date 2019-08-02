@@ -290,14 +290,14 @@ public class DialogueEditorWindow : EditorWindow
         {
             case UserInteractions.addNPCDialogueNode:
 
-                NPCDialogueNode newNPCNode = new NPCDialogueNode( new Rect(mousePos.x, mousePos.y, 200, 300), "NPC Dialogue Node");
+                NPCDialogueNode newNPCNode = new NPCDialogueNode( new Rect(mousePos.x, mousePos.y, 200, 300), "NPC Dialogue Node", currentAsset);
                 allNPCNodes.Add(newNPCNode);
                 allNodes.Add(newNPCNode);
                 break;
 
             case UserInteractions.addPlayerResponseNode:
 
-                PlayerDialogueNode newPlayerNode = new PlayerDialogueNode(new Rect(mousePos.x, mousePos.y, 200, 128), "Player Response Node");
+                PlayerDialogueNode newPlayerNode = new PlayerDialogueNode(new Rect(mousePos.x, mousePos.y, 200, 128), "Player Response Node", currentAsset);
                 allPlayerNodes.Add(newPlayerNode);      
                 allNodes.Add(newPlayerNode);         
                 break;
@@ -307,7 +307,7 @@ public class DialogueEditorWindow : EditorWindow
                 Rect newPosRect = new Rect(selectedNode.WindowRect().x + selectedNode.WindowRect().width, selectedNode.WindowRect().y, selectedNode.WindowRect().width, selectedNode.WindowRect().height);
                 if (selectedNode is PlayerDialogueNode)
                 {
-                    PlayerDialogueNode duplicatedNode = new PlayerDialogueNode(newPosRect, selectedNode.WindowTitle());
+                    PlayerDialogueNode duplicatedNode = new PlayerDialogueNode(newPosRect, selectedNode.WindowTitle(), currentAsset);
                     duplicatedNode.dialogueLine = selectedNode.DialogueLine();                                    
                     allPlayerNodes.Add(duplicatedNode);
                     allNodes.Add(duplicatedNode);
@@ -315,7 +315,7 @@ public class DialogueEditorWindow : EditorWindow
                 else if (selectedNode is NPCDialogueNode)
                 {
                     NPCDialogueNode dialNode = selectedNode as NPCDialogueNode;
-                    NPCDialogueNode duplicatedNode = new NPCDialogueNode(newPosRect, selectedNode.WindowTitle());
+                    NPCDialogueNode duplicatedNode = new NPCDialogueNode(newPosRect, selectedNode.WindowTitle(), currentAsset);
                     duplicatedNode.dialogueLine = selectedNode.DialogueLine();
                     duplicatedNode.speaker = dialNode.speaker;            
                     allNPCNodes.Add(duplicatedNode);
@@ -346,14 +346,14 @@ public class DialogueEditorWindow : EditorWindow
                 {
                     NPCDialogueNode npcNode = selectedNode as NPCDialogueNode;
                     newTransition = new DialogueTransition();
-                    newTransition.Initialize(npcNode, null, null, null);
+                    newTransition.Initialize(npcNode, null, null, null, currentAsset);
                     npcNode.outgoingTransitions.Add(newTransition);
                 }
                 else if (selectedNode is PlayerDialogueNode)
                 {
                     PlayerDialogueNode playerNode = selectedNode as PlayerDialogueNode;
                     newTransition = new DialogueTransition();
-                    newTransition.Initialize(null, playerNode, null, null);
+                    newTransition.Initialize(null, playerNode, null, null, currentAsset);
                     playerNode.outgoingTransitions.Add(newTransition);
                 }
                 else

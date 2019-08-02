@@ -7,6 +7,7 @@ using System;
 [System.Serializable]
 public class NPCDialogueNode : IDialogueNode
 {
+    ConversationAsset containingConversation;
     public int id;
     public Rect windowRect;
     public string windowTitle;
@@ -15,10 +16,11 @@ public class NPCDialogueNode : IDialogueNode
     [TextArea(3, 10)]
     public string dialogueLine;
 
-    public NPCDialogueNode(Rect rect, string title)
+    public NPCDialogueNode(Rect rect, string title, ConversationAsset convo)
     {
         this.windowRect = rect;
         this.windowTitle = title;
+        this.containingConversation = convo;
         id = UnityEngine.Random.Range(0, Int32.MaxValue);
     }
 
