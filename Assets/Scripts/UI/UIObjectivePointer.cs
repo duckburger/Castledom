@@ -9,7 +9,10 @@ public class UIObjectivePointer : MonoBehaviour
 
     [SerializeField] Transform currentObjective;
     Camera mainCam;
+    Vector2 objectiveScreenPosition;
+    Vector2 toObjective;
     Vector2 calculatedArrowPosition;
+    bool inView = false;
 
     private void Start()
     {
@@ -23,13 +26,46 @@ public class UIObjectivePointer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        UpdateArrow();
+        if (!currentObjective)
+            return;
+
+        CheckIfObjectiveInView();
+        if (!inView)
+        {
+            arrow.gameObject.SetActive(true);
+            UpdateArrowPosition();
+        }
+        else
+        {
+            arrow.gameObject.SetActive(false);
+            arrow.localPosition = Vector2.zero;
+        }
     }
 
-    void UpdateArrow()
+    void CheckIfObjectiveInView()
     {
-        Vector2 toObjective = mainCam.WorldToScreenPoint(currentObjective.position) - mainCam.transform.position;
+        objectiveScreenPosition = mainCam.WorldToScreenPoint(currentObjective.position);
+        switch (objectiveScreenPosition)
+        {
+            case Vector2 vec when vec.x > Screen.width || vec.x < 0:
+                inView = false;
+                break;
+            case Vector2 vec when vec.y > Screen.height || vec.y < 0:
+                inView = false;
+                break;
+            default:
+                inView = true;
+                break;
+        }
+    }
+
+    void UpdateArrowPosition()
+    {
+        toObjective = objectiveScreenPosition - (Vector2)mainCam.transform.position;
         calculatedArrowPosition = new Vector2(Mathf.Clamp(toObjective.x, 0, Screen.width), Mathf.Clamp(toObjective.y, 0, Screen.height));
         arrow.position = Vector2.Lerp(arrow.position, calculatedArrowPosition, Time.deltaTime * 5f);
+        arrow.transform.up = toObjective;
     }
+
+
 }
