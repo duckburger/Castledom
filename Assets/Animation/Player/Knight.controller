@@ -38,7 +38,7 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
-  - {fileID: -1800505086136295583}
+  - {fileID: 2650392834449072979}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -54,6 +54,31 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &-7174807131583867108
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: attackSelector
+    m_EventTreshold: 1
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 756419679837964550}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &-6399828052710838866
 AnimatorState:
   serializedVersion: 5
@@ -88,18 +113,15 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SwordAttack1
+  m_Name: UnarmedAttacks
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -8013155500605685321}
-    m_Position: {x: 500, y: -50, z: 0}
+    m_Position: {x: 610, y: -50, z: 0}
+  m_ChildStateMachines:
   - serializedVersion: 1
-    m_State: {fileID: -438417351991311704}
-    m_Position: {x: 360, y: -250, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 7764857441439020500}
-    m_Position: {x: 660, y: -240, z: 0}
-  m_ChildStateMachines: []
+    m_StateMachine: {fileID: 8252505614833583258}
+    m_Position: {x: 610, y: -270, z: 0}
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
@@ -130,6 +152,28 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
+  m_HasFixedDuration: 0
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &-5280398372565026901
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -8013155500605685321}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 1
+  m_HasExitTime: 1
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -181,31 +225,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1101 &-1800505086136295583
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: preSwing
-    m_EventTreshold: 0
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: -438417351991311704}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0
-  m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 0
-  m_HasFixedDuration: 0
-  m_InterruptionSource: 2
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1102 &-438417351991311704
 AnimatorState:
   serializedVersion: 5
@@ -213,7 +232,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SwordPreSwing1
+  m_Name: UnarmedPreSwing1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -247,13 +266,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: preSwing
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: attackSelector
+    m_Type: 3
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -280,7 +305,7 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
-    m_Name: SwordAttack1
+    m_Name: UnarmedAttacks
     m_StateMachine: {fileID: -6017043122798608483}
     m_Mask: {fileID: 0}
     m_Motions: []
@@ -291,6 +316,113 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+--- !u!1102 &756419679837964550
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PlayerUnarmedPreSwing2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: 9161074105892583635}
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: d575475007681cf47b71c5ec2adf5ac6, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1101 &2650392834449072979
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: preSwing
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 3491986962408711267}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1102 &3491986962408711267
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AttackSelector
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: 8310936884394550548}
+  - {fileID: -7174807131583867108}
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 0}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &4291522379726463091
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PlayerUnarmedSwing2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: -5280398372565026901}
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 70817fba325d67541adb751d6d90e8ba, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1101 &6477746059477120079
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -370,7 +502,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SwordAttack1
+  m_Name: UnarmedSwing1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -390,6 +522,65 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1107 &8252505614833583258
+AnimatorStateMachine:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SwingSelector
+  m_ChildStates:
+  - serializedVersion: 1
+    m_State: {fileID: -438417351991311704}
+    m_Position: {x: 780, y: -620, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 7764857441439020500}
+    m_Position: {x: 780, y: -550, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 3491986962408711267}
+    m_Position: {x: 480, y: -620, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 756419679837964550}
+    m_Position: {x: 170, y: -620, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 4291522379726463091}
+    m_Position: {x: 170, y: -460, z: 0}
+  m_ChildStateMachines: []
+  m_AnyStateTransitions: []
+  m_EntryTransitions: []
+  m_StateMachineTransitions: {}
+  m_StateMachineBehaviours: []
+  m_AnyStatePosition: {x: -20, y: -10, z: 0}
+  m_EntryPosition: {x: 800, y: -710, z: 0}
+  m_ExitPosition: {x: 800, y: 120, z: 0}
+  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_DefaultState: {fileID: -438417351991311704}
+--- !u!1101 &8310936884394550548
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: attackSelector
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -438417351991311704}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &8503086554420276700
 AnimatorState:
   serializedVersion: 5
@@ -416,3 +607,28 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &9161074105892583635
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: preSwing
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 4291522379726463091}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 1
+  m_HasExitTime: 1
+  m_HasFixedDuration: 0
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1

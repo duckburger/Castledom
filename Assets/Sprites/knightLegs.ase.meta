@@ -24,9 +24,6 @@ ScriptedImporter:
   - animationName: knightLegs
     loopTime: 1
     about: "Animation Type:\tForward\r\nAnimation:\tFrom: 0; To: 0"
-  - animationName: knightTopwSword
-    loopTime: 1
-    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 19; To: 19"
   - animationName: walkCycle
     loopTime: 1
     about: "Animation Type:\tForward\r\nAnimation:\tFrom: 1; To: 18"
@@ -35,9 +32,24 @@ ScriptedImporter:
     about: "Animation Type:\tForward\r\nAnimation:\tFrom: 20; To: 20"
   - animationName: swordPreSwing1
     loopTime: 1
-    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 21; To: 26"
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 34; To: 39"
   - animationName: swordSwing1
     loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 40; To: 46"
+  - animationName: knightTopUnarmed
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 19; To: 19"
+  - animationName: fistsPreSwing1
+    loopTime: 0
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 21; To: 26"
+  - animationName: fistsSwing1
+    loopTime: 0
     about: "Animation Type:\tForward\r\nAnimation:\tFrom: 27; To: 33"
+  - animationName: fistsPreSwing2
+    loopTime: 0
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 47; To: 52"
+  - animationName: fistsSwing2
+    loopTime: 0
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 53; To: 59"
   atlas: {fileID: -8328923581568760697, guid: 68aec8a319615be439071fe120dc994c, type: 3}
   importType: 0

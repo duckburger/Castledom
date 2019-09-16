@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54c5dc2db92d5c347ab393429cfca7c2, type: 3}
-  m_Name: DefaultSwordSwing
+  m_Name: UnarmedSwings
   m_EditorClassIdentifier: 
   attackSoundFx:
   - {fileID: 8300000, guid: 272153a8a9bb7a5418ef6591b90f7c32, type: 3}
   - {fileID: 8300000, guid: 242fcfec9b4be254592e3393df41f8a4, type: 3}
   animationLayerIndex: 2
-  attackAnimationStates: []
+  attackIndices: 0000000001000000

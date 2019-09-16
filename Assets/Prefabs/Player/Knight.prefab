@@ -57,6 +57,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -121,7 +122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3378525050965779283}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.022, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3378525051097374888}
@@ -152,6 +153,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -327,9 +329,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.02, y: 0}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.19186085
+  m_Radius: 0.15
 --- !u!212 &3378525051097374895
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -355,6 +357,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -551,6 +554,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -622,7 +626,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.1
 --- !u!114 &3378525051839673590
 MonoBehaviour:
   m_ObjectHideFlags: 0

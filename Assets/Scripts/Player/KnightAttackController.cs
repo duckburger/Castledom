@@ -7,10 +7,12 @@ public class KnightAttackController : MonoBehaviour
     [SerializeField] List<KnightAttack> availableAttacks = new List<KnightAttack>();
     [Space(10)]
     [SerializeField] AttackCollider attackCollier;
+    [SerializeField] GameObject attackDirArrow;
     Animator animator;
     AudioClip currentPreSwingAudioClip;
     AudioClip currentSwingAudioClip;
     int currentWeaponLayer = -1;
+    int currentAttackIndex = 0;
 
     public AudioClip CurrentPreSwingAudioClip => currentPreSwingAudioClip;
     public AudioClip CurrentSwingAudioClip => currentSwingAudioClip;
@@ -47,26 +49,27 @@ public class KnightAttackController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetMouseButtonDown(0))
-            Attack();
+            PreSwing();
         if (Input.GetMouseButtonUp(0))
-            ReleaseAttack();
-
+            Swing();
     }
 
-    void Attack()
+    void PreSwing()
     {
-        // string attackAnimation = attackAnimationsNames[Random.Range(0, attackAnimationsNames.Count)];
-        // animator?.Play(attackAnimation);
+        currentAttackIndex = availableAttacks[0].attackIndices[Random.Range(0, availableAttacks[0].attackIndices.Length)];
+        animator.SetInteger("attackSelector", currentAttackIndex);
         animator?.SetBool("preSwing", true);
+        attackDirArrow.SetActive(true);
     }
 
-    void ReleaseAttack()
+    void Swing()
     {
         animator?.SetBool("preSwing", false);
+        attackDirArrow.SetActive(false);
     }
 
     public void ActivateAttackCollider()

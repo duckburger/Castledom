@@ -7,5 +7,5 @@ public class KnightAttack : ScriptableObject
 {
     public List<AudioClip> attackSoundFx = new List<AudioClip>();
     public int animationLayerIndex;
-    public List<string> attackAnimationStates = new List<string>();
+    public int[] attackIndices;
 }
