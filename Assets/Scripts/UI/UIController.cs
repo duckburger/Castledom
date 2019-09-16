@@ -5,7 +5,7 @@ using System;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] AnnouncementBoardController announcementBoard;
+    [SerializeField] UIAnnouncementBoardController announcementBoard;
 
     public void DisplayMessageInAnnouncementBoard(AnnouncementBoardData message)
     {

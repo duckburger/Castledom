@@ -6,6 +6,7 @@ public class Test_Announcement : MonoBehaviour
 {
     [SerializeField] UIController uiController;
 
+    #region Test Stuff
 
     public void SendTestAnnouncement()
     {
@@ -18,28 +19,29 @@ public class Test_Announcement : MonoBehaviour
         uiController.DisplayMessageInAnnouncementBoard(newMessage);
     }
 
+    #endregion
 
     public void SendBeginningOfGameAnnouncement()
     {
         AnnouncementBoardData newMessage = new AnnouncementBoardData();
-        newMessage.blackedOut = true;
+        newMessage.blackedOut = false;
 
         // 0
         newMessage.messages.Add(new AnnouncementBoardData.AnnouncementMessage());
         newMessage.messages[0].title = "";
-        newMessage.messages[0].body = "You are a grandson of a local tradesman in a castledom, and you've been helping him run the business since you were a child.";
-        // 1
+        newMessage.messages[0].body = "You are a peasant somewhere in Eastern Europe. You've been living on your land off the beaten path for years.";
+        // 
         newMessage.messages.Add(new AnnouncementBoardData.AnnouncementMessage());
         newMessage.messages[1].title = "";
-        newMessage.messages[1].body = "Business is going well, however the lord and barons of the castle have grown corrupt. You've heard of a few local businesses giving regular kicksbacks to the barons.";
-        // 2
+        newMessage.messages[1].body = "But the word from the few passing merchants is that your neck of the woods pretty soon won't be that remote.";
+        // 
         newMessage.messages.Add(new AnnouncementBoardData.AnnouncementMessage());
         newMessage.messages[2].title = "";
-        newMessage.messages[2].body = "Your grandfather has always insisted that he hasn't paid a coin yet.";
+        newMessage.messages[2].body = "War has broken out with a neighbouring kingom, and the local ruler has decided to make some improvements to your village, and specifically - your personal road.";
         // 3
         newMessage.messages.Add(new AnnouncementBoardData.AnnouncementMessage());
         newMessage.messages[3].title = "";
-        newMessage.messages[3].body = "Today is just another day on the job";
+        newMessage.messages[3].body = "One morning you wake up to two soldiers inquisitively strolling down your road...";
 
         uiController.DisplayMessageInAnnouncementBoard(newMessage);
     }
