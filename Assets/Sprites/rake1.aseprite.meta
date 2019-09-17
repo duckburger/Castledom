@@ -11,7 +11,7 @@ ScriptedImporter:
   textureSettings:
     textureType: 8
     pixelsPerUnit: 64
-    meshType: 1
+    meshType: 0
     extrudeEdges: 1
     spritePivot: {x: 0.5, y: 0.5}
     generatePhysics: 1
