@@ -5,7 +5,7 @@ using UnityEngine;
 public class KnightMovement : MonoBehaviour
 {
     [SerializeField] float speed;
-
+    [SerializeField] float lerpSpeed = 25f;
     Animator animator;
     Rigidbody2D rb;
     Vector2 velocity;
@@ -23,7 +23,7 @@ public class KnightMovement : MonoBehaviour
     void Move()
     {
         velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, Input.GetAxisRaw("Vertical") * speed); 
-        rb.velocity = Vector2.Lerp(rb.velocity, velocity, Time.deltaTime * 25f);
+        rb.velocity = Vector2.Lerp(rb.velocity, velocity, Time.deltaTime * lerpSpeed);
 
         if (Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0)
         {

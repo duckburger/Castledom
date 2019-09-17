@@ -23,6 +23,7 @@ public class DialogueUIDisplay : MonoBehaviour
     Vector2 originalBoxPosition;
     Vector2 originalRepliesPosition;
     Action onCurrentConvoCompleted = null;
+    CanvasGroup mainCG;
 
     bool onScreen = false;
 
@@ -33,6 +34,7 @@ public class DialogueUIDisplay : MonoBehaviour
         originalBoxPosition = mainDialogueBox.localPosition;
         originalRepliesPosition = repliesParent.localPosition;
         AnimateOut();
+        mainCG = GetComponent<CanvasGroup>();
     }
 
 #endregion
@@ -49,7 +51,12 @@ public class DialogueUIDisplay : MonoBehaviour
         }
 
         onScreen = true;
-
+        if (mainCG)
+        {
+            mainCG.alpha = 1;
+            mainCG.blocksRaycasts = true;
+            mainCG.interactable = true;
+        }
         LeanTween.moveLocalY(mainDialogueBox.gameObject, originalBoxPosition.y, 0.23f).setEase(LeanTweenType.easeOutSine);
     }
 
@@ -63,7 +70,16 @@ public class DialogueUIDisplay : MonoBehaviour
 
         onScreen = false;
 
-        LeanTween.moveLocalY(mainDialogueBox.gameObject, originalBoxPosition.y - Screen.height / 2, 0.15f).setEase(LeanTweenType.easeInSine);
+        LeanTween.moveLocalY(mainDialogueBox.gameObject, originalBoxPosition.y - Screen.height / 2, 0.15f).setEase(LeanTweenType.easeInSine)
+            .setOnComplete(() => 
+            {
+                if (mainCG)
+                {
+                    mainCG.alpha = 0;
+                    mainCG.blocksRaycasts = false;
+                    mainCG.interactable = false;
+                }
+            });
     }
 
     void AnimateRepliesIn()
