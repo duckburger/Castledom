@@ -8,6 +8,7 @@ public class KnightAttackController : MonoBehaviour
     [Space(10)]
     [SerializeField] AttackCollider attackCollier;
     [SerializeField] GameObject attackDirArrow;
+    [SerializeField] bool showAttackDirection = true;
     Animator animator;
     AudioClip currentPreSwingAudioClip;
     AudioClip currentSwingAudioClip;
@@ -63,13 +64,15 @@ public class KnightAttackController : MonoBehaviour
         currentAttackIndex = availableAttacks[0].attackIndices[Random.Range(0, availableAttacks[0].attackIndices.Length)];
         animator.SetInteger("attackSelector", currentAttackIndex);
         animator?.SetBool("preSwing", true);
-        attackDirArrow.SetActive(true);
+        if (showAttackDirection && attackDirArrow)
+            attackDirArrow.SetActive(true);
     }
 
     void Swing()
     {
         animator?.SetBool("preSwing", false);
-        attackDirArrow.SetActive(false);
+        if (showAttackDirection && attackDirArrow)
+            attackDirArrow.SetActive(false);
     }
 
     public void ActivateAttackCollider()
