@@ -14,6 +14,7 @@ public class KnightMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
     }
     private void Update()
     {
