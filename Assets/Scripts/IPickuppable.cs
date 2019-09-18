@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IPickuppable : MonoBehaviour
+public interface IPickuppable
 {
-    void PickedUp() { }
+    void PickedUp();
 }
