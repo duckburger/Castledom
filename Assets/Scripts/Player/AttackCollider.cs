@@ -4,7 +4,25 @@ using UnityEngine;
 
 public class AttackCollider : MonoBehaviour
 {
-    public bool isOn = false;   
+    public bool isOn = false;
+    Collider2D collider;
+
+    private void Start()
+    {
+        collider = GetComponent<Collider2D>();
+    }
+
+    public void TurnOn()
+    {
+        isOn = true;
+        collider.enabled = true;
+    }
+
+    public void TurnOff()
+    {
+        isOn = false;
+        collider.enabled = false;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

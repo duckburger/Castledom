@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IPickuppable
 {
-    void PickedUp();
+    object GetPickuppableObject();
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "KnightAttack", menuName = "Knight Stuff/Attack")]
-public class KnightAttack : ScriptableObject
+public class KnightAttack : ExtendedScriptableObject
 {
     public List<AudioClip> attackSoundFx = new List<AudioClip>();
     public int animationLayerIndex;

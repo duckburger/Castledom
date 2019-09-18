@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 3378525051097374888}
   - component: {fileID: 3378525051097374889}
   - component: {fileID: 3378525051097374891}
+  - component: {fileID: 8527860511542276870}
   - component: {fileID: 3378525051097374890}
   - component: {fileID: 3378525051097374892}
   - component: {fileID: 3378525051097374884}
@@ -330,6 +331,28 @@ MonoBehaviour:
   knightBody: {fileID: 3378525051298982934}
   knightLegs: {fileID: 3378525050965779282}
   lerpSpeed: 250
+--- !u!114 &8527860511542276870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3378525051097374887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56b3f5e68de0cbc4d954eeac0236dc6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickuppableLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  onWeaponUpdated: {fileID: 11400000, guid: 328b5d039ee655e42bdab6ff31ad597c, type: 2}
+  onNearPickuppable: {fileID: 11400000, guid: 33a7b1192eb55ff45ad21876ac51a73a, type: 2}
+  onMoveAwayFromPickuppable: {fileID: 11400000, guid: 95be46fc11a66234c9c00360766c62a7,
+    type: 2}
+  equippedWeapon: {fileID: 11400000, guid: 89b92ce8866cf824b811dc54fbfc1ea3, type: 2}
+  defaultWeapon: {fileID: 11400000, guid: 89b92ce8866cf824b811dc54fbfc1ea3, type: 2}
+  weaponThrowStrength: 18
 --- !u!114 &3378525051097374890
 MonoBehaviour:
   m_ObjectHideFlags: 0

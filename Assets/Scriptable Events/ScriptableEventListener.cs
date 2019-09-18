@@ -47,7 +47,7 @@ public class ScriptableEventListener : MonoBehaviour
 
     #endregion
 
-    #region Inovking Events
+    #region Invoking Events
 
     public void Raise()
     {

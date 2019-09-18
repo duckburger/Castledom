@@ -22,6 +22,7 @@ public class KnightAttackController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         SetupAttack();
+        DeActivateAttackCollider();
     }
 
     public void SetupAttack()
@@ -77,12 +78,12 @@ public class KnightAttackController : MonoBehaviour
 
     public void ActivateAttackCollider()
     {
-        attackCollier.isOn = true;
+        attackCollier.TurnOn();
     }
 
     public void DeActivateAttackCollider()
     {
-        attackCollier.isOn = false;
+        attackCollier.TurnOff();
     }
 
 }

@@ -37,3 +37,4 @@ Material:
     - Vector1_884656FF: 2
     m_Colors:
     - Color_7C1E3157: {r: 0.7971698, g: 1, b: 0.8110517, a: 1}
+    - _OutlineColour: {r: 0.2907269, g: 1, b: 0, a: 1}

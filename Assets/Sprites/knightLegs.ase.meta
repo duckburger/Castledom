@@ -51,5 +51,5 @@ ScriptedImporter:
   - animationName: fistsSwing2
     loopTime: 0
     about: "Animation Type:\tForward\r\nAnimation:\tFrom: 53; To: 59"
-  atlas: {fileID: -8328923581568760697, guid: 68aec8a319615be439071fe120dc994c, type: 3}
+  atlas: {instanceID: 0}
   importType: 0
