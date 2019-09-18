@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KnightAttackController : MonoBehaviour
 {
-    [SerializeField] List<KnightAttack> availableAttacks = new List<KnightAttack>();
+    [SerializeField] KnightAttack availableAttack;
     [Space(10)]
     [SerializeField] AttackCollider attackCollier;
     [SerializeField] GameObject attackDirArrow;
@@ -21,16 +21,13 @@ public class KnightAttackController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        SetupAttack();
         DeActivateAttackCollider();
     }
 
-    public void SetupAttack()
+    public void SetupNewAttack(KnightAttack newAttack)
     {
-        if (availableAttacks.Count > 0)
-        {
-            currentWeaponLayer = availableAttacks[0].animationLayerIndex;
-        }
+        availableAttack = newAttack;
+        currentWeaponLayer = availableAttack.animationLayerIndex;       
 
         if (currentWeaponLayer >= 0)
         {
@@ -45,9 +42,9 @@ public class KnightAttackController : MonoBehaviour
             }
         }
 
-        if (availableAttacks[0].attackSoundFx.Count > 0)
+        if (availableAttack.attackSoundFx.Count > 0)
         {
-            currentSwingAudioClip = availableAttacks[0].attackSoundFx[Random.Range(0,  availableAttacks[0].attackSoundFx.Count - 1)];
+            currentSwingAudioClip = availableAttack.attackSoundFx[Random.Range(0, newAttack.attackSoundFx.Count - 1)];
         }
     }
 
@@ -62,7 +59,7 @@ public class KnightAttackController : MonoBehaviour
 
     void PreSwing()
     {
-        currentAttackIndex = availableAttacks[0].attackIndices[Random.Range(0, availableAttacks[0].attackIndices.Length)];
+        currentAttackIndex = availableAttack.attackIndices[Random.Range(0, availableAttack.attackIndices.Length)];
         animator.SetInteger("attackSelector", currentAttackIndex);
         animator?.SetBool("preSwing", true);
         if (showAttackDirection && attackDirArrow)

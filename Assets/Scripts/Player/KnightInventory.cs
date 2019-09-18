@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class KnightInventory : MonoBehaviour
-{ 
+{
+    [SerializeField] SpriteRenderer bodyRenderer;
+    [Space]
     [SerializeField] LayerMask pickuppableLayerMask;
     [SerializeField] ScriptableEvent onWeaponUpdated;
     [SerializeField] ScriptableEvent onNearPickuppable;
@@ -14,6 +16,7 @@ public class KnightInventory : MonoBehaviour
     [Space]
     [SerializeField] float weaponThrowStrength = 12f;
 
+    KnightAttackController attackController;
     Collider2D nearbyPickuppable = null;
     Rigidbody2D myRB;
     Camera mainCam;
@@ -23,6 +26,8 @@ public class KnightInventory : MonoBehaviour
     {
         mainCam = Camera.main;
         myRB = GetComponent<Rigidbody2D>();
+        attackController = GetComponent<KnightAttackController>();
+        attackController.SetupNewAttack(equippedWeapon.availableAttacks[0]); // TODO: Change this so there is only 1 attack or it passes all of them through
     }
 
     private void Update()
@@ -33,7 +38,12 @@ public class KnightInventory : MonoBehaviour
             Vector2 throwForce = myRB.velocity + (Vector2)(Input.mousePosition - mainCam.WorldToScreenPoint(transform.position)).normalized * weaponThrowStrength;
             rigidBody.AddRelativeForce(throwForce, ForceMode2D.Impulse);
             equippedWeapon = defaultWeapon;
-            onWeaponUpdated?.RaiseWithData(equippedWeapon);               
+
+            if (equippedWeapon.idleBodySprite && bodyRenderer)
+                bodyRenderer.sprite = equippedWeapon.idleBodySprite;
+
+            onWeaponUpdated?.RaiseWithData(equippedWeapon);
+            attackController.SetupNewAttack(equippedWeapon.availableAttacks[0]);
         }
 
         if (nearPickuppableItem && nearbyPickuppable)
@@ -45,8 +55,13 @@ public class KnightInventory : MonoBehaviour
                 {
                     case WeaponStatFile w:
                         equippedWeapon = w;
+
+                        if (equippedWeapon.idleBodySprite && bodyRenderer)
+                            bodyRenderer.sprite = equippedWeapon.idleBodySprite;
+
                         Destroy(nearbyPickuppable.gameObject);
                         onWeaponUpdated?.RaiseWithData(equippedWeapon);
+                        attackController.SetupNewAttack(equippedWeapon.availableAttacks[0]);
                         break;
                     default:
                         break;

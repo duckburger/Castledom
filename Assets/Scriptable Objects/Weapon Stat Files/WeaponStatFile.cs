@@ -10,6 +10,7 @@ public class WeaponStatFile : ExtendedScriptableObject
     public float baseDmg;
     public float armoredDmg;
     public Sprite uiIcon;
+    public Sprite idleBodySprite;
     [Space]
     public KnightAttack[] availableAttacks;
     [Space(5)]

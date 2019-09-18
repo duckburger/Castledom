@@ -16,5 +16,8 @@ MonoBehaviour:
   baseDmg: 10
   armoredDmg: 5
   uiIcon: {fileID: -6149787470575072911, guid: 24da19a5228f93640a74658f5c081833, type: 3}
+  idleBodySprite: {fileID: 7621072956808713120, guid: 68aec8a319615be439071fe120dc994c,
+    type: 3}
   availableAttacks:
   - {fileID: 11400000, guid: 4df4ecab2fa31b34fa35459ed57c7d97, type: 2}
+  prefab: {fileID: 0}
