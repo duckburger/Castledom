@@ -1,0 +1,16 @@
+tree("Root")
+	fallback
+		tree("WalkTheRoad")
+		tree("Combat")
+
+tree("WalkTheRoad")
+	while not inCombat
+		GoToDestination
+
+
+tree("Combat")
+	while inCombat
+		while not WithinCombatRange
+			ChaseCombatTarget
+		
+	

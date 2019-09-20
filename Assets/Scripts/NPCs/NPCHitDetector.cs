@@ -7,10 +7,12 @@ public class NPCHitDetector : MonoBehaviour
 
     [SerializeField] GameObject bloodParticlesPrefab;
     [SerializeField] Sprite deadBodySprite;
-    [SerializeField] float knockbackStrength = 35f;
+    [SerializeField] float knockbackStrength = 35f; // For now only applies to a dead body
 
     Transform lastHitBy;
     Vector2 direction;
+
+    public Transform LastHitBy => lastHitBy;
 
     private void Start()
     {
