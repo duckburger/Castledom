@@ -732,7 +732,7 @@ GameObject:
   - component: {fileID: 599347692}
   - component: {fileID: 599347693}
   m_Layer: 0
-  m_Name: GRID
+  m_Name: TILEGRID
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3718,11 +3718,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PLAYER
       objectReference: {fileID: 0}
-    - target: {fileID: 3378525051097374887, guid: c6fa33661b65d734d9c53830210f2e52,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 3378525051097374888, guid: c6fa33661b65d734d9c53830210f2e52,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3777,34 +3772,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3378525050965779283, guid: c6fa33661b65d734d9c53830210f2e52,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3378525051298982935, guid: c6fa33661b65d734d9c53830210f2e52,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1499219151, guid: c6fa33661b65d734d9c53830210f2e52, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3378525050749690253, guid: c6fa33661b65d734d9c53830210f2e52,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3378525051839673584, guid: c6fa33661b65d734d9c53830210f2e52,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2139220947, guid: c6fa33661b65d734d9c53830210f2e52, type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6fa33661b65d734d9c53830210f2e52, type: 3}
@@ -4322,16 +4289,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -69.025
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000932799846560605, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
-        type: 3}
-      propertyPath: combatRange
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 879201020682937764, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
-        type: 3}
-      propertyPath: canTalk
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97cc45e0f026e1b48a05fbe8906f1f30, type: 3}

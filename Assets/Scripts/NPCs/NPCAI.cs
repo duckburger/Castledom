@@ -81,6 +81,7 @@ public class NPCAI : MonoBehaviour
     [Task]
     void ChaseCombatTarget() // TODO: Add speed change + Add stamina system??
     {
+        npcAnimator.DeactivateAttack();
         if (polynavAgent.primeGoal != (Vector2)combatTarget.transform.position)
             polynavAgent.SetDestination(combatTarget.transform.position);
 
@@ -88,6 +89,12 @@ public class NPCAI : MonoBehaviour
             Debug.Log($"{Task.current.debugInfo}");
         else
             Task.current.Succeed();
+    }
+
+    [Task]
+    void AttackTarget()
+    {
+        npcAnimator.ActivateAttack();
     }
 
     #endregion

@@ -10,7 +10,9 @@ tree("WalkTheRoad")
 
 tree("Combat")
 	while inCombat
-		while not WithinCombatRange
+		fallback
+			while WithinCombatRange
+				AttackTarget				
 			ChaseCombatTarget
 		
 	

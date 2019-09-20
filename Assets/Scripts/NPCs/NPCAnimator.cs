@@ -26,4 +26,14 @@ public class NPCAnimator : MonoBehaviour
         }
     }
 
+    public void ActivateAttack()
+    {
+        animator.SetBool("isAttacking", true);
+    }
+
+    public void DeactivateAttack()
+    {
+        animator.SetBool("isAttacking", false);
+    }
+
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1499219153}
   - component: {fileID: 1499219152}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttackDirArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 2139220948}
   - component: {fileID: 2139220950}
   - component: {fileID: 2139220949}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: InteractionDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 3378525050749690252}
   - component: {fileID: 3378525050749690355}
   - component: {fileID: 3378525050749690354}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3378525050965779282}
   - component: {fileID: 3378525050965779281}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 3378525051097374867}
   - component: {fileID: 1900744984}
   - component: {fileID: 2537316410683312697}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Knight
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -378,8 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140a437f6f5c66148b4b4ad73048d46a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  lerpSpeed: 25
+  speed: 6
 --- !u!114 &3378525051097374891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,7 +476,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -691,7 +690,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3378525051298982934}
   - component: {fileID: 3378525051298982933}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -776,7 +775,7 @@ GameObject:
   - component: {fileID: 3378525051839673591}
   - component: {fileID: 3378525051839673589}
   - component: {fileID: 3378525051839673590}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

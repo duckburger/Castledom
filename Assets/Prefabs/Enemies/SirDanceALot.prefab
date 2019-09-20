@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cdfa172308a332418335859dfde5ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatRange: 1
 --- !u!114 &4000932799846560615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2fc16efdc15a6c4cbfebda7b33146e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canTalk: 1
+  canTalk: 0
   myDialogue: {fileID: 11400000, guid: 09a621fabbf968a4eb4c949ac349a4e0, type: 2}
   onDialogueActivated: {fileID: 11400000, guid: 1df8b0906f480c84cbd4ec3d727a9062,
     type: 2}
