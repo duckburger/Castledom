@@ -21,7 +21,6 @@ public class KnightInteractionDetector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"Interaction detection triggered by {collision.gameObject.name}");
         NPCDialogueHolder dialogueHolder = collision.GetComponent<NPCDialogueHolder>();
         if (dialogueHolder && dialogueHolder.myDialogue && dialogueHolder.canTalk)
         {

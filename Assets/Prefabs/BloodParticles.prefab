@@ -71,7 +71,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -104,7 +104,7 @@ ParticleSystem:
   m_GameObject: {fileID: 9155770031381064098}
   serializedVersion: 6
   lengthInSec: 0.4
-  simulationSpeed: 1
+  simulationSpeed: 3
   stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
@@ -231,7 +231,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 25
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1446,13 +1446,13 @@ ParticleSystem:
           inWeight: 0
           outWeight: 0.035413153
         - serializedVersion: 3
-          time: 0.13830566
+          time: 0.026087735
           value: 1
-          inSlope: 0.2253624
-          outSlope: 0.2253624
+          inSlope: 0.8866766
+          outSlope: 0.8866766
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.65860015
+          inWeight: 1
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2

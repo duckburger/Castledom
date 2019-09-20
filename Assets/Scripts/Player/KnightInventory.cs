@@ -75,6 +75,7 @@ public class KnightInventory : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log($"Collision enter from {collision.gameObject.name}");
         if (pickuppableLayerMask == (1 << collision.gameObject.layer | pickuppableLayerMask))
         {
             nearbyPickuppable = collision;
@@ -100,6 +101,7 @@ public class KnightInventory : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        Debug.Log($"Collision exit from {collision.gameObject.name}");
         if (pickuppableLayerMask == (1 << collision.gameObject.layer | pickuppableLayerMask))
         {
             onMoveAwayFromPickuppable?.Raise();
@@ -107,7 +109,7 @@ public class KnightInventory : MonoBehaviour
             nearbyPickuppable = null;
         }
 
-        if (collision.GetComponent<Weapon>() != null)
+        if (!nearbyPickuppable && !nearPickuppableItem && collision.GetComponent<Weapon>() != null)
         {
             collision.GetComponent<Weapon>().StopAnimatingOutline();
         }

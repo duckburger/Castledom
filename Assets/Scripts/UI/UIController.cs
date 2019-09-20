@@ -63,6 +63,12 @@ public class UIController : MonoBehaviour
         speakIcon.position = mainCam.WorldToScreenPoint(trans.position) + Vector3.up * 15f;
     }
 
+    public void TurnOnSpeakToIcon()
+    {
+        if (!speakIcon.gameObject.activeSelf)
+            speakIcon.gameObject.SetActive(true);
+    }
+
     public void TurnOffSpeakToIcon()
     {
         if (speakIcon.gameObject.activeSelf)

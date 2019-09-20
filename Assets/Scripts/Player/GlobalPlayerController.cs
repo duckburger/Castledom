@@ -10,7 +10,9 @@ public class GlobalPlayerController : MonoBehaviour
     KnightRotation rotation;
     KnightSounds sounds;
     KnightAttackController attacks;
-
+    Rigidbody2D rigidBody;
+    KnightInteractionDetector interactionDetector;
+    CircleCollider2D interactionCollider;
 
     private void Start()
     {
@@ -20,6 +22,9 @@ public class GlobalPlayerController : MonoBehaviour
             rotation = player.GetComponent<KnightRotation>();
             sounds = player.GetComponent<KnightSounds>();
             attacks = player.GetComponent<KnightAttackController>();
+            rigidBody = player.GetComponent<Rigidbody2D>();
+            interactionDetector = player.GetComponentInChildren<KnightInteractionDetector>();
+            interactionCollider = interactionDetector.GetComponent<CircleCollider2D>();
         }
     }
 
@@ -29,6 +34,9 @@ public class GlobalPlayerController : MonoBehaviour
         rotation.enabled = true;
         sounds.enabled = true;
         attacks.enabled = true;
+        rigidBody.simulated = true;
+        interactionDetector.enabled = true;
+        interactionCollider.enabled = true;
     }
 
     public void TurnOffPlayerControls()
@@ -37,6 +45,10 @@ public class GlobalPlayerController : MonoBehaviour
         rotation.enabled = false;
         sounds.enabled = false;
         attacks.enabled = false;
+        rigidBody.simulated = false;
+        rigidBody.velocity = Vector2.zero;
+        interactionDetector.enabled = false;
+        interactionCollider.enabled = false;
     }
-   
+
 }

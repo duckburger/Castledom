@@ -25,20 +25,22 @@ MonoBehaviour:
     outgoingTransitions: a5564c3ec1a0372c
     incomingTransitions: 
     dialogueLine: What do you want?
+    lineSoundEffect: {fileID: 8300000, guid: f29f49f291a32de4387d422cd61bd264, type: 3}
     attachedEvent: {fileID: 0}
     speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
   - containingConversation: {fileID: 11400000}
     id: 404334087
     windowRect:
       serializedVersion: 2
-      x: 745
-      y: 293
+      x: 717
+      y: 261
       width: 200
       height: 350
     windowTitle: NPC Dialogue Node
     outgoingTransitions: d8c21c010e1eaf70
     incomingTransitions: e40a3c44
     dialogueLine: It's none of your business, hayseed. How about you get out of here.
+    lineSoundEffect: {fileID: 8300000, guid: d9003a6d5e68521479854c908c9e5f73, type: 3}
     attachedEvent: {fileID: 0}
     speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
   allPlayerNodes:
@@ -106,6 +108,7 @@ MonoBehaviour:
       outgoingTransitions: a5564c3ec1a0372c
       incomingTransitions: 
       dialogueLine: What do you want?
+      lineSoundEffect: {fileID: 8300000, guid: f29f49f291a32de4387d422cd61bd264, type: 3}
       attachedEvent: {fileID: 0}
       speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
     endNPCNode:
@@ -121,6 +124,7 @@ MonoBehaviour:
       outgoingTransitions: 
       incomingTransitions: 
       dialogueLine: 
+      lineSoundEffect: {fileID: 0}
       attachedEvent: {fileID: 0}
       speaker: {fileID: 0}
     startPlayerNode:
@@ -164,6 +168,7 @@ MonoBehaviour:
       outgoingTransitions: a5564c3ec1a0372c
       incomingTransitions: 
       dialogueLine: What do you want?
+      lineSoundEffect: {fileID: 8300000, guid: f29f49f291a32de4387d422cd61bd264, type: 3}
       attachedEvent: {fileID: 0}
       speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
     endNPCNode:
@@ -179,6 +184,7 @@ MonoBehaviour:
       outgoingTransitions: 
       incomingTransitions: 
       dialogueLine: 
+      lineSoundEffect: {fileID: 0}
       attachedEvent: {fileID: 0}
       speaker: {fileID: 0}
     startPlayerNode:
@@ -222,6 +228,7 @@ MonoBehaviour:
       outgoingTransitions: 
       incomingTransitions: 
       dialogueLine: 
+      lineSoundEffect: {fileID: 0}
       attachedEvent: {fileID: 0}
       speaker: {fileID: 0}
     endNPCNode:
@@ -229,8 +236,8 @@ MonoBehaviour:
       id: 404334087
       windowRect:
         serializedVersion: 2
-        x: 745
-        y: 293
+        x: 717
+        y: 261
         width: 200
         height: 350
       windowTitle: NPC Dialogue Node
@@ -238,6 +245,7 @@ MonoBehaviour:
       incomingTransitions: e40a3c44
       dialogueLine: It's none of your business, hayseed. How about you get out of
         here.
+      lineSoundEffect: {fileID: 8300000, guid: d9003a6d5e68521479854c908c9e5f73, type: 3}
       attachedEvent: {fileID: 0}
       speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
     startPlayerNode:
@@ -273,8 +281,8 @@ MonoBehaviour:
       id: 404334087
       windowRect:
         serializedVersion: 2
-        x: 745
-        y: 293
+        x: 717
+        y: 261
         width: 200
         height: 350
       windowTitle: NPC Dialogue Node
@@ -282,6 +290,7 @@ MonoBehaviour:
       incomingTransitions: e40a3c44
       dialogueLine: It's none of your business, hayseed. How about you get out of
         here.
+      lineSoundEffect: {fileID: 8300000, guid: d9003a6d5e68521479854c908c9e5f73, type: 3}
       attachedEvent: {fileID: 0}
       speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
     endNPCNode:
@@ -297,6 +306,7 @@ MonoBehaviour:
       outgoingTransitions: 
       incomingTransitions: 
       dialogueLine: 
+      lineSoundEffect: {fileID: 0}
       attachedEvent: {fileID: 0}
       speaker: {fileID: 0}
     startPlayerNode:
@@ -332,8 +342,8 @@ MonoBehaviour:
       id: 404334087
       windowRect:
         serializedVersion: 2
-        x: 745
-        y: 293
+        x: 717
+        y: 261
         width: 200
         height: 350
       windowTitle: NPC Dialogue Node
@@ -341,6 +351,7 @@ MonoBehaviour:
       incomingTransitions: e40a3c44
       dialogueLine: It's none of your business, hayseed. How about you get out of
         here.
+      lineSoundEffect: {fileID: 8300000, guid: d9003a6d5e68521479854c908c9e5f73, type: 3}
       attachedEvent: {fileID: 0}
       speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
     endNPCNode:
@@ -356,6 +367,7 @@ MonoBehaviour:
       outgoingTransitions: 
       incomingTransitions: 
       dialogueLine: 
+      lineSoundEffect: {fileID: 0}
       attachedEvent: {fileID: 0}
       speaker: {fileID: 0}
     startPlayerNode:

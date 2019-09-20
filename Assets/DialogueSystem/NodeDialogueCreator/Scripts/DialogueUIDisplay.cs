@@ -8,8 +8,8 @@ using UnityEngine.Events;
 
 public class DialogueUIDisplay : MonoBehaviour
 {
-    [SerializeField] UnityEvent onDialogueStarted;
-    [SerializeField] UnityEvent onDialogueEnded;
+    [SerializeField] ScriptableEvent onDialogueStarted;
+    [SerializeField] ScriptableEvent onDialogueEnded;
     [Space(10)]
     [SerializeField] ConversationAsset activeConversation;
     [Space(10)]
@@ -29,6 +29,7 @@ public class DialogueUIDisplay : MonoBehaviour
     Vector2 originalRepliesPosition;
     Action onCurrentConvoCompleted = null;
     CanvasGroup mainCG;
+    AudioSource audioSource;
 
     bool onScreen = false;
 
@@ -40,6 +41,7 @@ public class DialogueUIDisplay : MonoBehaviour
         originalRepliesPosition = repliesParent.localPosition;
         AnimateOut();
         mainCG = GetComponent<CanvasGroup>();
+        audioSource = GetComponent<AudioSource>();
     }
 
 #endregion
@@ -138,6 +140,7 @@ public class DialogueUIDisplay : MonoBehaviour
 
     public void ProcessActiveConversation()
     {
+        onDialogueStarted?.Raise();
         ProcessActiveConversation(null);
     }
 
@@ -171,7 +174,6 @@ public class DialogueUIDisplay : MonoBehaviour
             {
                 // Found a node with only outbound transitions - this will be our first node
                 currentNode = activeConversation.GetNPCNodyByID( activeConversation.allNPCNodes[i].id );
-                
                 DisplayLine(currentNode);
             }
         }
@@ -186,6 +188,17 @@ public class DialogueUIDisplay : MonoBehaviour
     IEnumerator RollOutLine(string line)
     {
         NPCDialogueNode npcNode = currentNode as NPCDialogueNode;
+
+        if (npcNode != null)
+        {
+            if (audioSource && npcNode.lineSoundEffect)
+            {
+                audioSource.clip = npcNode.lineSoundEffect;
+                audioSource.Play();
+            }        
+            npcNode?.attachedEvent?.Raise();
+        }
+
         if (npcNode != null)
         {
             if (npcNode.speaker && npcNode.speaker.icon && !speakerIcon)
@@ -201,10 +214,7 @@ public class DialogueUIDisplay : MonoBehaviour
             dialogueLine.text += character;
             yield return null;
         }
-        if (npcNode != null)
-        {
-            npcNode?.attachedEvent?.Raise();
-        }
+   
         if (currentNode.GetConnectedPlayerResponses().Count > 0)
         {
             // Display player responses
@@ -316,6 +326,7 @@ public class DialogueUIDisplay : MonoBehaviour
         AnimateOut();
         DestroyAllReplyNodes();
         onCurrentConvoCompleted?.Invoke();
+        onDialogueEnded?.Raise();
     }
 
     public void Continue()

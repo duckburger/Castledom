@@ -18,6 +18,7 @@ public class NPCDialogueNode : IDialogueNode, ISerializationCallbackReceiver
     public List<int> incomingTransitions = new List<int>();
     [TextArea(3, 10)]
     public string dialogueLine;
+    public AudioClip lineSoundEffect;
     public DialogueNodeEvent attachedEvent;
 
 #region Paths
@@ -59,8 +60,9 @@ public class NPCDialogueNode : IDialogueNode, ISerializationCallbackReceiver
             GUILayout.EndVertical();            
             EditorGUILayout.LabelField("Dialogue Line");
             EditorStyles.textField.wordWrap = true;
-            dialogueLine = EditorGUILayout.TextArea(dialogueLine, GUILayout.Height(88f));   
-            
+            dialogueLine = EditorGUILayout.TextArea(dialogueLine, GUILayout.Height(88f));
+            lineSoundEffect = (AudioClip)EditorGUILayout.ObjectField(lineSoundEffect, typeof(AudioClip), false);
+
             EditorGUI.BeginChangeCheck();
 
             if (!attachedEvent)
