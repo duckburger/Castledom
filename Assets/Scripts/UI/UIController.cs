@@ -30,7 +30,6 @@ public class UIController : MonoBehaviour
         if (!pickupIcon.gameObject.activeSelf)
             pickupIcon.gameObject.SetActive(true);
         pickupIcon.position = mainCam.WorldToScreenPoint(trans.position);
-        Debug.Log("Called position pickup item");
     }
 
     public void TurnOffPickupIcon()

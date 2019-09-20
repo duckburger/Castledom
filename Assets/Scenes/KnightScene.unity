@@ -2817,7 +2817,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1900744987}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 10
+    OrthographicSize: 3.4
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -2859,11 +2859,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d28c4bcb2516fb4ca3b61910a3d75e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSpeed: 10
+  zoomSpeed: 22
   lerpSpeed: 25
-  defaultZoom: 6.6
+  defaultZoom: 3.4
   minZoom: 20
-  maxZoom: 3.5
+  maxZoom: 1.5
 --- !u!1 &1702260967
 GameObject:
   m_ObjectHideFlags: 0
@@ -3154,8 +3154,8 @@ Camera:
   near clip plane: 0.1
   far clip plane: 5000
   field of view: 40
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 3.4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3639,12 +3639,12 @@ PrefabInstance:
     - target: {fileID: 4000932799846560613, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.59
+      value: -1.03
       objectReference: {fileID: 0}
     - target: {fileID: 4000932799846560613, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.21
+      value: 2.07
       objectReference: {fileID: 0}
     - target: {fileID: 4000932799846560613, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
         type: 3}
@@ -3691,25 +3691,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -69.025
       objectReference: {fileID: 0}
-    - target: {fileID: 4000932799846560610, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-    - target: {fileID: 4000932799949694361, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-    - target: {fileID: 4000932800891247709, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-    - target: {fileID: 4000932801588046361, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97cc45e0f026e1b48a05fbe8906f1f30, type: 3}

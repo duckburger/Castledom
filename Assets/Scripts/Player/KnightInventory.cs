@@ -22,6 +22,9 @@ public class KnightInventory : MonoBehaviour
     Camera mainCam;
     bool nearPickuppableItem = false;
 
+
+    public WeaponStatFile EquippedWeapon => equippedWeapon;
+
     private void Start()
     {
         mainCam = Camera.main;
@@ -76,14 +79,13 @@ public class KnightInventory : MonoBehaviour
         {
             nearbyPickuppable = collision;
             onNearPickuppable?.RaiseWithData(nearbyPickuppable.transform);
-            nearPickuppableItem = true;            
-        }
+            nearPickuppableItem = true;
 
-        if (nearbyPickuppable.GetComponent<Weapon>() != null)
-        {
-            nearbyPickuppable.GetComponent<Weapon>().AnimateOutline();
+            if (nearbyPickuppable.GetComponent<Weapon>() != null)
+            {
+                nearbyPickuppable.GetComponent<Weapon>().AnimateOutline();
+            }
         }
-
     }
 
     private void OnTriggerStay2D(Collider2D collision)

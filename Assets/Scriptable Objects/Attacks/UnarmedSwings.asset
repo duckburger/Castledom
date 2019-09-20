@@ -15,5 +15,8 @@ MonoBehaviour:
   attackSoundFx:
   - {fileID: 8300000, guid: 272153a8a9bb7a5418ef6591b90f7c32, type: 3}
   - {fileID: 8300000, guid: 242fcfec9b4be254592e3393df41f8a4, type: 3}
+  hitSounds:
+  - {fileID: 8300000, guid: 277a94f3c6181834ead54f2344ee4479, type: 3}
+  - {fileID: 8300000, guid: 9f8fbec297052af439dcb7e6ed1d3971, type: 3}
   animationLayerIndex: 2
   attackIndices: 0000000001000000

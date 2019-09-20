@@ -7,9 +7,13 @@ public class Health : MonoBehaviour
 {
     [SerializeField] float currentHealth;
     [SerializeField] float maxHealth = 100f;
+    [Space]
+    public bool armored = false;
 
-    public Action downToFirstHealthThreshold;
-    public Action downToSecondHealthThreshold;
+    public Action onDownToFirstHealthThreshold;
+    public Action onDownToSecondHealthThreshold;
+    public Action onHealthDecreased;
+    public Action onDied;
 
     private void Start()
     {
@@ -19,20 +23,23 @@ public class Health : MonoBehaviour
     public void AdjustHealth(float amount)
     {
         currentHealth += amount;
-
         
         // AdjustHealthBar and/or appearance
         if (currentHealth <= 0)
         {
             // No health left
-            // Die();
+            onDied?.Invoke();
             return;
         }
 
+        if (amount < 0)
+            onHealthDecreased?.Invoke();
+
         if (currentHealth <= maxHealth / 2)
-            downToFirstHealthThreshold?.Invoke();
+            onDownToFirstHealthThreshold?.Invoke();
 
         if (currentHealth <= maxHealth / 3)
-            downToSecondHealthThreshold?.Invoke();
+            onDownToSecondHealthThreshold?.Invoke();
     }
+
 }

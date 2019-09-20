@@ -14,8 +14,8 @@ public class NPCBodyPartStatus : MonoBehaviour
 
         if (characterHealth)
         {
-            characterHealth.downToFirstHealthThreshold += SwitchToFirstLevel;
-            characterHealth.downToSecondHealthThreshold += SwitchToSecondLevel;
+            characterHealth.onDownToFirstHealthThreshold += SwitchToFirstLevel;
+            characterHealth.onDownToSecondHealthThreshold += SwitchToSecondLevel;
         }
     }
 

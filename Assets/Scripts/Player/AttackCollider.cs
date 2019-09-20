@@ -1,15 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class AttackCollider : MonoBehaviour
 {
+    [SerializeField] KnightInventory playerInventory;
     public bool isOn = false;
+
+    public Action onHitEnemy;
+
+    KnightSounds knightSounds;
     Collider2D collider;
 
     private void Start()
     {
         collider = GetComponent<Collider2D>();
+        knightSounds = GetComponentInParent<KnightSounds>();
     }
 
     public void TurnOn()
@@ -29,9 +36,23 @@ public class AttackCollider : MonoBehaviour
         if (!isOn)
             return;
 
-        if (other.GetComponent<Health>() != null) //TODO: Add friend for check
+        if (!playerInventory)
         {
-            other.GetComponent<Health>().AdjustHealth(-10); // TODO: Set attack value based on weapon
+            Debug.LogError("Connect player inventory to the player's attack collider");
+            return;
+        }
+
+        Health hitEnemyHealth = other.GetComponent<Health>();
+        if (hitEnemyHealth != null) //TODO: Add friend for check
+        {
+            int length = playerInventory.EquippedWeapon.availableAttacks[0].hitSounds.Length;
+            if (length > 0)
+            {
+                int index = UnityEngine.Random.Range(0, length);
+                knightSounds.PlaySound(playerInventory.EquippedWeapon.availableAttacks[0].hitSounds[index]);
+            }
+            float dmg = hitEnemyHealth.armored ? playerInventory.EquippedWeapon.armoredDmg : playerInventory.EquippedWeapon.baseDmg;
+            hitEnemyHealth.AdjustHealth(-dmg);
         }
     }
 }
