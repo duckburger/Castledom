@@ -1,0 +1,387 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff965f00d1cf3f94ba90268b7c492f1f, type: 3}
+  m_Name: ConversationWithFirstSoldier
+  m_EditorClassIdentifier: 
+  allNPCNodes:
+  - containingConversation: {fileID: 11400000}
+    id: 641814027
+    windowRect:
+      serializedVersion: 2
+      x: 66
+      y: 226
+      width: 200
+      height: 350
+    windowTitle: NPC Dialogue Node
+    outgoingTransitions: a5564c3ec1a0372c
+    incomingTransitions: 
+    dialogueLine: What do you want?
+    attachedEvent: {fileID: 0}
+    speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
+  - containingConversation: {fileID: 11400000}
+    id: 404334087
+    windowRect:
+      serializedVersion: 2
+      x: 745
+      y: 293
+      width: 200
+      height: 350
+    windowTitle: NPC Dialogue Node
+    outgoingTransitions: d8c21c010e1eaf70
+    incomingTransitions: e40a3c44
+    dialogueLine: It's none of your business, hayseed. How about you get out of here.
+    attachedEvent: {fileID: 0}
+    speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
+  allPlayerNodes:
+  - containingConversation: {fileID: 11400000}
+    id: 689152312
+    windowRect:
+      serializedVersion: 2
+      x: 421
+      y: 147
+      width: 200
+      height: 128
+    windowTitle: Player Response Node
+    outgoingTransitions: 
+    incomingTransitions: a5564c3e
+    dialogueLine: Nothing, I'll be going
+  - containingConversation: {fileID: 11400000}
+    id: 11181998
+    windowRect:
+      serializedVersion: 2
+      x: 427
+      y: 389
+      width: 200
+      height: 128
+    windowTitle: Player Response Node
+    outgoingTransitions: e40a3c44
+    incomingTransitions: c1a0372c
+    dialogueLine: What are you doing here?
+  - containingConversation: {fileID: 11400000}
+    id: 272605759
+    windowRect:
+      serializedVersion: 2
+      x: 1039
+      y: 218
+      width: 200
+      height: 128
+    windowTitle: Player Response Node
+    outgoingTransitions: 
+    incomingTransitions: d8c21c01
+    dialogueLine: OK
+  - containingConversation: {fileID: 11400000}
+    id: 1415605623
+    windowRect:
+      serializedVersion: 2
+      x: 1048
+      y: 437
+      width: 200
+      height: 128
+    windowTitle: Player Response Node
+    outgoingTransitions: 
+    incomingTransitions: 0e1eaf70
+    dialogueLine: I don't think so.
+  allTransitions:
+  - id: 1045190309
+    containingConversation: {fileID: 11400000}
+    startNPCNode:
+      containingConversation: {fileID: 11400000}
+      id: 641814027
+      windowRect:
+        serializedVersion: 2
+        x: 66
+        y: 226
+        width: 200
+        height: 350
+      windowTitle: NPC Dialogue Node
+      outgoingTransitions: a5564c3ec1a0372c
+      incomingTransitions: 
+      dialogueLine: What do you want?
+      attachedEvent: {fileID: 0}
+      speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
+    endNPCNode:
+      containingConversation: {fileID: 0}
+      id: 0
+      windowRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      windowTitle: 
+      outgoingTransitions: 
+      incomingTransitions: 
+      dialogueLine: 
+      attachedEvent: {fileID: 0}
+      speaker: {fileID: 0}
+    startPlayerNode:
+      containingConversation: {fileID: 0}
+      id: 0
+      windowRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      windowTitle: 
+      outgoingTransitions: 
+      incomingTransitions: 
+      dialogueLine: 
+    endPlayerNode:
+      containingConversation: {fileID: 11400000}
+      id: 689152312
+      windowRect:
+        serializedVersion: 2
+        x: 421
+        y: 147
+        width: 200
+        height: 128
+      windowTitle: Player Response Node
+      outgoingTransitions: 
+      incomingTransitions: a5564c3e
+      dialogueLine: Nothing, I'll be going
+  - id: 741843137
+    containingConversation: {fileID: 11400000}
+    startNPCNode:
+      containingConversation: {fileID: 11400000}
+      id: 641814027
+      windowRect:
+        serializedVersion: 2
+        x: 66
+        y: 226
+        width: 200
+        height: 350
+      windowTitle: NPC Dialogue Node
+      outgoingTransitions: a5564c3ec1a0372c
+      incomingTransitions: 
+      dialogueLine: What do you want?
+      attachedEvent: {fileID: 0}
+      speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
+    endNPCNode:
+      containingConversation: {fileID: 0}
+      id: 0
+      windowRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      windowTitle: 
+      outgoingTransitions: 
+      incomingTransitions: 
+      dialogueLine: 
+      attachedEvent: {fileID: 0}
+      speaker: {fileID: 0}
+    startPlayerNode:
+      containingConversation: {fileID: 0}
+      id: 0
+      windowRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      windowTitle: 
+      outgoingTransitions: 
+      incomingTransitions: 
+      dialogueLine: 
+    endPlayerNode:
+      containingConversation: {fileID: 11400000}
+      id: 11181998
+      windowRect:
+        serializedVersion: 2
+        x: 427
+        y: 389
+        width: 200
+        height: 128
+      windowTitle: Player Response Node
+      outgoingTransitions: e40a3c44
+      incomingTransitions: c1a0372c
+      dialogueLine: What are you doing here?
+  - id: 1144785636
+    containingConversation: {fileID: 11400000}
+    startNPCNode:
+      containingConversation: {fileID: 0}
+      id: 0
+      windowRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      windowTitle: 
+      outgoingTransitions: 
+      incomingTransitions: 
+      dialogueLine: 
+      attachedEvent: {fileID: 0}
+      speaker: {fileID: 0}
+    endNPCNode:
+      containingConversation: {fileID: 11400000}
+      id: 404334087
+      windowRect:
+        serializedVersion: 2
+        x: 745
+        y: 293
+        width: 200
+        height: 350
+      windowTitle: NPC Dialogue Node
+      outgoingTransitions: d8c21c010e1eaf70
+      incomingTransitions: e40a3c44
+      dialogueLine: It's none of your business, hayseed. How about you get out of
+        here.
+      attachedEvent: {fileID: 0}
+      speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
+    startPlayerNode:
+      containingConversation: {fileID: 11400000}
+      id: 11181998
+      windowRect:
+        serializedVersion: 2
+        x: 427
+        y: 389
+        width: 200
+        height: 128
+      windowTitle: Player Response Node
+      outgoingTransitions: e40a3c44
+      incomingTransitions: c1a0372c
+      dialogueLine: What are you doing here?
+    endPlayerNode:
+      containingConversation: {fileID: 0}
+      id: 0
+      windowRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      windowTitle: 
+      outgoingTransitions: 
+      incomingTransitions: 
+      dialogueLine: 
+  - id: 18662104
+    containingConversation: {fileID: 11400000}
+    startNPCNode:
+      containingConversation: {fileID: 11400000}
+      id: 404334087
+      windowRect:
+        serializedVersion: 2
+        x: 745
+        y: 293
+        width: 200
+        height: 350
+      windowTitle: NPC Dialogue Node
+      outgoingTransitions: d8c21c010e1eaf70
+      incomingTransitions: e40a3c44
+      dialogueLine: It's none of your business, hayseed. How about you get out of
+        here.
+      attachedEvent: {fileID: 0}
+      speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
+    endNPCNode:
+      containingConversation: {fileID: 0}
+      id: 0
+      windowRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      windowTitle: 
+      outgoingTransitions: 
+      incomingTransitions: 
+      dialogueLine: 
+      attachedEvent: {fileID: 0}
+      speaker: {fileID: 0}
+    startPlayerNode:
+      containingConversation: {fileID: 0}
+      id: 0
+      windowRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      windowTitle: 
+      outgoingTransitions: 
+      incomingTransitions: 
+      dialogueLine: 
+    endPlayerNode:
+      containingConversation: {fileID: 11400000}
+      id: 272605759
+      windowRect:
+        serializedVersion: 2
+        x: 1039
+        y: 218
+        width: 200
+        height: 128
+      windowTitle: Player Response Node
+      outgoingTransitions: 
+      incomingTransitions: d8c21c01
+      dialogueLine: OK
+  - id: 1890524686
+    containingConversation: {fileID: 11400000}
+    startNPCNode:
+      containingConversation: {fileID: 11400000}
+      id: 404334087
+      windowRect:
+        serializedVersion: 2
+        x: 745
+        y: 293
+        width: 200
+        height: 350
+      windowTitle: NPC Dialogue Node
+      outgoingTransitions: d8c21c010e1eaf70
+      incomingTransitions: e40a3c44
+      dialogueLine: It's none of your business, hayseed. How about you get out of
+        here.
+      attachedEvent: {fileID: 0}
+      speaker: {fileID: 11400000, guid: 09718d12727c31c4ea34271ee92c56e5, type: 2}
+    endNPCNode:
+      containingConversation: {fileID: 0}
+      id: 0
+      windowRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      windowTitle: 
+      outgoingTransitions: 
+      incomingTransitions: 
+      dialogueLine: 
+      attachedEvent: {fileID: 0}
+      speaker: {fileID: 0}
+    startPlayerNode:
+      containingConversation: {fileID: 0}
+      id: 0
+      windowRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      windowTitle: 
+      outgoingTransitions: 
+      incomingTransitions: 
+      dialogueLine: 
+    endPlayerNode:
+      containingConversation: {fileID: 11400000}
+      id: 1415605623
+      windowRect:
+        serializedVersion: 2
+        x: 1048
+        y: 437
+        width: 200
+        height: 128
+      windowTitle: Player Response Node
+      outgoingTransitions: 
+      incomingTransitions: 0e1eaf70
+      dialogueLine: I don't think so.
+  skippable: 0

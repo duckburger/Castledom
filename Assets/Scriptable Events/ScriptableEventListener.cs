@@ -6,10 +6,10 @@ using System;
 
 [Serializable]
 public class EventWithData : UnityEvent<object> { }
-
+[Serializable]
 public class ScriptableEventListener : MonoBehaviour
 {
-    [SerializeField] ScriptableEvent trackedEvent;
+    public ScriptableEvent trackedEvent;
     [Space(10)]
     [Header("Responses")]
     [SerializeField] UnityEvent raiseResponse;

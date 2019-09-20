@@ -4,9 +4,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Events;
 
 public class DialogueUIDisplay : MonoBehaviour
 {
+    [SerializeField] UnityEvent onDialogueStarted;
+    [SerializeField] UnityEvent onDialogueEnded;
+    [Space(10)]
     [SerializeField] ConversationAsset activeConversation;
     [Space(10)]
     [Header("UI Components")]
@@ -16,6 +20,7 @@ public class DialogueUIDisplay : MonoBehaviour
     [SerializeField] Image speakerIcon;
     [SerializeField] Transform repliesParent;
     [SerializeField] CanvasGroup continueButtonCG;
+    [SerializeField] GameObject skipButton;
 
     [Space(10)]
     [SerializeField] GameObject responsePrefab;
@@ -108,9 +113,23 @@ public class DialogueUIDisplay : MonoBehaviour
         });
     }
 
-#endregion
+    #endregion
 
-#region Processing Conversation Asset
+    #region Accepting Object From an Event
+
+    public void AcceptConversationAssetFromEvent(object convoAsset)
+    {
+        ConversationAsset asset = (ConversationAsset)convoAsset;
+        AssignActiveConversation(asset);
+        if (!onScreen)
+            ProcessActiveConversation();
+        else
+            Debug.Log("Cannot load a new conversation, while the previous one is still on screen");
+    }
+
+    #endregion
+
+    #region Processing Conversation Asset
 
     public void AssignActiveConversation(ConversationAsset asset)
     {
@@ -135,6 +154,11 @@ public class DialogueUIDisplay : MonoBehaviour
             Debug.Log($"No nodes in the active conversation, can't play dialogue");
             return;
         }
+
+        if (activeConversation.skippable)
+            skipButton.SetActive(true);
+        else
+            skipButton.SetActive(false);
 
         onCurrentConvoCompleted = onConversationCompleted;
 
@@ -208,8 +232,18 @@ public class DialogueUIDisplay : MonoBehaviour
         for (int i = 0; i < replyIDs.Count; i++)
         {        
             PlayerDialogueNode playerResponseNode = activeConversation.GetPlayerNodeByID(replyIDs[i]);
-            NPCDialogueNode connectedNPCNode = activeConversation.GetNPCNodyByID(activeConversation.GetTransitionByID(playerResponseNode.outgoingTransitions[0]).endNPCNode.id);                           
 
+            if (playerResponseNode.outgoingTransitions.Count == 0)
+            {
+                SpawnButton(playerResponseNode.dialogueLine, () =>
+                {
+                    Close();
+                    onCurrentConvoCompleted?.Invoke();
+                });
+                continue;
+            }
+
+            NPCDialogueNode connectedNPCNode = activeConversation.GetNPCNodyByID(activeConversation.GetTransitionByID(playerResponseNode.outgoingTransitions[0]).endNPCNode.id);
             SpawnButton(playerResponseNode.dialogueLine, () =>
             {
                 AnimateRepliesOut();
@@ -217,6 +251,7 @@ public class DialogueUIDisplay : MonoBehaviour
                 currentNode = savedNode;
                 DisplayLine(currentNode);
             });
+
         }
 
         AnimateRepliesIn();

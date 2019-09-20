@@ -7,6 +7,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] UIAnnouncementBoardController announcementBoard;
     [SerializeField] RectTransform pickupIcon;
+    [SerializeField] RectTransform speakIcon;
     [SerializeField] UIObjectivePointer objectivePointer;
     [SerializeField] UIObjectiveTextDisplay objectiveTextDisplay;
     Camera mainCam;
@@ -29,7 +30,6 @@ public class UIController : MonoBehaviour
 
     #region Item Pick Up Icon
 
-
     public void PositionPickupIcon(object obj)
     {
         if (!pickupIcon)
@@ -47,6 +47,27 @@ public class UIController : MonoBehaviour
             pickupIcon.gameObject.SetActive(false);
     }
 
+
+    #endregion
+
+    #region Speak To Icon
+
+    public void PositionSpeakToIcon(object obj)
+    {
+        if (!speakIcon)
+            return;
+
+        Transform trans = (Transform)obj;
+        if (!speakIcon.gameObject.activeSelf)
+            speakIcon.gameObject.SetActive(true);
+        speakIcon.position = mainCam.WorldToScreenPoint(trans.position) + Vector3.up * 15f;
+    }
+
+    public void TurnOffSpeakToIcon()
+    {
+        if (speakIcon.gameObject.activeSelf)
+            speakIcon.gameObject.SetActive(false);
+    }
 
     #endregion
 
