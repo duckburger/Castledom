@@ -5,6 +5,8 @@ using System;
 
 public class Health : MonoBehaviour
 {
+    [SerializeField] ScriptableEvent onHealthAdjusted;
+    [Space]
     [SerializeField] float currentHealth;
     [SerializeField] float maxHealth = 100f;
     [Space]
@@ -23,8 +25,9 @@ public class Health : MonoBehaviour
     public void AdjustHealth(float amount)
     {
         currentHealth += amount;
-        
-        // AdjustHealthBar and/or appearance
+        CombatMoveInfo moveInfo = new CombatMoveInfo(amount, gameObject);
+        onHealthAdjusted?.RaiseWithData(moveInfo);
+        // TODO: AdjustHealthBar and/or appearance
         if (currentHealth <= 0)
         {
             // No health left

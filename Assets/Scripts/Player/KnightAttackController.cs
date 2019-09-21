@@ -6,7 +6,7 @@ public class KnightAttackController : MonoBehaviour
 {
     [SerializeField] KnightAttack availableAttack;
     [Space(10)]
-    [SerializeField] AttackCollider attackCollier;
+    [SerializeField] PlayerAttackCollider attackCollier;
     [SerializeField] GameObject attackDirArrow;
     [SerializeField] bool showAttackDirection = true;
     Animator animator;
@@ -75,12 +75,12 @@ public class KnightAttackController : MonoBehaviour
 
     public void ActivateAttackCollider()
     {
-        attackCollier.TurnOn();
+        attackCollier?.EnableAttackCollider();
     }
 
     public void DeActivateAttackCollider()
     {
-        attackCollier.TurnOff();
+        attackCollier?.DisableAttackCollider();
     }
 
 }

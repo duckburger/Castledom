@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &794496293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 794496294}
+  - component: {fileID: 794496295}
+  - component: {fileID: 794496296}
+  m_Layer: 0
+  m_Name: NPCAttackCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &794496294
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794496293}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4000932800891247708}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &794496295
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794496293}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.14779982
+--- !u!114 &794496296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794496293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f55c83b87291d164eb8a1bdb276d3dee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOn: 0
+  npcInventory: {fileID: 1055663666}
 --- !u!1 &4000932799846560609
 GameObject:
   m_ObjectHideFlags: 0
@@ -22,6 +84,7 @@ GameObject:
   - component: {fileID: 1055663655}
   - component: {fileID: 1055663654}
   - component: {fileID: 879201020682937764}
+  - component: {fileID: 1055663666}
   m_Layer: 0
   m_Name: SirDanceALot
   m_TagString: Untagged
@@ -42,7 +105,6 @@ Transform:
   m_Children:
   - {fileID: 4000932800891247708}
   - {fileID: 4000932801588046360}
-  - {fileID: 4000932799949694360}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -69.025}
@@ -152,6 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79bd071352204ea4890c4e3322100242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onHealthAdjusted: {fileID: 11400000, guid: ab93e7d9000e5464cb4204637ae71a89, type: 2}
   currentHealth: 0
   maxHealth: 100
   armored: 0
@@ -356,6 +419,19 @@ MonoBehaviour:
   myDialogue: {fileID: 11400000, guid: 09a621fabbf968a4eb4c949ac349a4e0, type: 2}
   onDialogueActivated: {fileID: 11400000, guid: 1df8b0906f480c84cbd4ec3d727a9062,
     type: 2}
+--- !u!114 &1055663666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4000932799846560609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df3fba8ffda86642808fc3b7e611cb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcWeapon: {fileID: 11400000, guid: 427f322ffcb640a4799d8686112e723a, type: 2}
 --- !u!1 &4000932799949694375
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,8 +461,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4000932799846560613}
-  m_RootOrder: 2
+  m_Father: {fileID: 4000932800891247708}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4000932799949694361
 SpriteRenderer:
@@ -478,7 +554,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 794496294}
+  - {fileID: 4000932799949694360}
   m_Father: {fileID: 4000932799846560613}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

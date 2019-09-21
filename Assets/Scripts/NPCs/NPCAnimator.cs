@@ -7,11 +7,13 @@ public class NPCAnimator : MonoBehaviour
 {
     Animator animator;
     PolyNavAgent navAgent;
+    NPCAttackCollider npcAttackCollider;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         navAgent = GetComponent<PolyNavAgent>();
+        npcAttackCollider = GetComponentInChildren<NPCAttackCollider>(true);
     }
 
     private void Update()
@@ -34,6 +36,16 @@ public class NPCAnimator : MonoBehaviour
     public void DeactivateAttack()
     {
         animator.SetBool("isAttacking", false);
+    }
+
+    public void ActivateAttackCollider()
+    {
+        npcAttackCollider?.EnableAttackCollider();
+    }
+
+    public void DeActivateAttackCollider()
+    {
+        npcAttackCollider?.DisableAttackCollider();
     }
 
 }

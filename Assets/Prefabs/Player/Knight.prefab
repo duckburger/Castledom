@@ -677,6 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79bd071352204ea4890c4e3322100242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onHealthAdjusted: {fileID: 11400000, guid: ab93e7d9000e5464cb4204637ae71a89, type: 2}
   currentHealth: 0
   maxHealth: 100
   armored: 0
@@ -824,5 +825,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f251cf5418ac174aa7b7492d4d50f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInventory: {fileID: 8527860511542276870}
   isOn: 1
+  playerInventory: {fileID: 8527860511542276870}

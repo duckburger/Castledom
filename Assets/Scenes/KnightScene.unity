@@ -2761,6 +2761,78 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
+--- !u!1 &972561629 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 972561629, guid: 2a5459afb9170a04a9ac2897adc60236,
+    type: 3}
+  m_PrefabInstance: {fileID: 3783259591430947897}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &972561631 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3243932618880752617, guid: 2a5459afb9170a04a9ac2897adc60236,
+    type: 3}
+  m_PrefabInstance: {fileID: 3783259591430947897}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972561629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e452721cc20c2084e927f57056e1a18b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &972561632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972561629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f44479df30e3c6e47aa54c9a8be7b8a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackedEvent: {fileID: 11400000, guid: ab93e7d9000e5464cb4204637ae71a89, type: 2}
+  raiseResponse:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  raisedWithData:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 972561631}
+        m_MethodName: AcceptCombatMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: EventWithData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  activateResponse:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  activateWithDataResponse:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: EventWithData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  deactivateResponse:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  deactivateWithDataResponse:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: EventWithData, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &1014257459
 GameObject:
   m_ObjectHideFlags: 0
@@ -4106,6 +4178,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3418839952987534365, guid: 2a5459afb9170a04a9ac2897adc60236,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.15991211
+      objectReference: {fileID: 0}
     - target: {fileID: 3418839953771112718, guid: 2a5459afb9170a04a9ac2897adc60236,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -4186,6 +4263,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4749528345392325563, guid: 2a5459afb9170a04a9ac2897adc60236,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -123.700195
+      objectReference: {fileID: 0}
     - target: {fileID: 2431674622897730054, guid: 2a5459afb9170a04a9ac2897adc60236,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -4206,6 +4288,42 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 972561630, guid: 2a5459afb9170a04a9ac2897adc60236, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 972561630, guid: 2a5459afb9170a04a9ac2897adc60236, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 972561630, guid: 2a5459afb9170a04a9ac2897adc60236, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 972561630, guid: 2a5459afb9170a04a9ac2897adc60236, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 972561630, guid: 2a5459afb9170a04a9ac2897adc60236, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 972561630, guid: 2a5459afb9170a04a9ac2897adc60236, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3243932618880752617, guid: 2a5459afb9170a04a9ac2897adc60236,
+        type: 3}
+      propertyPath: damageNumberPrefab
+      value: 
+      objectReference: {fileID: 6349876667947741562, guid: ff43fbe762b94234e9f642af45375861,
+        type: 3}
+    - target: {fileID: 3243932618880752617, guid: 2a5459afb9170a04a9ac2897adc60236,
+        type: 3}
+      propertyPath: infoTextPrefab
+      value: 
+      objectReference: {fileID: 6349876667947741562, guid: ff43fbe762b94234e9f642af45375861,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a5459afb9170a04a9ac2897adc60236, type: 3}
 --- !u!1001 &4000932800882228728

@@ -3,38 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AttackCollider : MonoBehaviour
+public class PlayerAttackCollider : AttackCollider
 {
     [SerializeField] KnightInventory playerInventory;
-    public bool isOn = false;
-
-    public Action onHitEnemy;
 
     KnightSounds knightSounds;
-    Collider2D collider;
 
     private void Start()
     {
-        collider = GetComponent<Collider2D>();
+        circleCollider = GetComponent<Collider2D>();
         knightSounds = GetComponentInParent<KnightSounds>();
     }
-
-    public void TurnOn()
-    {
-        isOn = true;
-        collider.enabled = true;
-    }
-
-    public void TurnOff()
-    {
-        isOn = false;
-        collider.enabled = false;
-    }
-
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!isOn)
-            return;
+        HandleCollision(other);   
+    }
+
+    public override void HandleCollision(Collider2D collider)
+    {
+        base.HandleCollision(collider);
 
         if (!playerInventory)
         {
@@ -42,8 +30,8 @@ public class AttackCollider : MonoBehaviour
             return;
         }
 
-        Health hitEnemyHealth = other.GetComponent<Health>();
-        if (hitEnemyHealth != null) //TODO: Add friend for check
+        Health hitEnemyHealth = collider.GetComponent<Health>();
+        if (hitEnemyHealth != null) //TODO: Add friend/foe for check
         {
             int length = playerInventory.EquippedWeapon.availableAttacks[0].hitSounds.Length;
             if (length > 0)
@@ -52,7 +40,7 @@ public class AttackCollider : MonoBehaviour
                 knightSounds.PlaySound(playerInventory.EquippedWeapon.availableAttacks[0].hitSounds[index]);
             }
             float dmg = hitEnemyHealth.armored ? playerInventory.EquippedWeapon.armoredDmg : playerInventory.EquippedWeapon.baseDmg;
-            Transform body = other.GetComponent<NPCRotator>().body;
+            Transform body = collider.GetComponent<NPCRotator>().body;
             float dot = Vector2.Dot(transform.parent.up, body.up);
             if (dot > 0.2f)
             {

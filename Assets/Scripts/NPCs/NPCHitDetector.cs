@@ -21,7 +21,7 @@ public class NPCHitDetector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.GetComponent<AttackCollider>())
+        if (collider.GetComponent<PlayerAttackCollider>())
         {
             BloodSplat(collider.transform);
             lastHitBy = collider.transform;
