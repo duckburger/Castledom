@@ -19,6 +19,18 @@ public class NPCAI : MonoBehaviour
     bool inCombat = false;
     Health combatTarget = null;
 
+    public Transform CombatTarget
+    {
+        get
+        {
+            if (combatTarget)
+                return combatTarget.transform;
+            else
+                return null;
+        }
+    }
+      
+
     private void Awake()
     {
         polynavAgent = GetComponent<PolyNavAgent>();

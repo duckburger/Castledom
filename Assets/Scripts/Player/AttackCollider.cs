@@ -52,6 +52,13 @@ public class AttackCollider : MonoBehaviour
                 knightSounds.PlaySound(playerInventory.EquippedWeapon.availableAttacks[0].hitSounds[index]);
             }
             float dmg = hitEnemyHealth.armored ? playerInventory.EquippedWeapon.armoredDmg : playerInventory.EquippedWeapon.baseDmg;
+            Transform body = other.GetComponent<NPCRotator>().body;
+            float dot = Vector2.Dot(transform.parent.up, body.up);
+            if (dot > 0.2f)
+            {
+                // Player is behind the target, add extra damage
+                dmg *= 2f;
+            }
             hitEnemyHealth.AdjustHealth(-dmg);
         }
     }

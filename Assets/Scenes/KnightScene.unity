@@ -3963,24 +3963,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3418839952702260568, guid: 2a5459afb9170a04a9ac2897adc60236,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3418839952702260568, guid: 2a5459afb9170a04a9ac2897adc60236,
-        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1564273422}
-    - target: {fileID: 3418839952702260568, guid: 2a5459afb9170a04a9ac2897adc60236,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SpawnWave
-      objectReference: {fileID: 0}
-    - target: {fileID: 3418839952702260568, guid: 2a5459afb9170a04a9ac2897adc60236,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 3418839953569037872, guid: 2a5459afb9170a04a9ac2897adc60236,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -4253,22 +4238,22 @@ PrefabInstance:
     - target: {fileID: 4000932799846560613, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000932799846560613, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000932799846560613, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.5665895
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000932799846560613, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.82400024
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000932799846560613, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
         type: 3}
@@ -4288,7 +4273,7 @@ PrefabInstance:
     - target: {fileID: 4000932799846560613, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -69.025
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97cc45e0f026e1b48a05fbe8906f1f30, type: 3}
