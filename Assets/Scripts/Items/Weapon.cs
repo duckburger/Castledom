@@ -12,6 +12,16 @@ public class Weapon : MonoBehaviour, IPickuppable
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    public bool AutoPickupped()
+    {
+        return false;
+    }
+
+    public AudioClip PickupSound()
+    {
+        return null;
+    }
+
     public object GetPickuppableObject()
     {
         return stats;

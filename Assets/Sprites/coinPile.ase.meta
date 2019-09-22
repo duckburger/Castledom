@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 53cb523648d813c469ce7a7977f79f4e
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: c5b4995c739cb6c41b2bb4a01104e430, type: 3}
+  textureSettings:
+    textureType: 8
+    pixelsPerUnit: 128
+    meshType: 1
+    extrudeEdges: 1
+    spritePivot: {x: 0.5, y: 0.5}
+    generatePhysics: 1
+    wrapMode: 1
+    filterMode: 0
+    tileSize: {x: 32, y: 32}
+    tilePadding: {x: 0, y: 0}
+    tileOffset: {x: 0, y: 0}
+  animationSettings:
+  - animationName: Glimmer
+    loopTime: 0
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 1; To: 8"
+  atlas: {fileID: -8328923581568760697, guid: 53cb523648d813c469ce7a7977f79f4e, type: 3}
+  importType: 0

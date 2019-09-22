@@ -7,6 +7,15 @@ using Panda;
 public class NPCAI : MonoBehaviour
 {
     [SerializeField] float combatRange = 3f;
+    [SerializeField] float runSpeed = 2.5f;
+    [SerializeField] float walkSpeed = 1.8f;
+    [Space]
+    [SerializeField] float stamina = 100f;
+    [SerializeField] float maxStamina = 100f;
+    [SerializeField] float staminaRecoverySpeed = 0.5f;
+    [SerializeField] float sprintStaminaDepletion = 0.5f;
+    [SerializeField] bool isRunning = false;
+
 
     PolyNavAgent polynavAgent;
     Transform currentTarget;
@@ -17,6 +26,8 @@ public class NPCAI : MonoBehaviour
 
     [Task]
     bool inCombat = false;
+    [Task]
+    bool recoveringStamina = false;
     Health combatTarget = null;
 
     public Transform CombatTarget
@@ -107,6 +118,60 @@ public class NPCAI : MonoBehaviour
     void AttackTarget()
     {
         npcAnimator.ActivateAttack();
+        Task.current.Succeed();
+    }
+
+    #endregion
+
+    #region Stamina
+
+    [Task]
+    bool EnoughStaminaToRun()
+    {
+        return stamina > 0f;
+    }
+
+    [Task]
+    void RestoreStamina()
+    {
+        stamina += Time.deltaTime * staminaRecoverySpeed;
+        stamina = Mathf.Clamp(stamina, 0, maxStamina);        
+        if (stamina == maxStamina)
+            recoveringStamina = false;
+        else
+            recoveringStamina = true;
+        Task.current.Succeed();
+    }
+
+    [Task]
+    void DepleteStamina()
+    {
+        if (isRunning)
+        {
+            stamina -= Time.deltaTime * sprintStaminaDepletion;
+            stamina = Mathf.Clamp(stamina, 0, maxStamina);
+            if (stamina <= 0)
+            {
+                recoveringStamina = true;
+            }
+            Task.current.Succeed();
+        }       
+    }
+
+    [Task]
+    void SpeedUpToRun()
+    {
+        isRunning = true;
+        polynavAgent.maxSpeed = Mathf.Lerp(polynavAgent.maxSpeed, runSpeed, Time.deltaTime * 25f);
+        Task.current.Succeed();
+    }
+
+    [Task]
+    void SlowDownToWalk()
+    {
+        isRunning = false;
+        polynavAgent.maxSpeed = walkSpeed;
+        Task.current.Succeed();
     }
 
     #endregion

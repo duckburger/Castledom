@@ -10,6 +10,8 @@ public class UIController : MonoBehaviour
     [SerializeField] RectTransform speakIcon;
     [SerializeField] UIObjectivePointer objectivePointer;
     [SerializeField] UIObjectiveTextDisplay objectiveTextDisplay;
+    [SerializeField] AudioSource uiAudioSource;
+    [SerializeField] UIMoneyText moneyDisplayController;
     Camera mainCam;
 
     private void Start()
@@ -99,6 +101,42 @@ public class UIController : MonoBehaviour
             objectivePointer?.AssignObjective(receivedObjective.objectiveLocation);
             objectiveTextDisplay?.UpdateObjectiveText(receivedObjective.objectiveText);
         }
+    }
+
+    #endregion
+
+    #region MoneyDisplay
+
+    public void AcceptMoneyEvent(object money)
+    {
+        float newAmt = (float)money;
+        UpdateMoneyText(newAmt);
+    }
+
+    public void UpdateMoneyText(float newAmount)
+    {
+        if (!moneyDisplayController)
+        {
+            Debug.LogError("Connect MoneyText controller to the UIController");
+            return;
+        }
+        moneyDisplayController?.UpdateAmount(newAmount);
+    }
+
+    #endregion
+
+    #region UI Audio
+
+    public void PlayClipAsUIAudio(AudioClip clip)
+    {
+        if (!uiAudioSource)
+        {
+            Debug.LogError("Connect AudioSource to the UI Controller");
+            return;
+        }
+        uiAudioSource.clip = clip;
+        uiAudioSource.Play();
+        
     }
 
     #endregion

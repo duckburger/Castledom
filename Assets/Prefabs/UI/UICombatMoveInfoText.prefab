@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6349876667947741565}
   - component: {fileID: 6349876667947741567}
   - component: {fileID: 6349876667947741564}
+  - component: {fileID: 6283267196402411091}
   m_Layer: 5
   m_Name: UICombatMoveInfoText
   m_TagString: Untagged
@@ -27,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 6349876667947741562}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -67,8 +68,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: -25
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f099534771af3ef499ef1d205ae0b9de, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: b2228c246cbfcbd4eb82a55b5256ebfe, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ef4b4140ddaa7654a838b19372b6362d, type: 2}
+  m_sharedMaterial: {fileID: -8862111974896053437, guid: ef4b4140ddaa7654a838b19372b6362d,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -93,8 +95,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 35
-  m_fontSizeBase: 35
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -145,7 +147,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -157,3 +159,24 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!223 &6283267196402411091
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6349876667947741562}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 10
+  m_TargetDisplay: 0

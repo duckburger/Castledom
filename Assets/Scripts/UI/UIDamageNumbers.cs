@@ -51,15 +51,24 @@ public class UIDamageNumbers : MonoBehaviour
             return;
         }
 
-        Vector2 newPosition = mainCam.WorldToScreenPoint(moveInfo.moveTarget.transform.position);
-        TextMeshProUGUI newCombatInfo = Instantiate(infoTextPrefab, newPosition, Quaternion.identity, transform).GetComponent<TextMeshProUGUI>();
+        Vector2 newPosition = moveInfo.moveTarget.transform.position;
+        TextMeshProUGUI newCombatInfo = Instantiate(infoTextPrefab, newPosition, Quaternion.identity, moveInfo.moveTarget.transform).GetComponent<TextMeshProUGUI>();
+
         if (moveInfo.healthChange > 0)
             newCombatInfo.text = $"+{moveInfo.healthChange}";
         else
             newCombatInfo.text = moveInfo.healthChange.ToString();
 
+        if (moveInfo.moveTarget.layer == 10 || moveInfo.moveTarget.layer == 11)
+        {
+            newCombatInfo.color = GlobalVarsHolder.Instance.vars.friendlyCombatTextColour;
+        }
+        else if (moveInfo.moveTarget.layer == 12)
+        {
+            newCombatInfo.color = GlobalVarsHolder.Instance.vars.enemyCombatTextColour;
+        }
 
-        LeanTween.moveLocalY(newCombatInfo.gameObject, newCombatInfo.rectTransform.localPosition.y + 50f, 0.45f).setEase(LeanTweenType.easeInOutSine)
+        LeanTween.moveY(newCombatInfo.gameObject, newCombatInfo.rectTransform.position.y + 0.7f, 0.55f).setEase(LeanTweenType.easeInOutSine)
             .setOnComplete(() =>
             {
                 Destroy(newCombatInfo.gameObject);

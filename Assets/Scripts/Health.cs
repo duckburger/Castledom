@@ -27,6 +27,8 @@ public class Health : MonoBehaviour
         currentHealth += amount;
         CombatMoveInfo moveInfo = new CombatMoveInfo(amount, gameObject);
         onHealthAdjusted?.RaiseWithData(moveInfo);
+        if (gameObject.layer == 10)
+            CameraControls.Instance?.ScreenShake();
         // TODO: AdjustHealthBar and/or appearance
         if (currentHealth <= 0)
         {

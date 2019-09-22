@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5898834d644e19f42a4aa7830767b66d, type: 3}
   m_Name: GlobalVars
   m_EditorClassIdentifier: 
-  halfDamagedColor: {r: 1, g: 1, b: 0.524, a: 1}
-  fullDamagedColor: {r: 1, g: 0, b: 0.056, a: 1}
+  halfDamagedColour: {r: 0.8952992, g: 0.8962264, b: 0.16487186, a: 1}
+  fullDamagedColour: {r: 0.8396226, g: 0.16090809, b: 0.1544589, a: 1}
+  enemyCombatTextColour: {r: 0.734, g: 0, b: 0, a: 1}
+  friendlyCombatTextColour: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}

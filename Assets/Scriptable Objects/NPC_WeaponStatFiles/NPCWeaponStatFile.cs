@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="Weapon Stat File", menuName ="Knight Stuff/NPC Weapon Stat File")]
-public class NPCWeaponStatFile : ScriptableObject
+public class NPCWeaponStatFile : ExtendedScriptableObject
 {
     public float baseDmg;
     public float armoredDmg;

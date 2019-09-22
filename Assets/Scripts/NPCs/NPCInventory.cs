@@ -5,4 +5,5 @@ using UnityEngine;
 public class NPCInventory : MonoBehaviour
 {
     public NPCWeaponStatFile npcWeapon;
+    public NPCLootTable npcLootTable;
 }

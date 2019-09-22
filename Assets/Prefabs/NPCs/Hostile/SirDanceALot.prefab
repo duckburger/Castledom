@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 794496294}
   - component: {fileID: 794496295}
   - component: {fileID: 794496296}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: NPCAttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794496293}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 1055663654}
   - component: {fileID: 879201020682937764}
   - component: {fileID: 1055663666}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SirDanceALot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,6 +158,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatRange: 1
+  runSpeed: 4
+  walkSpeed: 1.8
+  stamina: 100
+  maxStamina: 100
+  staminaRecoverySpeed: 10
+  sprintStaminaDepletion: 10
+  isRunning: 0
 --- !u!114 &4000932799846560615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,6 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcWeapon: {fileID: 11400000, guid: 427f322ffcb640a4799d8686112e723a, type: 2}
+  npcLootTable: {fileID: 11400000, guid: 3805f550902357f49a3ae9496cd6de85, type: 2}
 --- !u!1 &4000932799949694375
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +451,7 @@ GameObject:
   - component: {fileID: 4000932799949694360}
   - component: {fileID: 4000932799949694361}
   - component: {fileID: 4000932799949694362}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -537,7 +545,7 @@ GameObject:
   - component: {fileID: 4000932800891247708}
   - component: {fileID: 4000932800891247709}
   - component: {fileID: 4000932800891247710}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -633,7 +641,7 @@ GameObject:
   - component: {fileID: 4000932801588046360}
   - component: {fileID: 4000932801588046361}
   - component: {fileID: 4000932801588046362}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -691,7 +699,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -6145184685925821131, guid: 68aec8a319615be439071fe120dc994c,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

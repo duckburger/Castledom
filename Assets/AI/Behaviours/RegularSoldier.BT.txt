@@ -12,7 +12,21 @@ tree("Combat")
 	while inCombat
 		fallback
 			while WithinCombatRange
-				AttackTarget				
-			ChaseCombatTarget
+				parallel
+					AttackTarget	
+					RestoreStamina
+			while EnoughStaminaToRun
+				parallel
+					SpeedUpToRun
+					ChaseCombatTarget
+					DepleteStamina
+			while recoveringStamina
+				sequence
+					repeat
+						parallel
+							SlowDownToWalk
+							RestoreStamina
+							ChaseCombatTarget
+			
 		
 	

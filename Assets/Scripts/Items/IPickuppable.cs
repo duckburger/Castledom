@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IPickuppable
 {
+    AudioClip PickupSound();
     object GetPickuppableObject();
+    bool AutoPickupped();
 }

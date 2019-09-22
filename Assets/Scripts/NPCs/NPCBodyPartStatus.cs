@@ -24,7 +24,7 @@ public class NPCBodyPartStatus : MonoBehaviour
     {
         if (spriteRenderer)
         {
-            spriteRenderer.color = GlobalVarsHolder.Instance.vars.fullDamagedColor;
+            spriteRenderer.color = GlobalVarsHolder.Instance.vars.fullDamagedColour;
         }
     }
 
@@ -32,7 +32,7 @@ public class NPCBodyPartStatus : MonoBehaviour
     {
         if (spriteRenderer)
         {
-            spriteRenderer.color = GlobalVarsHolder.Instance.vars.halfDamagedColor;
+            spriteRenderer.color = GlobalVarsHolder.Instance.vars.halfDamagedColour;
         }
     }
 

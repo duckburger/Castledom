@@ -6,7 +6,6 @@ public class UIObjectivePointer : MonoBehaviour
 {
     [SerializeField] Transform arrow;
 
-
     [SerializeField] Transform currentObjective;
     Camera mainCam;
     Vector2 objectiveScreenPosition;
@@ -62,8 +61,8 @@ public class UIObjectivePointer : MonoBehaviour
     void UpdateArrowPosition()
     {
         toObjective = objectiveScreenPosition - (Vector2)mainCam.transform.position;
-        calculatedArrowPosition = new Vector2(Mathf.Clamp(toObjective.x, 100, Screen.width - 100), Mathf.Clamp(toObjective.y, 100, Screen.height - 100));
-        arrow.position = Vector2.Lerp(arrow.position, calculatedArrowPosition, Time.deltaTime * 5f);
+        calculatedArrowPosition = new Vector2(Mathf.Clamp(toObjective.x, Screen.width / 10f, Screen.width - 100), Mathf.Clamp(toObjective.y, Screen.height / 10f, Screen.height - 100));
+        arrow.position = Vector2.Lerp(arrow.position, calculatedArrowPosition, Time.deltaTime * 8f);
         arrow.transform.up = toObjective;
     }
 
