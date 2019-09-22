@@ -53,17 +53,19 @@ public class UIMoneyText : MonoBehaviour
     {
         animating = true;
         GameObject spawnedCoin = Instantiate(animatedMoneyIcon.gameObject, animatedMoneyIcon.position, Quaternion.identity, transform);
+
         changeText.transform.position = new Vector3(changeText.transform.position.x, spawnedCoin.transform.position.y, 0);
         LeanTween.alphaCanvas(changeTextCG, 1, 0.1f)
             .setOnComplete(() => 
             {
-                LeanTween.alphaCanvas(changeTextCG, 0, 0.35f).setDelay(0.2f)
+                LeanTween.alphaCanvas(changeTextCG, 0, 0.45f).setDelay(0.63f)
                     .setOnComplete(() => 
                     {
                         animating = false;
                     });
             });
-        LeanTween.move(changeText.gameObject, new Vector3(changeText.transform.position.x, coinIcon.position.y, 0), 0.28f).setEase(LeanTweenType.easeInOutBounce); ;        
+        LeanTween.move(changeText.gameObject, new Vector3(changeText.transform.position.x, coinIcon.position.y, 0), 0.45f).setEase(LeanTweenType.easeOutBounce); ;
+
         spawnedCoin.transform.SetAsFirstSibling();
         spawnedCoin.SetActive(true);
         LeanTween.move(spawnedCoin, coinIcon, 0.28f).setEase(LeanTweenType.easeInOutBounce)
