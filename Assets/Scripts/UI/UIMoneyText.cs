@@ -6,10 +6,20 @@ using TMPro;
 public class UIMoneyText : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI changeText;
     [SerializeField] RectTransform coinIcon;
     [SerializeField] RectTransform animatedMoneyIcon;
 
-    public void UpdateAmount(float newAmount)
+    CanvasGroup changeTextCG;
+    bool animating = false;
+    float lastAdjustment = 0;
+
+    private void Start()
+    {
+        changeTextCG = changeText.GetComponent<CanvasGroup>();
+    }
+
+    public void UpdateAmount(float adjustmentAmount)
     {
         if (!text)
         {
@@ -18,19 +28,42 @@ public class UIMoneyText : MonoBehaviour
         }
 
         Debug.Log("Updating money text");
-        float currentAmount;
-        float.TryParse(text.text, out currentAmount);
-        LeanTween.value(currentAmount, newAmount, 0.5f).setEase(LeanTweenType.easeOutSine)
+        float currentAmount = GlobalVarsHolder.Instance.vars.playerGoldCoins;
+        LeanTween.value(currentAmount - adjustmentAmount, currentAmount, 0.5f).setEase(LeanTweenType.easeOutSine)
             .setOnUpdate((float val) => 
             {
                 text.text = val.ToString("F1");
             });
-        AnimateCoin();
+        changeText.text = $"+{adjustmentAmount}";
+        
+        if (!animating)
+        {
+            lastAdjustment = adjustmentAmount;
+            AnimateCoin();
+        }            
+        else
+        {
+            lastAdjustment += adjustmentAmount;
+            changeText.text = $"+{lastAdjustment}";
+        }
+        
     }
 
     public void AnimateCoin()
     {
+        animating = true;
         GameObject spawnedCoin = Instantiate(animatedMoneyIcon.gameObject, animatedMoneyIcon.position, Quaternion.identity, transform);
+        changeText.transform.position = new Vector3(changeText.transform.position.x, spawnedCoin.transform.position.y, 0);
+        LeanTween.alphaCanvas(changeTextCG, 1, 0.1f)
+            .setOnComplete(() => 
+            {
+                LeanTween.alphaCanvas(changeTextCG, 0, 0.35f).setDelay(0.2f)
+                    .setOnComplete(() => 
+                    {
+                        animating = false;
+                    });
+            });
+        LeanTween.move(changeText.gameObject, new Vector3(changeText.transform.position.x, coinIcon.position.y, 0), 0.28f).setEase(LeanTweenType.easeInOutBounce); ;        
         spawnedCoin.transform.SetAsFirstSibling();
         spawnedCoin.SetActive(true);
         LeanTween.move(spawnedCoin, coinIcon, 0.28f).setEase(LeanTweenType.easeInOutBounce)
@@ -46,5 +79,6 @@ public class UIMoneyText : MonoBehaviour
                Destroy(spawnedCoin);
                LeanTween.scale(coinIcon.gameObject, Vector2.one, 0.33f).setEase(LeanTweenType.easeInOutBounce);
             });
+
     }
 }

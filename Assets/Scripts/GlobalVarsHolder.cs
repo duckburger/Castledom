@@ -26,6 +26,6 @@ public class GlobalVarsHolder : MonoBehaviour
     {
         vars.playerGoldCoins += amount;
         vars.playerGoldCoins = Mathf.Clamp(vars.playerGoldCoins, 0, long.MaxValue);
-        onPlayerMoneyUpdated?.RaiseWithData(vars.playerGoldCoins);
+        onPlayerMoneyUpdated?.RaiseWithData(amount);
     }
 }

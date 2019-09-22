@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="NPC Loot Table", menuName ="Knight Stuff/NPC Loot Table")]
 public class NPCLootTable : ExtendedScriptableObject
 {
+    public GameObject coinsItemPrefab;
 
     #region Money Drops
 
