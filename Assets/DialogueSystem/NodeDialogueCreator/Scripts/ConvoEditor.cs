@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
+
 [CustomEditor(typeof(ConversationAsset))]
 public class ConvoEditor : Editor
 {
@@ -46,3 +48,5 @@ public class ConvoEditor : Editor
         AssetDatabase.Refresh();
     }
 }
+
+#endif

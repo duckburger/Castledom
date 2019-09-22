@@ -64,7 +64,11 @@ public class DialogueUIDisplay : MonoBehaviour
             mainCG.blocksRaycasts = true;
             mainCG.interactable = true;
         }
-        LeanTween.moveLocalY(mainDialogueBox.gameObject, originalBoxPosition.y, 0.23f).setEase(LeanTweenType.easeOutSine);
+        LeanTween.value(mainDialogueBox.anchoredPosition.y, 0, 0.23f).setEase(LeanTweenType.easeOutSine)
+            .setOnUpdate((float val) => 
+            {
+                mainDialogueBox.anchoredPosition = new Vector2(mainDialogueBox.anchoredPosition.x, val);
+            });
     }
 
     public void AnimateOut()
@@ -77,8 +81,12 @@ public class DialogueUIDisplay : MonoBehaviour
 
         onScreen = false;
 
-        LeanTween.moveLocalY(mainDialogueBox.gameObject, originalBoxPosition.y - Screen.height / 2, 0.15f).setEase(LeanTweenType.easeInSine)
-            .setOnComplete(() => 
+        LeanTween.value(mainDialogueBox.anchoredPosition.y, mainDialogueBox.anchoredPosition.y - Screen.height / 2, 0.15f).setEase(LeanTweenType.easeInSine)
+            .setOnUpdate((float val) => 
+            {
+                mainDialogueBox.anchoredPosition = new Vector2(mainDialogueBox.anchoredPosition.x, val);
+            })
+            .setOnComplete(() =>
             {
                 if (mainCG)
                 {
@@ -86,7 +94,7 @@ public class DialogueUIDisplay : MonoBehaviour
                     mainCG.blocksRaycasts = false;
                     mainCG.interactable = false;
                 }
-            });
+            });        
     }
 
     void AnimateRepliesIn()

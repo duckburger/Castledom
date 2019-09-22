@@ -26,7 +26,9 @@ public class NPCDialogueNode : IDialogueNode, ISerializationCallbackReceiver
     string pathToConvoAsset;
     string fullPathToAsset;
 
-#endregion
+    #endregion
+
+#if UNITY_EDITOR
 
     public NPCDialogueNode(Rect rect, string title, ConversationAsset convo)
     {
@@ -39,7 +41,12 @@ public class NPCDialogueNode : IDialogueNode, ISerializationCallbackReceiver
             id = UnityEngine.Random.Range(1, Int32.MaxValue);        
     }
 
+#endif
+
     public DialogueCharacter speaker;
+
+#if UNITY_EDITOR
+
     public void DrawWindow()
     {
         speaker = (DialogueCharacter) EditorGUILayout.ObjectField(speaker, typeof(DialogueCharacter), false);
@@ -109,7 +116,7 @@ public class NPCDialogueNode : IDialogueNode, ISerializationCallbackReceiver
         }                
     }
 
-
+#endif
     public void Drag(Vector2 dragDelta)
     {
         windowRect.position += dragDelta;

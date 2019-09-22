@@ -6,8 +6,11 @@ using System;
 public class PlayerAttackCollider : AttackCollider
 {
     [SerializeField] KnightInventory playerInventory;
+    [SerializeField] float minTimeBetweenAttacks = 0.15f;
 
+    bool canRegisterAttack = true;
     KnightSounds knightSounds;
+
 
     private void Start()
     {
@@ -30,6 +33,9 @@ public class PlayerAttackCollider : AttackCollider
             return;
         }
 
+        if (!canRegisterAttack)
+            return;
+
         Health hitEnemyHealth = collider.GetComponent<Health>();
         if (hitEnemyHealth != null) //TODO: Add friend/foe for check
         {
@@ -48,6 +54,15 @@ public class PlayerAttackCollider : AttackCollider
                 dmg *= 2f;
             }
             hitEnemyHealth.AdjustHealth(-dmg);
+            canRegisterAttack = false;
+            StartCoroutine(TimerForAttackRegistration());
         }
+    }
+
+
+    IEnumerator TimerForAttackRegistration()
+    {
+        yield return new WaitForSeconds(minTimeBetweenAttacks);
+        canRegisterAttack = true;
     }
 }
