@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 879201020682937764}
   - component: {fileID: 1055663666}
   m_Layer: 12
-  m_Name: SirDanceALot
+  m_Name: RegSoldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

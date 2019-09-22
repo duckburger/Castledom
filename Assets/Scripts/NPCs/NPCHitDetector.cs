@@ -12,7 +12,11 @@ public class NPCHitDetector : MonoBehaviour
     Transform lastHitBy;
     Vector2 direction;
 
-    public Transform LastHitBy => lastHitBy;
+    public Transform LastHitBy
+    {
+        get => lastHitBy;
+        set => this.lastHitBy = value;
+    }
 
     private void Start()
     {

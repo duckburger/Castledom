@@ -14,7 +14,7 @@ public class NPCLootTable : ExtendedScriptableObject
 
     public float GetMoneyDrop()
     {
-        return Random.Range(minCoinDrop, maxCoinDrop);
+        return Mathf.Round(Random.Range(minCoinDrop, maxCoinDrop));
     }
 
     #endregion

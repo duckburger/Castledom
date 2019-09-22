@@ -53,7 +53,14 @@ public class PlayerAttackCollider : AttackCollider
                 // Player is behind the target, add extra damage
                 dmg *= 2f;
             }
+            NPCHitDetector hitDetector = collider.GetComponent<NPCHitDetector>();
+            if (hitDetector)
+            {
+                hitDetector.LastHitBy = transform;
+            }
+
             hitEnemyHealth.AdjustHealth(-dmg);
+           
             canRegisterAttack = false;
             StartCoroutine(TimerForAttackRegistration());
         }

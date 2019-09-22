@@ -54,11 +54,11 @@ public class UIDamageNumbers : MonoBehaviour
         Vector2 newPosition = Vector2.zero;
         if (moveInfo.moveTarget.layer == 10 || moveInfo.moveTarget.layer == 11)
         {
-            newPosition = (Vector2)moveInfo.moveTarget.transform.position + Vector2.right / 2;
+            newPosition = (Vector2)moveInfo.moveTarget.transform.position - Vector2.right / 2;
         }
         else if (moveInfo.moveTarget.layer == 12)
         {
-            newPosition = (Vector2)moveInfo.moveTarget.transform.position - Vector2.right / 2;
+            newPosition = (Vector2)moveInfo.moveTarget.transform.position + Vector2.right / 2;
         }
 
 

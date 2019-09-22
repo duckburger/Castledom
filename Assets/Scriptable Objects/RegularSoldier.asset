@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c8a76b12018ee4490a232e66d225f9, type: 3}
   m_Name: RegularSoldier
   m_EditorClassIdentifier: 
+  coinsItemPrefab: {fileID: 8189048556243974679, guid: c3fbf3b5b872118488b39ecee80afe73,
+    type: 3}
   minCoinDrop: 2
   maxCoinDrop: 5

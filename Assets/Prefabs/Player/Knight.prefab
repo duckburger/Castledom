@@ -142,7 +142,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.6261899
+  m_Radius: 0.2365768
 --- !u!1 &3378525050749690253
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,3 +827,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isOn: 1
   playerInventory: {fileID: 8527860511542276870}
+  minTimeBetweenAttacks: 0.15

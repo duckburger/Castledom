@@ -25,8 +25,8 @@ public class NPCInventory : MonoBehaviour
 
     void DropMoney()
     {
-        float amountToDrop = npcLootTable.GetMoneyDrop();
-
+        Coins droppedCoins = Instantiate(npcLootTable.coinsItemPrefab, transform.position, Quaternion.identity, null).GetComponent<Coins>();
+        droppedCoins.amount = npcLootTable.GetMoneyDrop();
     }
 
     void DropItems()
