@@ -328,5 +328,5 @@ MonoBehaviour:
   zoomSpeed: 7
   lerpSpeed: 7
   defaultZoom: 3.4
-  minZoom: 20
+  minZoom: 8.3
   maxZoom: 1.5

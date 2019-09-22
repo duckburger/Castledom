@@ -8,12 +8,21 @@ public class NPCAnimator : MonoBehaviour
     Animator animator;
     PolyNavAgent navAgent;
     NPCAttackCollider npcAttackCollider;
+    NPCRotator npcRotator;
+    ParticleSystem sprintParticles;
+    NPCAI npcAI;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         navAgent = GetComponent<PolyNavAgent>();
         npcAttackCollider = GetComponentInChildren<NPCAttackCollider>(true);
+        npcRotator = GetComponent<NPCRotator>();
+        if (npcRotator)
+        {
+            sprintParticles = npcRotator.body.GetComponent<ParticleSystem>();
+        }
+        npcAI = GetComponent<NPCAI>();
     }
 
     private void Update()
@@ -21,10 +30,16 @@ public class NPCAnimator : MonoBehaviour
         if (navAgent.hasPath)
         {
             animator.SetBool("isWalking", true);
+            if (npcAI.IsRunning)
+                sprintParticles?.Play();
+            else
+                sprintParticles?.Clear();
         }
         else
         {
             animator.SetBool("isWalking", false);
+            sprintParticles?.Pause();
+            sprintParticles?.Clear();                   
         }
     }
 

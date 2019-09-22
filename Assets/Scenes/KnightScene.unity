@@ -5361,7 +5361,7 @@ PrefabInstance:
     - target: {fileID: 4000932799846560609, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
         type: 3}
       propertyPath: m_Name
-      value: SirDanceALot
+      value: RegularSolider
       objectReference: {fileID: 0}
     - target: {fileID: 4000932799846560613, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
         type: 3}
@@ -5497,10 +5497,5 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1900744987}
-    - target: {fileID: 6213838465496999327, guid: 49259a63b34840b4a98100c05d4bad18,
-        type: 3}
-      propertyPath: minZoom
-      value: 8.3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49259a63b34840b4a98100c05d4bad18, type: 3}

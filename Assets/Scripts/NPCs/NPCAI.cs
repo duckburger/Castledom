@@ -16,19 +16,17 @@ public class NPCAI : MonoBehaviour
     [SerializeField] float sprintStaminaDepletion = 0.5f;
     [SerializeField] bool isRunning = false;
 
-
     PolyNavAgent polynavAgent;
     Transform currentTarget;
     Health healthController;
     NPCHitDetector hitDetector;
     NPCAnimator npcAnimator;
-
-
-    [Task]
-    bool inCombat = false;
-    [Task]
-    bool recoveringStamina = false;
     Health combatTarget = null;
+
+    [Task] bool inCombat = false;
+    [Task] bool recoveringStamina = false;
+
+    public bool IsRunning => isRunning;
 
     public Transform CombatTarget
     {

@@ -641,7 +641,7 @@ ParticleSystem:
   m_GameObject: {fileID: 4000932800891247707}
   serializedVersion: 6
   lengthInSec: 1
-  simulationSpeed: 0.5
+  simulationSpeed: 2
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -715,7 +715,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -768,7 +768,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1200,7 +1200,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 7
+    maxNumParticles: 2
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -1265,8 +1265,8 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 0.5
     donutRadius: 0.2
-    m_Position: {x: 0, y: -0.16, z: 0}
-    m_Rotation: {x: 0, y: 0, z: 0}
+    m_Position: {x: 0, y: 0.1, z: 0}
+    m_Rotation: {x: 0, y: 0, z: 180}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -1465,7 +1465,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 2
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1961,7 +1961,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 0
+    enabled: 1
     mode: 0
     timeMode: 0
     fps: 30
@@ -2072,8 +2072,8 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 1
-    tilesY: 1
+    tilesX: 4
+    tilesY: 3
     animationType: 0
     rowIndex: 0
     cycles: 1
