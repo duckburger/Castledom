@@ -32,10 +32,6 @@ public class UIAnnouncementBoardController : MonoBehaviour
     Coroutine messageTimer;
     float currentOnScreenTimer = 0;
 
-    private void Start()
-    {
-        AnimateOut();
-    }    
 
     public void AnimateIn()
     {

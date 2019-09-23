@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class UIController : MonoBehaviour
     [SerializeField] UIObjectiveTextDisplay objectiveTextDisplay;
     [SerializeField] AudioSource uiAudioSource;
     [SerializeField] UIMoneyText moneyDisplayController;
+    [SerializeField] TextMeshProUGUI playerNameText;
+
     Camera mainCam;
 
     private void Start()
@@ -137,6 +140,21 @@ public class UIController : MonoBehaviour
         uiAudioSource.clip = clip;
         uiAudioSource.Play();
         
+    }
+
+    #endregion
+
+    #region Player Name
+
+    public void UpdatePlayerName(string name)
+    {
+        if (!playerNameText)
+        {
+            Debug.LogError("No player name text attached to the UIController");
+            return;
+        }
+
+        playerNameText.text = name;
     }
 
     #endregion

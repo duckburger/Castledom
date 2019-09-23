@@ -14,7 +14,7 @@ public class GlobalPlayerController : MonoBehaviour
     KnightInteractionDetector interactionDetector;
     CircleCollider2D interactionCollider;
 
-    private void Start()
+    private void Awake()
     {
         if (player)
         {
@@ -41,6 +41,11 @@ public class GlobalPlayerController : MonoBehaviour
 
     public void TurnOffPlayerControls()
     {
+        if (!player)
+        {
+            Debug.LogError("Can't find player component in the scene");
+            return;
+        }
         movement.enabled = false;
         rotation.enabled = false;
         sounds.enabled = false;

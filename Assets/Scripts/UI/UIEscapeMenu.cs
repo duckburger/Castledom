@@ -5,11 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class UIEscapeMenu : MonoBehaviour
 {
+    [SerializeField] UISaveLoadScreen saveLoadMenu;
+    [Space]
+    [SerializeField] ScriptableEvent onGameplayBlocked;
+
     CanvasGroup cg;
+    CurrentGameData currentGameData;
 
     private void Start()
     {
         cg = GetComponent<CanvasGroup>();
+
+        currentGameData = FindObjectOfType<CurrentGameData>();
+        if (currentGameData == null)
+        {
+            // Generate a game data
+            currentGameData = new GameObject("CurrentGameData", typeof(CurrentGameData)).GetComponent<CurrentGameData>();
+            AnimateIn();
+            saveLoadMenu.AnimateIn();
+            saveLoadMenu.DisableBackButton();
+            onGameplayBlocked?.Activate();
+        }
     }
 
     private void Update()
