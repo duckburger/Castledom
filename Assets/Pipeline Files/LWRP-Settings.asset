@@ -15,9 +15,9 @@ MonoBehaviour:
   k_AssetVersion: 5
   k_AssetPreviousVersion: 5
   m_RendererType: 0
-  m_RendererData: {fileID: 11400000, guid: 907a4be07b8ed5442adfac236c2046c6, type: 2}
+  m_RendererData: {fileID: 0}
   m_RendererDataList:
-  - {fileID: 11400000, guid: 907a4be07b8ed5442adfac236c2046c6, type: 2}
+  - {fileID: 11400000, guid: 9a2a17ae076682a46b028624ac630d0d, type: 2}
   m_DefaultRendererIndex: 0
   m_RequireDepthTexture: 0
   m_RequireOpaqueTexture: 0
@@ -32,13 +32,13 @@ MonoBehaviour:
   m_AdditionalLightsPerObjectLimit: 4
   m_AdditionalLightShadowsSupported: 1
   m_AdditionalLightsShadowmapResolution: 512
-  m_ShadowDistance: 50
+  m_ShadowDistance: 400
   m_ShadowCascades: 0
   m_Cascade2Split: 0.25
   m_Cascade4Split: {x: 0.067, y: 0.2, z: 0.467}
   m_ShadowDepthBias: 1
   m_ShadowNormalBias: 1
-  m_SoftShadowsSupported: 0
+  m_SoftShadowsSupported: 1
   m_UseSRPBatcher: 1
   m_SupportsDynamicBatching: 0
   m_MixedLightingSupported: 1
