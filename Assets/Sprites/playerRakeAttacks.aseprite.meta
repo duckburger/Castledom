@@ -24,5 +24,8 @@ ScriptedImporter:
   - animationName: rakePreSwing1
     loopTime: 1
     about: "Animation Type:\tForward\r\nAnimation:\tFrom: 0; To: 5"
-  atlas: {fileID: -8328923581568760697, guid: ec275855dd514254fb5147764777daa4, type: 3}
+  - animationName: rakeSwing1
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 6; To: 15"
+  atlas: {instanceID: 0}
   importType: 0

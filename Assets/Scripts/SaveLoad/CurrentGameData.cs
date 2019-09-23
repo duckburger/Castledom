@@ -39,6 +39,10 @@ public class CurrentGameData : MonoBehaviour
     {
         if (currentData != null && !SaveLoadSystem.CheckIfSaveFileExists(name))
         {
+            if (currentData.playerData == null)
+            {
+                currentData.playerData = new SaveLoadSystem.PlayerSaveData();
+            }
             currentData.playerData.playerName = name;
             SaveLoadSystem.SaveData(currentData);
         }

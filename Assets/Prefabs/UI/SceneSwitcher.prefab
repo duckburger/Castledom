@@ -43,3 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e323c249dd2b2204291f8a642ec4ba76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onSwitchedScenes: {fileID: 11400000, guid: 35d5c056fe9269f44bb5e91f311b84e5, type: 2}
+  loadingBarPrefab: {fileID: 8086099617528911419, guid: a3ff4ce280b7635498b57ee895d4e23f,
+    type: 3}
