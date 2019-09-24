@@ -5,10 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
+    public static SceneSwitcher Instance;
+
     [SerializeField] ScriptableEvent onSwitchedScenes;
     [SerializeField] GameObject loadingBarPrefab;
 
     UILoadingScreen currentLoadingScreen;
+
+    private void Awake()
+    {
+        if (!Instance)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -29,21 +43,18 @@ public class SceneSwitcher : MonoBehaviour
     {
         currentLoadingScreen = Instantiate(loadingBarPrefab).GetComponent<UILoadingScreen>();
         AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
-        loadingOperation.allowSceneActivation = false;
                 
-
         while (!loadingOperation.isDone)
         {
             currentLoadingScreen?.UpdateLoadingValue(loadingOperation.progress);
             if (loadingOperation.progress >= 0.9f)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    loadingOperation.allowSceneActivation = true;
+                currentLoadingScreen?.UpdateLoadingValue(1f);
+                loadingOperation.allowSceneActivation = true;
+                if (currentLoadingScreen)
                     Destroy(currentLoadingScreen.gameObject);
-                    currentLoadingScreen = null;
-                    onSwitchedScenes?.Raise();
-                }
+                currentLoadingScreen = null;
+                LeanTween.delayedCall(0.1f, () => onSwitchedScenes?.Raise());               
             }           
             yield return null;
         }

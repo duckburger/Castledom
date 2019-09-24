@@ -11,6 +11,8 @@ public class Health : MonoBehaviour
     [SerializeField] float maxHealth = 100f;
     [Space]
     public bool armored = false;
+    [Space(10)]
+    [SerializeField] NPCStatusIcon statusIcon;
 
     public Action onDownToFirstHealthThreshold;
     public Action onDownToSecondHealthThreshold;
@@ -22,10 +24,14 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public void AdjustHealth(float amount)
+    public void AdjustHealth(float amount, bool stunned = false)
     {
         currentHealth += amount;
-        CombatMoveInfo moveInfo = new CombatMoveInfo(amount, gameObject);
+        if (stunned)
+        {
+            GetStunned();
+        }
+        CombatMoveInfo moveInfo = new CombatMoveInfo(amount, gameObject, stunned);
         onHealthAdjusted?.RaiseWithData(moveInfo);
         if (gameObject.layer == 10)
             CameraControls.Instance?.ScreenShake();
@@ -45,6 +51,12 @@ public class Health : MonoBehaviour
 
         if (currentHealth <= maxHealth / 3)
             onDownToSecondHealthThreshold?.Invoke();
+    }
+
+    public void GetStunned()
+    {
+        statusIcon?.ShowStunnedStatus();
+        // TODO: Write this + add stun duration and stun probability to this somehow
     }
 
 }

@@ -74,7 +74,8 @@ public class UIEscapeMenu : MonoBehaviour
         SceneSwitcher switcher = FindObjectOfType<SceneSwitcher>();
         if (switcher)
         {
-            switcher.SwitchToScene(0);
+            //switcher.SwitchToScene(0);
+            switcher.SwitchToSceneAsync(0);
         }
         else
         {

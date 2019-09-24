@@ -70,7 +70,8 @@ public class UINameGenerator : MonoBehaviour
         if (ValidateString(nameInputField.text))
         {
             CurrentGameData.Instance?.AssignNewCharacterName(nameInputField.text);
-            sceneSwitcher?.SwitchToScene(1); // Assuming main scene is at 1
+            //sceneSwitcher?.SwitchToScene(1); // Assuming main scene is at 1
+            sceneSwitcher?.SwitchToSceneAsync(1);
         }
         else
         {

@@ -71,8 +71,20 @@ public static class SaveLoadSystem
         FileStream stream = new FileStream(filePath, FileMode.Open);
 
         KnightGameData retrievedData = bFormatter.Deserialize(stream) as KnightGameData;
-
+        stream.Close();
         return retrievedData;
+    }
+
+    #endregion
+
+    #region Deleting Data
+
+    public static void DeleteCharacterData(string characterName)
+    {
+        if (CheckIfSaveFileExists(characterName))
+        {
+            File.Delete(Path.Combine(Application.persistentDataPath, $"SaveFiles/{characterName}.road"));
+        }
     }
 
     #endregion

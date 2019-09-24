@@ -14,6 +14,8 @@ public class KnightInventory : MonoBehaviour
     [SerializeField] WeaponStatFile equippedWeapon;
     [SerializeField] WeaponStatFile defaultWeapon;
     [Space]
+    [SerializeField] WeaponStatFile kickWeapon;
+    [Space]
     [SerializeField] float weaponThrowStrength = 12f;
 
     KnightAttackController attackController;
@@ -24,6 +26,7 @@ public class KnightInventory : MonoBehaviour
 
 
     public WeaponStatFile EquippedWeapon => equippedWeapon;
+    public WeaponStatFile KickWeapon => kickWeapon;
 
     private void Start()
     {

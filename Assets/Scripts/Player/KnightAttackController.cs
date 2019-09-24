@@ -6,9 +6,12 @@ public class KnightAttackController : MonoBehaviour
 {
     [SerializeField] KnightAttack availableAttack;
     [Space(10)]
-    [SerializeField] PlayerAttackCollider attackCollier;
+    [SerializeField] PlayerAttackCollider attackCollider;
     [SerializeField] GameObject attackDirArrow;
     [SerializeField] bool showAttackDirection = true;
+
+    KnightMovement knightMovement;
+    KnightRotation knightRotator;
     Animator animator;
     AudioClip currentPreSwingAudioClip;
     AudioClip currentSwingAudioClip;
@@ -21,6 +24,8 @@ public class KnightAttackController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        knightRotator = GetComponent<KnightRotation>();
+        knightMovement = GetComponent<KnightMovement>();
         DeActivateAttackCollider();
     }
 
@@ -55,6 +60,18 @@ public class KnightAttackController : MonoBehaviour
             PreSwing();
         if (Input.GetMouseButtonUp(0))
             Swing();
+        if (Input.GetKeyDown(KeyCode.Q))
+            PreKick();
+        if (Input.GetKey(KeyCode.Q))
+        {
+            knightRotator?.RotateLegsTowardsMouse();
+            knightMovement?.StopMovement(true);
+        }
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            Kick();
+            knightMovement?.StopMovement(false);
+        }
     }
 
     void PreSwing()
@@ -73,14 +90,39 @@ public class KnightAttackController : MonoBehaviour
             attackDirArrow.SetActive(false);
     }
 
+    void PreKick()
+    {
+        animator?.SetBool("preKick", true);
+    }
+    
+    void Kick()
+    {
+        animator?.SetBool("preKick", false);
+    }
+
+    #region Activating / Deactivating
+
     public void ActivateAttackCollider()
     {
-        attackCollier?.EnableAttackCollider();
+        attackCollider?.EnableAttackCollider();
     }
 
     public void DeActivateAttackCollider()
     {
-        attackCollier?.DisableAttackCollider();
+        attackCollider?.DisableAttackCollider();
     }
+
+    public void ActivateColliderKickMode()
+    {
+        attackCollider?.EnableKickCollider();
+    }
+
+    public void DeActivateColliderKickMode()
+    {
+        attackCollider?.DisableKickCollider();
+    }
+
+
+    #endregion
 
 }

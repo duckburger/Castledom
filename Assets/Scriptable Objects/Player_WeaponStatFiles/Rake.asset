@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rake
   m_EditorClassIdentifier: 
   weaponName: Rake
-  baseDmg: 10
+  baseDmg: 12
   armoredDmg: 8
   uiIcon: {fileID: 3231215385400543592, guid: d40242c92fdaa7b4899c559e5a9c2355, type: 3}
   idleBodySprite: {fileID: 7176437739301930329, guid: 68aec8a319615be439071fe120dc994c,

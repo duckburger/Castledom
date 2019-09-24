@@ -52,4 +52,9 @@ public class CurrentGameData : MonoBehaviour
         }
     }
 
+    public void ClearCurrentData()
+    {
+        currentData = null;
+    }
+
 }

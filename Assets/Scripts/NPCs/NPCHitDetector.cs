@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Spawns the dead body and provides blood splat effects
 public class NPCHitDetector : MonoBehaviour
 {
 

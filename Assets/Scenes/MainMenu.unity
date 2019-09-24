@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -337,11 +338,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 738977050119757685, guid: fa0817042b83dea44915e716d5dc7812,
-        type: 3}
-      propertyPath: m_Name
-      value: SceneSwitcher
-      objectReference: {fileID: 0}
     - target: {fileID: 738977050119757683, guid: fa0817042b83dea44915e716d5dc7812,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -396,6 +392,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 738977050119757685, guid: fa0817042b83dea44915e716d5dc7812,
+        type: 3}
+      propertyPath: m_Name
+      value: SceneSwitcher
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa0817042b83dea44915e716d5dc7812, type: 3}
@@ -761,5 +762,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5103280605514292469, guid: 482846fff24b4c542a08363397526274,
+        type: 3}
+      propertyPath: sceneSwitcher
+      value: 
+      objectReference: {fileID: 2066419580}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 482846fff24b4c542a08363397526274, type: 3}

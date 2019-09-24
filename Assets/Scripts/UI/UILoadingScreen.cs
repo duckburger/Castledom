@@ -13,6 +13,7 @@ public class UILoadingScreen : MonoBehaviour
     {
         cg = GetComponent<CanvasGroup>();
         DontDestroyOnLoad(gameObject);
+        AnimateIn();
     }
 
 
@@ -26,7 +27,7 @@ public class UILoadingScreen : MonoBehaviour
         cg.interactable = true;
         cg.blocksRaycasts = true;
 
-        LeanTween.alphaCanvas(cg, 1, 0.23f);
+        LeanTween.alphaCanvas(cg, 1, 0.12f);
     }
 
     public void AnimateOut()

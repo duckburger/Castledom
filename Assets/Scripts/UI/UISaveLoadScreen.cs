@@ -7,6 +7,8 @@ using System;
 public class UISaveLoadScreen : MonoBehaviour
 {
     [SerializeField] Button[] saveLoadButtons;
+    [SerializeField] Button[] overwriteButtons;
+
     [SerializeField] UINameGenerator nameGenScreen;
     [SerializeField] SceneSwitcher sceneSwitcher;
     [SerializeField] GameObject backButton;
@@ -54,6 +56,12 @@ public class UISaveLoadScreen : MonoBehaviour
 
     void GenerateSaveLoadButtons()
     {
+        if (saveLoadButtons.Length == 0 || overwriteButtons.Length == 0)
+        {
+            Debug.LogError("Missing SaveLoad or Overwrite buttons on the UISaveLoadScreen");
+            return;
+        }
+
         SaveLoadSystem.KnightGameData[] retrievedData = SaveLoadSystem.RetrieveSaveFiles();
         
         for (int i = 0; i < retrievedData.Length; i++)
@@ -72,9 +80,22 @@ public class UISaveLoadScreen : MonoBehaviour
                     }
                     else
                     {
-                        CurrentGameData.Instance.AssignCurrentData(data);
-                        sceneSwitcher.SwitchToScene(1);
+                        CurrentGameData.Instance?.AssignCurrentData(data);
+                        sceneSwitcher?.SwitchToSceneAsync(1);
                     }
+                });
+
+                overwriteButtons[i].onClick.RemoveAllListeners();
+                overwriteButtons[i].onClick.AddListener(() => 
+                {
+                    // TODO: Add a modal to confirm
+                    saveLoadButtons[i].GetComponent<SaveLoadButton>().PopulateAsSave(i);
+                    SaveLoadSystem.DeleteCharacterData(data.playerData.playerName);
+                    CurrentGameData.Instance?.ClearCurrentData();
+                    SaveLoadSystem.KnightGameData newData = new SaveLoadSystem.KnightGameData();
+                    newData.timeSaved = DateTime.Now.ToString("O");
+                    CurrentGameData.Instance.AssignCurrentData(newData);
+                    nameGenScreen?.AnimateIn();
                 });
             }
             else
@@ -88,6 +109,7 @@ public class UISaveLoadScreen : MonoBehaviour
                     CurrentGameData.Instance.AssignCurrentData(newData);
                     nameGenScreen?.AnimateIn();
                 });
+                overwriteButtons[i].gameObject.SetActive(false);
             }
         }
     }

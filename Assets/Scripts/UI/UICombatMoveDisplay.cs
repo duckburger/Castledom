@@ -9,15 +9,17 @@ public class CombatMoveInfo
 {
     public float healthChange;
     public GameObject moveTarget;
+    public bool hasStun = false;
 
-    public CombatMoveInfo(float changeAmount, GameObject target)
+    public CombatMoveInfo(float changeAmount, GameObject target, bool stunned)
     {
         this.healthChange = changeAmount;
         this.moveTarget = target;
+        this.hasStun = false;
     }
 }
 
-public class UIDamageNumbers : MonoBehaviour
+public class UICombatMoveDisplay : MonoBehaviour
 {
     [SerializeField] GameObject infoTextPrefab;
 
@@ -60,7 +62,6 @@ public class UIDamageNumbers : MonoBehaviour
         {
             newPosition = (Vector2)moveInfo.moveTarget.transform.position + Vector2.right / 2;
         }
-
 
         TextMeshProUGUI newCombatInfo = Instantiate(infoTextPrefab, newPosition, Quaternion.identity, moveInfo.moveTarget.transform).GetComponent<TextMeshProUGUI>();
 

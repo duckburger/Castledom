@@ -68,6 +68,14 @@ public class KnightRotation : MonoBehaviour
         }
     }
 
+    public void RotateLegsTowardsMouse()
+    {
+        Vector2 toCursor = Input.mousePosition - mainCam.WorldToScreenPoint(knightBody.position);
+        toCursor.Normalize();
+        float toMouseAngle = (Mathf.Atan2(toCursor.y, toCursor.x) * Mathf.Rad2Deg) - 90f;
+        knightLegs.rotation = Quaternion.Slerp(knightLegs.rotation, Quaternion.Euler(new Vector3(0, 0, toMouseAngle + 180f)), Time.deltaTime * lerpSpeed);
+    }
+
     void AlignLegsWithBody()
     {        
         if (bodyToLegsAngle > 70f)

@@ -146,6 +146,15 @@ public class UIController : MonoBehaviour
 
     #region Player Name
 
+    public void GrabLocalPlayerName()
+    {
+        CurrentGameData gameDataHolder = FindObjectOfType<CurrentGameData>();
+        if (gameDataHolder && gameDataHolder.CurrentData.playerData != null)
+        {
+            UpdatePlayerName(gameDataHolder.CurrentData.playerData.playerName);
+        }
+    }
+
     public void UpdatePlayerName(string name)
     {
         if (!playerNameText)
@@ -155,6 +164,8 @@ public class UIController : MonoBehaviour
         }
 
         playerNameText.text = name;
+        if (!playerNameText.gameObject.activeSelf)
+            playerNameText.gameObject.SetActive(true);
     }
 
     #endregion

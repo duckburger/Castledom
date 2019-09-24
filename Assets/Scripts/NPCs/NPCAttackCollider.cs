@@ -19,12 +19,12 @@ public class NPCAttackCollider : AttackCollider
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        HandleCollision(other);
+        HandleRegularAttackCollision(other);
     }
 
-    public override void HandleCollision(Collider2D collider)
+    public override void HandleRegularAttackCollision(Collider2D collider)
     {
-        base.HandleCollision(collider);
+        base.HandleRegularAttackCollision(collider);
 
         if (!npcInventory)
         {

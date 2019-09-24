@@ -3840,6 +3840,7 @@ GameObject:
   - component: {fileID: 736763818}
   - component: {fileID: 736763819}
   - component: {fileID: 2013951668263959549}
+  - component: {fileID: 754808539}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -4291,6 +4292,48 @@ MonoBehaviour:
   deactivateWithDataResponse:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &754808539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3418839953796857794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f44479df30e3c6e47aa54c9a8be7b8a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackedEvent: {fileID: 11400000, guid: 35d5c056fe9269f44bb5e91f311b84e5, type: 2}
+  raiseResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3418839953796857797}
+        m_MethodName: GrabLocalPlayerName
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  raisedWithData:
+    m_PersistentCalls:
+      m_Calls: []
+  activateResponse:
+    m_PersistentCalls:
+      m_Calls: []
+  activateWithDataResponse:
+    m_PersistentCalls:
+      m_Calls: []
+  deactivateResponse:
+    m_PersistentCalls:
+      m_Calls: []
+  deactivateWithDataResponse:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3783259591106961750
 GameObject:
   m_ObjectHideFlags: 0
@@ -4600,11 +4643,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1386647002}
     m_Modifications:
-    - target: {fileID: 9155691467718676968, guid: e57641551d313b24eb5b39d642735786,
-        type: 3}
-      propertyPath: m_Name
-      value: UINameGeneratorScreen
-      objectReference: {fileID: 0}
     - target: {fileID: 9155691467718676969, guid: e57641551d313b24eb5b39d642735786,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4710,6 +4748,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9155691467718676968, guid: e57641551d313b24eb5b39d642735786,
+        type: 3}
+      propertyPath: m_Name
+      value: UINameGeneratorScreen
+      objectReference: {fileID: 0}
     - target: {fileID: 9155691468637121987, guid: e57641551d313b24eb5b39d642735786,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4757,11 +4800,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3418839953796857798}
     m_Modifications:
-    - target: {fileID: 738977050119757685, guid: fa0817042b83dea44915e716d5dc7812,
-        type: 3}
-      propertyPath: m_Name
-      value: SceneSwitcher
-      objectReference: {fileID: 0}
     - target: {fileID: 738977050119757683, guid: fa0817042b83dea44915e716d5dc7812,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4817,6 +4855,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 738977050119757685, guid: fa0817042b83dea44915e716d5dc7812,
+        type: 3}
+      propertyPath: m_Name
+      value: SceneSwitcher
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa0817042b83dea44915e716d5dc7812, type: 3}
 --- !u!4 &2131847064494626340 stripped
@@ -4832,11 +4875,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3418839953796857798}
     m_Modifications:
-    - target: {fileID: 3614941853618395465, guid: 54f99dc987963f64d80e74a286cfb352,
-        type: 3}
-      propertyPath: m_Name
-      value: DialogueUIDisplay
-      objectReference: {fileID: 0}
     - target: {fileID: 3614941853618395461, guid: 54f99dc987963f64d80e74a286cfb352,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4961,6 +4999,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614941853618395465, guid: 54f99dc987963f64d80e74a286cfb352,
+        type: 3}
+      propertyPath: m_Name
+      value: DialogueUIDisplay
       objectReference: {fileID: 0}
     - target: {fileID: 4151198465402100387, guid: 54f99dc987963f64d80e74a286cfb352,
         type: 3}
@@ -5164,21 +5207,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2114706812912026230}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7553230918134440017 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8469728439801143847, guid: 54f99dc987963f64d80e74a286cfb352,
+--- !u!224 &3418839953548090163 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3614941853618395461, guid: 54f99dc987963f64d80e74a286cfb352,
     type: 3}
   m_PrefabInstance: {fileID: 2114706812912026230}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3418839953771112719 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3614941853939985273, guid: 54f99dc987963f64d80e74a286cfb352,
-    type: 3}
-  m_PrefabInstance: {fileID: 2114706812912026230}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &3418839953548090163 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3614941853618395461, guid: 54f99dc987963f64d80e74a286cfb352,
     type: 3}
   m_PrefabInstance: {fileID: 2114706812912026230}
   m_PrefabAsset: {fileID: 0}
@@ -5200,6 +5237,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2114706812912026230}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7553230918134440017 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8469728439801143847, guid: 54f99dc987963f64d80e74a286cfb352,
+    type: 3}
+  m_PrefabInstance: {fileID: 2114706812912026230}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6645098882713521426
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5207,11 +5250,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1386647002}
     m_Modifications:
-    - target: {fileID: 6330607732146733728, guid: 2c1633541c6e09a4eb1ec10300b3ef94,
-        type: 3}
-      propertyPath: m_Name
-      value: UISaveLoadScreen
-      objectReference: {fileID: 0}
     - target: {fileID: 6330607732146733731, guid: 2c1633541c6e09a4eb1ec10300b3ef94,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5316,6 +5354,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330607732146733728, guid: 2c1633541c6e09a4eb1ec10300b3ef94,
+        type: 3}
+      propertyPath: m_Name
+      value: UISaveLoadScreen
       objectReference: {fileID: 0}
     - target: {fileID: 6330607732146733732, guid: 2c1633541c6e09a4eb1ec10300b3ef94,
         type: 3}

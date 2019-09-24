@@ -9,6 +9,8 @@ public class KnightMovement : MonoBehaviour
     Rigidbody2D rb;
     Vector2 velocity;
 
+    bool movementBlocked = false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -19,9 +21,26 @@ public class KnightMovement : MonoBehaviour
     {
         Move();
     }
+    
+    public void StopMovement(bool stop)
+    {
+        if (stop)
+        {
+            rb.velocity = Vector2.zero;
+            animator.SetBool("isWalking", false);
+            movementBlocked = true;
+        }
+        else
+        {
+            movementBlocked = false;
+        }       
+    }
 
     void Move()
     {
+        if (movementBlocked)
+            return;
+
         velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, Input.GetAxisRaw("Vertical") * speed);
         rb.velocity = velocity;
 
