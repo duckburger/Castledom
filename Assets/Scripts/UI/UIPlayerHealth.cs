@@ -35,12 +35,12 @@ public class UIPlayerHealth : MonoBehaviour
     {
         // For now assuming that max health is always 100
         float newVal = Mathf.Clamp01(healthChange.currentValue / healthChange.maxValue);
-        LeanTween.value(mainSlider.value, newVal, 0.55f).setEase(LeanTweenType.easeOutElastic)
+        LeanTween.value(mainSlider.value, newVal, 0.75f).setEase(LeanTweenType.easeOutElastic)
             .setOnUpdate((float val) => 
             {
                 mainSlider.value = val;
             });
-        LeanTween.value(secondaryFill.fillAmount, newVal, 0.65f).setEase(LeanTweenType.easeOutElastic)
+        LeanTween.value(secondaryFill.fillAmount, newVal, 0.85f).setEase(LeanTweenType.easeOutElastic)
             .setOnUpdate((float val) =>
             {
                 secondaryFill.fillAmount = val;

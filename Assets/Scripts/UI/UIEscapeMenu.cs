@@ -7,7 +7,7 @@ public class UIEscapeMenu : MonoBehaviour
 {
     [SerializeField] UISaveLoadScreen saveLoadMenu;
     [Space]
-    [SerializeField] ScriptableEvent onGameplayBlocked;
+    [SerializeField] ScriptableEvent onGamePaused;
 
     CanvasGroup cg;
     CurrentGameData currentGameData;
@@ -17,6 +17,7 @@ public class UIEscapeMenu : MonoBehaviour
         cg = GetComponent<CanvasGroup>();
 
         currentGameData = FindObjectOfType<CurrentGameData>();
+
         if (currentGameData == null)
         {
             // Generate a game data
@@ -24,7 +25,6 @@ public class UIEscapeMenu : MonoBehaviour
             AnimateIn();
             saveLoadMenu.AnimateIn();
             saveLoadMenu.DisableBackButton();
-            onGameplayBlocked?.Activate();
         }
     }
 
@@ -51,6 +51,7 @@ public class UIEscapeMenu : MonoBehaviour
         cg.interactable = true;
 
         LeanTween.alphaCanvas(cg, 1, 0.23f);
+        onGamePaused?.Activate();
     }
 
     public void AnimateOut()
@@ -62,6 +63,7 @@ public class UIEscapeMenu : MonoBehaviour
         cg.interactable = false;
 
         LeanTween.alphaCanvas(cg, 0, 0.18f);
+        onGamePaused?.Deactivate();
     }
 
     #endregion

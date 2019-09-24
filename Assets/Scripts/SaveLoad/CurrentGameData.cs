@@ -26,7 +26,7 @@ public class CurrentGameData : MonoBehaviour
 
     public void AssignCurrentData(SaveLoadSystem.KnightGameData newData)
     {
-        if (currentData != null && !string.IsNullOrEmpty(currentData.playerData.playerName))
+        if (currentData != null && currentData.playerData != null && !string.IsNullOrEmpty(currentData.playerData.playerName))
         {
             Debug.LogError("Cannot write a new file into the Current Game Data, because there is one loaded already!");
             return;
