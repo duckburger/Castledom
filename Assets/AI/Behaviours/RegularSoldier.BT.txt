@@ -1,5 +1,6 @@
 tree("Root")
 	fallback
+		tree("Stunned")
 		tree("WalkTheRoad")
 		tree("Combat")
 
@@ -29,4 +30,7 @@ tree("Combat")
 							ChaseCombatTarget
 			
 		
+tree("Stunned")
+	while isStunned
+		Succeed
 	

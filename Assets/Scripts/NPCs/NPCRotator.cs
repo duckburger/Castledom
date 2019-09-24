@@ -12,14 +12,24 @@ public class NPCRotator : MonoBehaviour
     float directionAngle;
     NPCAI aiController;
 
+    bool isOn = true;
+
     private void Start()
     {
         navAgent = GetComponent<PolyNavAgent>();
         aiController = GetComponent<NPCAI>();
     }
 
+    public void EnableRotator(bool enabled)
+    {
+        isOn = enabled;
+    }
+
     private void Update()
     {
+        if (!isOn)
+            return;
+
         if (navAgent.hasPath)
         {
             directionAngle = Mathf.Atan2(navAgent.movingDirection.y, navAgent.movingDirection.x) * Mathf.Rad2Deg - 90f;

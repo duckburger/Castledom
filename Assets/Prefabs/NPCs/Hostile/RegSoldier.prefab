@@ -356,7 +356,6 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 100
   armored: 0
-  statusIcon: {fileID: 0}
 --- !u!114 &4000932799846560601
 MonoBehaviour:
   m_ObjectHideFlags: 0

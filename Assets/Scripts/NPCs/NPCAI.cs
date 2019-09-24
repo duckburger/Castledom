@@ -16,6 +16,8 @@ public class NPCAI : MonoBehaviour
     [SerializeField] float sprintStaminaDepletion = 0.5f;
     [SerializeField] bool isRunning = false;
 
+    NPCStatusIcon statusIcon;
+    NPCRotator npcRotator;
     PolyNavAgent polynavAgent;
     Transform currentTarget;
     Health healthController;
@@ -25,8 +27,16 @@ public class NPCAI : MonoBehaviour
 
     [Task] bool inCombat = false;
     [Task] bool recoveringStamina = false;
+    [Task] bool isStunned = false;
 
     public bool IsRunning => isRunning;
+    public bool IsStunned
+    {
+        get => isStunned;
+        set => isStunned = value;
+    }
+
+    Coroutine stunTimer = null;
 
     public Transform CombatTarget
     {
@@ -46,6 +56,8 @@ public class NPCAI : MonoBehaviour
         healthController = GetComponent<Health>();
         hitDetector = GetComponent<NPCHitDetector>();
         npcAnimator = GetComponent<NPCAnimator>();
+        npcRotator = GetComponent<NPCRotator>();
+        statusIcon = GetComponentInChildren<NPCStatusIcon>();
 
         healthController.onHealthDecreased += ReactToAgression;
     }
@@ -170,6 +182,42 @@ public class NPCAI : MonoBehaviour
         isRunning = false;
         polynavAgent.maxSpeed = walkSpeed;
         Task.current.Succeed();
+    }
+
+    #endregion
+
+    #region Stun
+
+    public void Stun(bool enable, float duration)
+    {
+        if (duration <= 0)
+            return;
+
+        if (stunTimer != null)
+            StopCoroutine(stunTimer);
+
+        if (enable)
+        {            
+            stunTimer = StartCoroutine(StunTimer(duration));
+        }
+        else
+        {
+            isStunned = false;
+        }
+    }
+
+
+    IEnumerator StunTimer(float stunDuration)
+    {
+        isStunned = true;
+        npcRotator?.EnableRotator(false);
+        statusIcon?.ShowStunnedStatus();
+        npcAnimator?.SetIdle(true);
+        yield return new WaitForSeconds(stunDuration);
+        npcAnimator?.SetIdle(false);
+        statusIcon?.Disable();
+        npcRotator?.EnableRotator(true);
+        isStunned = false;
     }
 
     #endregion

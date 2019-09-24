@@ -9,6 +9,9 @@ public class WeaponStatFile : ExtendedScriptableObject
     [Space]
     public float baseDmg;
     public float armoredDmg;
+    [Space]
+    public float stunProbability = 0;
+    public float stunDuration = 0;
     public Sprite uiIcon;
     public Sprite idleBodySprite;
     [Space]

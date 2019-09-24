@@ -9,13 +9,11 @@ public class CombatMoveInfo
 {
     public float healthChange;
     public GameObject moveTarget;
-    public bool hasStun = false;
 
-    public CombatMoveInfo(float changeAmount, GameObject target, bool stunned)
+    public CombatMoveInfo(float changeAmount, GameObject target)
     {
         this.healthChange = changeAmount;
         this.moveTarget = target;
-        this.hasStun = false;
     }
 }
 

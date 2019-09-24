@@ -17,8 +17,8 @@ MonoBehaviour:
     id: 641814027
     windowRect:
       serializedVersion: 2
-      x: 66
-      y: 226
+      x: 81
+      y: 204
       width: 200
       height: 350
     windowTitle: NPC Dialogue Node
@@ -32,8 +32,8 @@ MonoBehaviour:
     id: 404334087
     windowRect:
       serializedVersion: 2
-      x: 717
-      y: 261
+      x: 747
+      y: 207
       width: 200
       height: 350
     windowTitle: NPC Dialogue Node
@@ -48,8 +48,8 @@ MonoBehaviour:
     id: 689152312
     windowRect:
       serializedVersion: 2
-      x: 421
-      y: 147
+      x: 428
+      y: 193
       width: 200
       height: 128
     windowTitle: Player Response Node
@@ -72,8 +72,8 @@ MonoBehaviour:
     id: 272605759
     windowRect:
       serializedVersion: 2
-      x: 1039
-      y: 218
+      x: 1076
+      y: 204
       width: 200
       height: 128
     windowTitle: Player Response Node
@@ -100,8 +100,8 @@ MonoBehaviour:
       id: 641814027
       windowRect:
         serializedVersion: 2
-        x: 66
-        y: 226
+        x: 81
+        y: 204
         width: 200
         height: 350
       windowTitle: NPC Dialogue Node
@@ -145,8 +145,8 @@ MonoBehaviour:
       id: 689152312
       windowRect:
         serializedVersion: 2
-        x: 421
-        y: 147
+        x: 428
+        y: 193
         width: 200
         height: 128
       windowTitle: Player Response Node
@@ -160,8 +160,8 @@ MonoBehaviour:
       id: 641814027
       windowRect:
         serializedVersion: 2
-        x: 66
-        y: 226
+        x: 81
+        y: 204
         width: 200
         height: 350
       windowTitle: NPC Dialogue Node
@@ -236,8 +236,8 @@ MonoBehaviour:
       id: 404334087
       windowRect:
         serializedVersion: 2
-        x: 717
-        y: 261
+        x: 747
+        y: 207
         width: 200
         height: 350
       windowTitle: NPC Dialogue Node
@@ -281,8 +281,8 @@ MonoBehaviour:
       id: 404334087
       windowRect:
         serializedVersion: 2
-        x: 717
-        y: 261
+        x: 747
+        y: 207
         width: 200
         height: 350
       windowTitle: NPC Dialogue Node
@@ -327,8 +327,8 @@ MonoBehaviour:
       id: 272605759
       windowRect:
         serializedVersion: 2
-        x: 1039
-        y: 218
+        x: 1076
+        y: 204
         width: 200
         height: 128
       windowTitle: Player Response Node
@@ -342,8 +342,8 @@ MonoBehaviour:
       id: 404334087
       windowRect:
         serializedVersion: 2
-        x: 717
-        y: 261
+        x: 747
+        y: 207
         width: 200
         height: 350
       windowTitle: NPC Dialogue Node

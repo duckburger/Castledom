@@ -12,6 +12,8 @@ public class NPCAnimator : MonoBehaviour
     ParticleSystem sprintParticles;
     NPCAI npcAI;
 
+    bool isOn = true;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -27,6 +29,9 @@ public class NPCAnimator : MonoBehaviour
 
     private void Update()
     {
+        if (!isOn)
+            return;
+
         if (navAgent.hasPath)
         {
             animator.SetBool("isWalking", true);
@@ -43,14 +48,37 @@ public class NPCAnimator : MonoBehaviour
         }
     }
 
+    public void SetIdle(bool enable)
+    {
+        if (enable)
+        {
+            isOn = false;
+            animator?.SetBool("isAttacking", false);
+            animator?.SetBool("isWalking", false);
+            for (int i = 1; i < animator.layerCount; i++)
+            {
+                animator?.SetLayerWeight(i, 0);
+            }
+        }
+        else
+        {
+            isOn = true;
+            for (int i = 1; i < animator.layerCount; i++)
+            {
+                animator?.SetLayerWeight(i, 1);
+            }
+        }
+        
+    }
+
     public void ActivateAttack()
     {
-        animator.SetBool("isAttacking", true);
+        animator?.SetBool("isAttacking", true);
     }
 
     public void DeactivateAttack()
     {
-        animator.SetBool("isAttacking", false);
+        animator?.SetBool("isAttacking", false);
     }
 
     public void ActivateAttackCollider()

@@ -5,14 +5,17 @@ using System;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] ScriptableEvent onHealthAdjusted;
+    [SerializeField] bool player = false;
+    [Space]
+    [SerializeField] ScriptableEvent onPlayerHealthChanged;
+    [SerializeField] ScriptableEvent onCombatMoveMade;
     [Space]
     [SerializeField] float currentHealth;
     [SerializeField] float maxHealth = 100f;
     [Space]
     public bool armored = false;
-    [Space(10)]
-    [SerializeField] NPCStatusIcon statusIcon;
+
+    NPCAI aiController;
 
     public Action onDownToFirstHealthThreshold;
     public Action onDownToSecondHealthThreshold;
@@ -22,20 +25,21 @@ public class Health : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        aiController = GetComponent<NPCAI>();
     }
 
-    public void AdjustHealth(float amount, bool stunned = false)
+    public void AdjustHealth(float amount)
     {
         currentHealth += amount;
-        if (stunned)
+        CombatMoveInfo moveInfo = new CombatMoveInfo(amount, gameObject);
+        onCombatMoveMade?.RaiseWithData(moveInfo);
+
+        if (player)
         {
-            GetStunned();
-        }
-        CombatMoveInfo moveInfo = new CombatMoveInfo(amount, gameObject, stunned);
-        onHealthAdjusted?.RaiseWithData(moveInfo);
-        if (gameObject.layer == 10)
             CameraControls.Instance?.ScreenShake();
-        // TODO: AdjustHealthBar and/or appearance
+            SendPlayerHealthEvent();
+        }
+
         if (currentHealth <= 0)
         {
             // No health left
@@ -53,10 +57,31 @@ public class Health : MonoBehaviour
             onDownToSecondHealthThreshold?.Invoke();
     }
 
-    public void GetStunned()
+    private void SendPlayerHealthEvent()
     {
-        statusIcon?.ShowStunnedStatus();
-        // TODO: Write this + add stun duration and stun probability to this somehow
+        UIPlayerHealth.UIHealthData healthData = new UIPlayerHealth.UIHealthData(currentHealth, maxHealth);
+        onPlayerHealthChanged?.RaiseWithData(healthData);
     }
 
+    public void TryStun(WeaponStatFile weaponInfo)
+    {
+        if (weaponInfo.stunProbability <= 0)
+            return;
+
+        bool stun = CheckStunChance(weaponInfo.stunProbability);
+        if (!stun)
+            return;
+
+        aiController?.Stun(true, weaponInfo.stunDuration);
+    }
+
+    private bool CheckStunChance(float stunProbability)
+    {
+        System.Random rand = new System.Random();
+        int chance = rand.Next(1, 101);
+        if (chance <= stunProbability)
+            return true;
+        else
+            return false;
+    }   
 }

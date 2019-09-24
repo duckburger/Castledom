@@ -42,26 +42,10 @@ public class PlayerAttackCollider : AttackCollider
         Health hitEnemyHealth = collider.GetComponent<Health>();
         if (hitEnemyHealth != null) //TODO: Add friend/foe for check
         {
-            int length = playerInventory.EquippedWeapon.availableAttacks[0].hitSounds.Length;
-            if (length > 0)
-            {
-                int index = UnityEngine.Random.Range(0, length);
-                knightSounds.PlaySound(playerInventory.EquippedWeapon.availableAttacks[0].hitSounds[index]);
-            }
-            float dmg = hitEnemyHealth.armored ? playerInventory.EquippedWeapon.armoredDmg : playerInventory.EquippedWeapon.baseDmg;
-            Transform body = collider.GetComponent<NPCRotator>().body;
-            float dot = Vector2.Dot(transform.parent.up, body.up);
-            if (dot > 0.2f)
-            {
-                // Player is behind the target, add extra damage
-                dmg *= 2f;
-            }
-            NPCHitDetector hitDetector = collider.GetComponent<NPCHitDetector>();
-            if (hitDetector)
-            {
-                hitDetector.LastHitBy = transform; // Doing this so the assignment happens before the var is needed inside the function in Health
-            }
-
+            PlayHitSound(playerInventory.EquippedWeapon);
+            float dmg = CalculateDamageAmount(collider, hitEnemyHealth, playerInventory.EquippedWeapon);
+            ProcessHitDetector(collider);
+            hitEnemyHealth.TryStun(playerInventory.EquippedWeapon);
             hitEnemyHealth.AdjustHealth(-dmg);
            
             canRegisterAttack = false;
@@ -85,30 +69,47 @@ public class PlayerAttackCollider : AttackCollider
         Health hitEnemyHealth = collider.GetComponent<Health>();
         if (hitEnemyHealth != null) //TODO: Add friend/foe for check
         {
-            int length = playerInventory.KickWeapon.availableAttacks[0].hitSounds.Length;
-            if (length > 0)
-            {
-                int index = UnityEngine.Random.Range(0, length);
-                knightSounds.PlaySound(playerInventory.KickWeapon.availableAttacks[0].hitSounds[index]);
-            }
-            float dmg = hitEnemyHealth.armored ? playerInventory.KickWeapon.armoredDmg : playerInventory.KickWeapon.baseDmg;
-            Transform body = collider.GetComponent<NPCRotator>().body;
-            float dot = Vector2.Dot(transform.parent.up, body.up);
-            if (dot > 0.2f)
-            {
-                // Player is behind the target, add extra damage
-                dmg *= 1.3f;
-            }
-            NPCHitDetector hitDetector = collider.GetComponent<NPCHitDetector>();
-            if (hitDetector)
-            {
-                hitDetector.LastHitBy = transform; // Doing this so the assignment happens before the var is needed inside the function in Health
-            }
-
-            hitEnemyHealth.AdjustHealth(-dmg, true);
+            PlayHitSound(playerInventory.KickWeapon);
+            float dmg = CalculateDamageAmount(collider, hitEnemyHealth, playerInventory.KickWeapon);
+            ProcessHitDetector(collider);
+            hitEnemyHealth.TryStun(playerInventory.KickWeapon);
+            hitEnemyHealth.AdjustHealth(-dmg);
 
             canRegisterAttack = false;
             StartCoroutine(TimerForAttackRegistration());
+        }
+    }
+
+    private float CalculateDamageAmount(Collider2D collider, Health hitEnemyHealth, WeaponStatFile weaponToUse)
+    {
+        float dmg = hitEnemyHealth.armored ? weaponToUse.armoredDmg : weaponToUse.baseDmg;
+        Transform body = collider.GetComponent<NPCRotator>().body;
+        float dot = Vector2.Dot(transform.parent.up, body.up);
+        if (dot > 0.2f)
+        {
+            // Player is behind the target, add extra damage
+            dmg *= 1.3f;
+        }
+
+        return dmg;
+    }
+
+    private void PlayHitSound(WeaponStatFile weaponToUse)
+    {
+        int length = weaponToUse.availableAttacks[0].hitSounds.Length;
+        if (length > 0)
+        {
+            int index = UnityEngine.Random.Range(0, length);
+            knightSounds.PlaySound(weaponToUse.availableAttacks[0].hitSounds[index]);
+        }
+    }
+
+    private void ProcessHitDetector(Collider2D collider)
+    {
+        NPCHitDetector hitDetector = collider.GetComponent<NPCHitDetector>();
+        if (hitDetector)
+        {
+            hitDetector.LastHitBy = transform; // Doing this so the assignment happens before the var is needed inside the function in Health
         }
     }
 
