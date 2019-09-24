@@ -9,7 +9,6 @@ public class NPCRegistry : MonoBehaviour
     List<GameObject> allNPCInScene = new List<GameObject>();
 
 
-
     private void Awake()
     {
         if (!Instance)

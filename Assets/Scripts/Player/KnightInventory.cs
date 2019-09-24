@@ -33,7 +33,7 @@ public class KnightInventory : MonoBehaviour
         mainCam = Camera.main;
         myRB = GetComponent<Rigidbody2D>();
         attackController = GetComponent<KnightAttackController>();
-        attackController.SetupNewAttack(equippedWeapon.availableAttacks[0]); // TODO: Change this so there is only 1 attack or it passes all of them through
+        attackController.SetupAttacksFromHandWeapon(equippedWeapon); // TODO: Change this so there is only 1 attack or it passes all of them through
     }
 
     private void Update()
@@ -49,7 +49,7 @@ public class KnightInventory : MonoBehaviour
                 bodyRenderer.sprite = equippedWeapon.idleBodySprite;
 
             onWeaponUpdated?.RaiseWithData(equippedWeapon);
-            attackController.SetupNewAttack(equippedWeapon.availableAttacks[0]);
+            attackController.SetupAttacksFromHandWeapon(equippedWeapon);
         }
 
         if (nearPickuppableItem && nearbyPickuppable)
@@ -67,7 +67,7 @@ public class KnightInventory : MonoBehaviour
 
                         Destroy(nearbyPickuppable.gameObject);
                         onWeaponUpdated?.RaiseWithData(equippedWeapon);
-                        attackController.SetupNewAttack(equippedWeapon.availableAttacks[0]);
+                        attackController.SetupAttacksFromHandWeapon(equippedWeapon);
                         break;
                     default:
                         break;

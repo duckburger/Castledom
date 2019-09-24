@@ -12,9 +12,11 @@ public class WeaponStatFile : ExtendedScriptableObject
     [Space]
     public float stunProbability = 0;
     public float stunDuration = 0;
+    [Space]
     public Sprite uiIcon;
     public Sprite idleBodySprite;
     [Space]
+    public int animationLayerIndex;
     public KnightAttack[] availableAttacks;
     [Space(5)]
     public GameObject prefab; // Used to spawn when a weapon is dropped

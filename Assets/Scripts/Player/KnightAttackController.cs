@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KnightAttackController : MonoBehaviour
 {
-    [SerializeField] KnightAttack availableAttack;
+    [SerializeField] KnightAttack[] availableAttacks;
     [Space(10)]
     [SerializeField] PlayerAttackCollider attackCollider;
     [SerializeField] GameObject attackDirArrow;
@@ -29,10 +29,10 @@ public class KnightAttackController : MonoBehaviour
         DeActivateAttackCollider();
     }
 
-    public void SetupNewAttack(KnightAttack newAttack)
+    public void SetupAttacksFromHandWeapon(WeaponStatFile weaponEquipped)
     {
-        availableAttack = newAttack;
-        currentWeaponLayer = availableAttack.animationLayerIndex;       
+        availableAttacks = weaponEquipped.availableAttacks;
+        currentWeaponLayer = weaponEquipped.animationLayerIndex;       
 
         if (currentWeaponLayer >= 0)
         {
@@ -47,19 +47,27 @@ public class KnightAttackController : MonoBehaviour
             }
         }
 
-        if (availableAttack.attackSoundFx.Count > 0)
+        if (weaponEquipped.availableAttacks[0].attackSoundFx.Count > 0) // Take sounds from both attacks somehow
         {
-            currentSwingAudioClip = availableAttack.attackSoundFx[Random.Range(0, newAttack.attackSoundFx.Count - 1)];
+            currentSwingAudioClip = weaponEquipped.availableAttacks[0].attackSoundFx[Random.Range(0, weaponEquipped.availableAttacks[0].attackSoundFx.Count - 1)];
         }
     }
 
     void Update()
     {
-        
+        // PRIMARY ATTACK
         if (Input.GetMouseButtonDown(0))
-            PreSwing();
+            PrimaryPreSwing();
         if (Input.GetMouseButtonUp(0))
-            Swing();
+            PrimarySwing();
+
+        // SECONDARY ATTACK
+        if (Input.GetMouseButtonDown(1))
+            SecondaryPreSwing();
+        if (Input.GetMouseButtonUp(1))
+            SecondarySwing();
+
+        // KICK (TERTIARY)
         if (Input.GetKeyDown(KeyCode.Q))
             PreKick();
         if (Input.GetKey(KeyCode.Q))
@@ -74,16 +82,32 @@ public class KnightAttackController : MonoBehaviour
         }
     }
 
-    void PreSwing()
+    void PrimaryPreSwing()
     {
-        currentAttackIndex = availableAttack.attackIndices[Random.Range(0, availableAttack.attackIndices.Length)];
+        currentAttackIndex = availableAttacks[0].attackSelectorIndex;
         animator.SetInteger("attackSelector", currentAttackIndex);
         animator?.SetBool("preSwing", true);
         if (showAttackDirection && attackDirArrow)
             attackDirArrow.SetActive(true);
     }
 
-    void Swing()
+    void PrimarySwing()
+    {
+        animator?.SetBool("preSwing", false);
+        if (showAttackDirection && attackDirArrow)
+            attackDirArrow.SetActive(false);
+    }
+
+    void SecondaryPreSwing()
+    {
+        currentAttackIndex = availableAttacks[1].attackSelectorIndex;
+        animator.SetInteger("attackSelector", currentAttackIndex);
+        animator?.SetBool("preSwing", true);
+        if (showAttackDirection && attackDirArrow)
+            attackDirArrow.SetActive(true);
+    }
+
+    void SecondarySwing()
     {
         animator?.SetBool("preSwing", false);
         if (showAttackDirection && attackDirArrow)

@@ -15,9 +15,13 @@ MonoBehaviour:
   weaponName: Unarmed
   baseDmg: 10
   armoredDmg: 5
+  stunProbability: 0
+  stunDuration: 0
   uiIcon: {fileID: -6149787470575072911, guid: 24da19a5228f93640a74658f5c081833, type: 3}
   idleBodySprite: {fileID: 7621072956808713120, guid: 68aec8a319615be439071fe120dc994c,
     type: 3}
+  animationLayerIndex: 2
   availableAttacks:
   - {fileID: 11400000, guid: 4df4ecab2fa31b34fa35459ed57c7d97, type: 2}
+  - {fileID: 11400000, guid: 6475dd7d1b6c21846942716f1bc85dfc, type: 2}
   prefab: {fileID: 0}

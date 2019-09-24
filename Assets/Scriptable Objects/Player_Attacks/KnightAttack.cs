@@ -7,6 +7,5 @@ public class KnightAttack : ExtendedScriptableObject
 {
     public List<AudioClip> attackSoundFx = new List<AudioClip>();
     public AudioClip[] hitSounds;
-    public int animationLayerIndex;
-    public int[] attackIndices;
+    public int attackSelectorIndex;
 }

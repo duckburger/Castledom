@@ -19,6 +19,7 @@ MonoBehaviour:
   stunDuration: 2
   uiIcon: {fileID: 0}
   idleBodySprite: {fileID: 0}
+  animationLayerIndex: 1
   availableAttacks:
   - {fileID: 11400000, guid: 9377a07a44efa564790ee2a0fb4480fd, type: 2}
   prefab: {fileID: 0}

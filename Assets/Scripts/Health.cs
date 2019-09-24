@@ -77,6 +77,9 @@ public class Health : MonoBehaviour
 
     private bool CheckStunChance(float stunProbability)
     {
+        if (aiController.IsStunned)
+            return false;
+
         System.Random rand = new System.Random();
         int chance = rand.Next(1, 101);
         if (chance <= stunProbability)

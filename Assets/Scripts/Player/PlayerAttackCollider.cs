@@ -45,6 +45,7 @@ public class PlayerAttackCollider : AttackCollider
             PlayHitSound(playerInventory.EquippedWeapon);
             float dmg = CalculateDamageAmount(collider, hitEnemyHealth, playerInventory.EquippedWeapon);
             ProcessHitDetector(collider);
+            //PushCharacterBack(collider, playerInventory.EquippedWeapon);
             hitEnemyHealth.TryStun(playerInventory.EquippedWeapon);
             hitEnemyHealth.AdjustHealth(-dmg);
            
@@ -72,11 +73,22 @@ public class PlayerAttackCollider : AttackCollider
             PlayHitSound(playerInventory.KickWeapon);
             float dmg = CalculateDamageAmount(collider, hitEnemyHealth, playerInventory.KickWeapon);
             ProcessHitDetector(collider);
+            PushCharacterBack(collider, playerInventory.KickWeapon);
             hitEnemyHealth.TryStun(playerInventory.KickWeapon);
             hitEnemyHealth.AdjustHealth(-dmg);
 
             canRegisterAttack = false;
             StartCoroutine(TimerForAttackRegistration());
+        }
+    }
+
+    private void PushCharacterBack(Collider2D collider, WeaponStatFile weaponStats)
+    {
+        Rigidbody2D rb = collider.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.AddForce((rb.transform.position - playerInventory.transform.position).normalized * 500f, ForceMode2D.Impulse);
+            Debug.Log("Adding force to enemy");
         }
     }
 

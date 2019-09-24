@@ -16,6 +16,7 @@ public class NPCAI : MonoBehaviour
     [SerializeField] float sprintStaminaDepletion = 0.5f;
     [SerializeField] bool isRunning = false;
 
+    NPCAttackCollider npcAttackCollider;
     NPCStatusIcon statusIcon;
     NPCRotator npcRotator;
     PolyNavAgent polynavAgent;
@@ -58,6 +59,7 @@ public class NPCAI : MonoBehaviour
         npcAnimator = GetComponent<NPCAnimator>();
         npcRotator = GetComponent<NPCRotator>();
         statusIcon = GetComponentInChildren<NPCStatusIcon>();
+        npcAttackCollider = GetComponentInChildren<NPCAttackCollider>();
 
         healthController.onHealthDecreased += ReactToAgression;
     }
@@ -213,6 +215,7 @@ public class NPCAI : MonoBehaviour
         npcRotator?.EnableRotator(false);
         statusIcon?.ShowStunnedStatus();
         npcAnimator?.SetIdle(true);
+        npcAttackCollider?.DisableAttackCollider();
         yield return new WaitForSeconds(stunDuration);
         npcAnimator?.SetIdle(false);
         statusIcon?.Disable();
