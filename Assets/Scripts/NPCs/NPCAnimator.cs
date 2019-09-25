@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PolyNav;
-
 public class NPCAnimator : MonoBehaviour
 {
     Animator animator;
@@ -44,8 +43,9 @@ public class NPCAnimator : MonoBehaviour
         {
             animator.SetBool("isWalking", false);
             sprintParticles?.Pause();
-            sprintParticles?.Clear();                   
+            sprintParticles?.Clear();
         }
+
     }
 
     public void SetIdle(bool enable)

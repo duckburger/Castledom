@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class NPCRegistry : MonoBehaviour
 {
     public static NPCRegistry Instance;
@@ -44,6 +43,7 @@ public class NPCRegistry : MonoBehaviour
             PolyNav.PolyNavAgent navAgent = allNPCInScene[i].GetComponent<PolyNav.PolyNavAgent>();
             if (navAgent)
                 navAgent.enabled = false;
+
         }
     }
 

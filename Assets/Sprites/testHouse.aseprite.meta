@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: 92d8a3702bdea84459402be54b0dbe9d
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: c5b4995c739cb6c41b2bb4a01104e430, type: 3}
+  textureSettings:
+    textureType: 8
+    pixelsPerUnit: 64
+    meshType: 1
+    extrudeEdges: 1
+    spritePivot: {x: 0.5, y: 0.5}
+    generatePhysics: 1
+    wrapMode: 1
+    filterMode: 0
+    tileSize: {x: 32, y: 32}
+    tilePadding: {x: 0, y: 0}
+    tileOffset: {x: 0, y: 0}
+  animationSettings:
+  - animationName: House
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 0; To: 0"
+  - animationName: Roof
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 1; To: 1"
+  atlas: {instanceID: 0}
+  importType: 0

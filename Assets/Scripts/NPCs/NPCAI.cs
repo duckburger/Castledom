@@ -88,6 +88,7 @@ public class NPCAI : MonoBehaviour
     [Task]
     void GoToDestination()
     {
+        //if (polynavAgent.pathPending)
         if (polynavAgent.pathPending)
             Debug.Log($"{Task.current.debugInfo}");
         else
@@ -216,7 +217,9 @@ public class NPCAI : MonoBehaviour
         statusIcon?.ShowStunnedStatus();
         npcAnimator?.SetIdle(true);
         npcAttackCollider?.DisableAttackCollider();
+        polynavAgent.enabled = false;
         yield return new WaitForSeconds(stunDuration);
+        polynavAgent.enabled = true;
         npcAnimator?.SetIdle(false);
         statusIcon?.Disable();
         npcRotator?.EnableRotator(true);

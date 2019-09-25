@@ -23,4 +23,5 @@ MonoBehaviour:
   animationLayerIndex: 3
   availableAttacks:
   - {fileID: 11400000, guid: f6b1bd8ee9e59a84f96024e153ccffca, type: 2}
+  - {fileID: 11400000, guid: 4fe128554f0230d4faba6b71e579ffa9, type: 2}
   prefab: {fileID: 3451547110103692658, guid: 8324bb7d20c979849868c6de720bf06c, type: 3}

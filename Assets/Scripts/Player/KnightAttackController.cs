@@ -100,11 +100,14 @@ public class KnightAttackController : MonoBehaviour
 
     void SecondaryPreSwing()
     {
-        currentAttackIndex = availableAttacks[1].attackSelectorIndex;
-        animator.SetInteger("attackSelector", currentAttackIndex);
-        animator?.SetBool("preSwing", true);
-        if (showAttackDirection && attackDirArrow)
-            attackDirArrow.SetActive(true);
+        if (availableAttacks.Length > 1)
+        {
+            currentAttackIndex = availableAttacks[1].attackSelectorIndex;
+            animator.SetInteger("attackSelector", currentAttackIndex);
+            animator?.SetBool("preSwing", true);
+            if (showAttackDirection && attackDirArrow)
+                attackDirArrow.SetActive(true);
+        }        
     }
 
     void SecondarySwing()
