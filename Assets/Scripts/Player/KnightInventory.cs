@@ -6,10 +6,7 @@ public class KnightInventory : MonoBehaviour
 {
     [SerializeField] SpriteRenderer bodyRenderer;
     [Space]
-    [SerializeField] LayerMask pickuppableLayerMask;
     [SerializeField] ScriptableEvent onWeaponUpdated;
-    [SerializeField] ScriptableEvent onNearPickuppable;
-    [SerializeField] ScriptableEvent onMoveAwayFromPickuppable;
     [Space]
     [SerializeField] WeaponStatFile equippedWeapon;
     [SerializeField] WeaponStatFile defaultWeapon;
@@ -40,80 +37,37 @@ public class KnightInventory : MonoBehaviour
     {
         if (equippedWeapon != defaultWeapon && Input.GetKeyDown(KeyCode.G))
         {
-            Rigidbody2D rigidBody = Instantiate(equippedWeapon.prefab, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
-            Vector2 throwForce = myRB.velocity + (Vector2)(Input.mousePosition - mainCam.WorldToScreenPoint(transform.position)).normalized * weaponThrowStrength;
-            rigidBody.AddRelativeForce(throwForce, ForceMode2D.Impulse);
-            equippedWeapon = defaultWeapon;
-
-            if (equippedWeapon.idleBodySprite && bodyRenderer)
-                bodyRenderer.sprite = equippedWeapon.idleBodySprite;
-
-            onWeaponUpdated?.RaiseWithData(equippedWeapon);
-            attackController.SetupAttacksFromHandWeapon(equippedWeapon);
-        }
-
-        if (nearPickuppableItem && nearbyPickuppable)
-        {
-            if (nearbyPickuppable.GetComponent<IPickuppable>() != null && Input.GetKeyDown(KeyCode.F))
-            {
-                object pickedUpObject = nearbyPickuppable.GetComponent<IPickuppable>().GetPickuppableObject();
-                switch (pickedUpObject)
-                {
-                    case WeaponStatFile w:
-                        equippedWeapon = w;
-
-                        if (equippedWeapon.idleBodySprite && bodyRenderer)
-                            bodyRenderer.sprite = equippedWeapon.idleBodySprite;
-
-                        Destroy(nearbyPickuppable.gameObject);
-                        onWeaponUpdated?.RaiseWithData(equippedWeapon);
-                        attackController.SetupAttacksFromHandWeapon(equippedWeapon);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            DropEquippedWeapon();
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void DropEquippedWeapon()
     {
-        if (pickuppableLayerMask == (1 << collision.gameObject.layer | pickuppableLayerMask))
-        {
-            nearbyPickuppable = collision;
-            onNearPickuppable?.RaiseWithData(nearbyPickuppable.transform);
-            nearPickuppableItem = true;
+        Rigidbody2D rigidBody = Instantiate(equippedWeapon.prefab, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
+        Vector2 throwForce = myRB.velocity + (Vector2)(Input.mousePosition - mainCam.WorldToScreenPoint(transform.position)).normalized * weaponThrowStrength;
+        rigidBody.AddRelativeForce(throwForce, ForceMode2D.Impulse);
+        equippedWeapon = defaultWeapon;
 
-            if (nearbyPickuppable.GetComponent<Weapon>() != null)
-            {
-                nearbyPickuppable.GetComponent<Weapon>().AnimateOutline();
-            }
-        }
+        if (equippedWeapon.idleBodySprite && bodyRenderer)
+            bodyRenderer.sprite = equippedWeapon.idleBodySprite;
+
+        onWeaponUpdated?.RaiseWithData(equippedWeapon);
+        attackController.SetupAttacksFromHandWeapon(equippedWeapon);
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    public void EquipWeapon(WeaponStatFile newWeapon, GameObject weaponInWorld)
     {
-        if (pickuppableLayerMask == (1 << collision.gameObject.layer | pickuppableLayerMask))
-        {
-            nearbyPickuppable = collision;
-            nearPickuppableItem = true;
-            onNearPickuppable?.RaiseWithData(nearbyPickuppable.transform);
-        }
-    }
+        if (equippedWeapon != defaultWeapon)
+            DropEquippedWeapon();
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (pickuppableLayerMask == (1 << collision.gameObject.layer | pickuppableLayerMask))
-        {
-            onMoveAwayFromPickuppable?.Raise();
-            nearPickuppableItem = false;
-            nearbyPickuppable = null;
-        }
+        equippedWeapon = newWeapon;
 
-        if (!nearbyPickuppable && !nearPickuppableItem && collision.GetComponent<Weapon>() != null)
-        {
-            collision.GetComponent<Weapon>().StopAnimatingOutline();
-        }
+        if (equippedWeapon.idleBodySprite && bodyRenderer)
+            bodyRenderer.sprite = equippedWeapon.idleBodySprite;
+
+        Destroy(weaponInWorld);
+        onWeaponUpdated?.RaiseWithData(equippedWeapon);
+        attackController.SetupAttacksFromHandWeapon(equippedWeapon);
     }
 
 

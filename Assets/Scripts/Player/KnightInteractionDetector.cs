@@ -4,40 +4,79 @@ using UnityEngine;
 
 public class KnightInteractionDetector : MonoBehaviour
 {
-    [SerializeField] ScriptableEvent onNearDialogueNPC;
-    [SerializeField] ScriptableEvent onMovedAwayFromDialogueNPC;
+    [SerializeField] ScriptableEvent onNearIneractiveObject;
 
-    KnightSounds knightSoundController;
+    KnightInventory playerInventory;
+    KnightSounds playerSoundController;
     NPCDialogueHolder nearbyDialogueHolder;
-    bool nearADialogueTrigger = false;
+    IInteractiveObject nearbyInteractiveObject;
+    IPickuppable nearbyPickuppableObject;
 
     private void Start()
     {
-        knightSoundController = GetComponentInParent<KnightSounds>();
+        playerSoundController = GetComponentInParent<KnightSounds>();
+        playerInventory = GetComponentInParent<KnightInventory>();
     }
 
     private void Update()
     {
-        if (nearADialogueTrigger && Input.GetKeyDown(KeyCode.F))
+        if (nearbyDialogueHolder != null && Input.GetKeyDown(KeyCode.F))
         {
             nearbyDialogueHolder?.ActivateDialogue();
+        }
+        if (nearbyInteractiveObject != null && Input.GetKeyDown(KeyCode.F))
+        {
+            nearbyInteractiveObject?.Interact();
+        }
+        if (nearbyPickuppableObject != null && Input.GetKeyDown(KeyCode.F))
+        {
+            object pickedUpObject = nearbyPickuppableObject.GetPickuppableObject();
+            switch (pickedUpObject)
+            {
+                case WeaponStatFile w:
+                    playerInventory?.EquipWeapon(w, nearbyPickuppableObject?.GetWorldObject());
+                    break;
+                default:
+                    break;
+            }            
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
-    {
-        CheckForDialogueTriggers(collider);
+    {     
+        if (!onNearIneractiveObject)
+        {
+            Debug.LogError("One of the interactive events is not connected to the interactionDetector");
+            return;
+        }
         CheckForItemTriggers(collider);
+        CheckForDialogueTriggers(collider);
     }    
 
     private void OnTriggerStay2D(Collider2D collider)
     {
+        if (!onNearIneractiveObject)
+        {
+            Debug.LogError("One of the interactive events is not connected to the interactionDetector");
+            return;
+        }
+        CheckForItemTriggers(collider);
         CheckForDialogueTriggers(collider);
     }
 
     private void OnTriggerExit2D(Collider2D collider)
     {
-        CheckIfLeftDialogueTrigger(collider);
+        if (!onNearIneractiveObject)
+        {
+            Debug.LogError("One of the interactive events is not connected to the interactionDetector");
+            return;
+        }
+        if (nearbyDialogueHolder)
+            CheckIfLeftDialogueTrigger(collider);
+        if (nearbyInteractiveObject != null)
+            CheckIfLeftInteractiveObject(collider);
+        if (nearbyPickuppableObject != null)
+            CheckIfLeftPickuppable(collider);
     }
 
     #region Dialogue Triggers
@@ -47,13 +86,9 @@ public class KnightInteractionDetector : MonoBehaviour
         NPCDialogueHolder dialogueHolder = collider.GetComponent<NPCDialogueHolder>();
         if (dialogueHolder && dialogueHolder.myDialogue && dialogueHolder.canTalk)
         {
-            if (!onNearDialogueNPC || !onMovedAwayFromDialogueNPC)
-            {
-                Debug.LogError("One of the dialogue NPC events is not connected to the player's interaction detector");
-            }
-            onNearDialogueNPC?.RaiseWithData(collider.transform);
+            UIController.ItemProximityEvent proximityEvent = new UIController.ItemProximityEvent(collider.transform, UIController.ItemProximityEvent.ProximityEventType.Dialogue);
+            onNearIneractiveObject?.ActivateWithData(proximityEvent);
             nearbyDialogueHolder = dialogueHolder;
-            nearADialogueTrigger = true;
         }
     }
 
@@ -62,13 +97,8 @@ public class KnightInteractionDetector : MonoBehaviour
         NPCDialogueHolder dialogueHolder = collider.GetComponent<NPCDialogueHolder>();
         if (dialogueHolder && dialogueHolder.myDialogue && dialogueHolder.canTalk)
         {
-            if (!onNearDialogueNPC || !onMovedAwayFromDialogueNPC)
-            {
-                Debug.LogError("One of the dialogue NPC events is not connected to the player's interaction detector");
-            }
-            onMovedAwayFromDialogueNPC?.Raise();
+            onNearIneractiveObject?.Deactivate();
             nearbyDialogueHolder = null;
-            nearADialogueTrigger = false;
         }
     }
 
@@ -78,6 +108,12 @@ public class KnightInteractionDetector : MonoBehaviour
 
     void CheckForItemTriggers(Collider2D collider)
     {
+        CheckPickuppable(collider);
+        CheckInteractive(collider);
+    }
+
+    private void CheckPickuppable(Collider2D collider)
+    {
         IPickuppable pickuppable = collider.GetComponent<IPickuppable>();
         if (pickuppable != null)
         {
@@ -86,17 +122,51 @@ public class KnightInteractionDetector : MonoBehaviour
                 // Pick it up automatically
                 float moneyToPickup = (float)pickuppable.GetPickuppableObject();
                 GlobalVarsHolder.Instance.UpdatePlayerMoney(moneyToPickup);
-                knightSoundController?.PlaySound(pickuppable.PickupSound());
-                // 1) Delete the pile
-                Destroy(collider.gameObject);
-                // 2) Spawn the coins to animate
-                // 3) Fly them to the indicator
-
-                // 4) Make a caching sound for each coin
-
+                playerSoundController?.PlaySound(pickuppable.PickupSound());
+                Destroy(pickuppable.GetWorldObject());
+                return;
             }
+            else
+            {
+                nearbyPickuppableObject = pickuppable;
+                UIController.ItemProximityEvent newEvent = new UIController.ItemProximityEvent(collider.transform, UIController.ItemProximityEvent.ProximityEventType.Pickuppable);
+                onNearIneractiveObject?.ActivateWithData(newEvent);
+            }
+        }        
+    }
+
+    void CheckInteractive(Collider2D collider)
+    {
+        IInteractiveObject interactiveObject = collider.GetComponent<IInteractiveObject>();
+        if (interactiveObject != null)
+        {
+            UIController.ItemProximityEvent newEvent = new UIController.ItemProximityEvent(collider.transform, UIController.ItemProximityEvent.ProximityEventType.Interactive);
+            onNearIneractiveObject?.ActivateWithData(newEvent);
+            nearbyInteractiveObject = interactiveObject;
+        }
+    }
+
+    void CheckIfLeftPickuppable(Collider2D collider)
+    {
+        IPickuppable pickuppableObject = collider.GetComponent<IPickuppable>();
+        if (nearbyPickuppableObject == pickuppableObject)
+        {
+            nearbyPickuppableObject = null;
+            onNearIneractiveObject?.Deactivate();
+        }
+    }
+
+    void CheckIfLeftInteractiveObject(Collider2D collider)
+    {
+        IInteractiveObject interactiveObject = collider.GetComponent<IInteractiveObject>();
+        if (interactiveObject == nearbyInteractiveObject)
+        {
+            nearbyInteractiveObject = null;
+            onNearIneractiveObject?.Deactivate();
         }
     }
 
     #endregion
+
+
 }

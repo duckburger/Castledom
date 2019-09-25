@@ -27,6 +27,11 @@ public class Weapon : MonoBehaviour, IPickuppable
         return stats;
     }
 
+    public GameObject GetWorldObject()
+    {
+        return this.gameObject;
+    }
+
     private void OnDisable()
     {
         LeanTween.cancel(tweenID);
@@ -37,8 +42,19 @@ public class Weapon : MonoBehaviour, IPickuppable
         LeanTween.cancel(tweenID);
     }
 
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.layer == 10)
+            TurnOnAttractor();
+    }
 
-    public void AnimateOutline()
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.gameObject.layer == 10)
+            TurnOffAttractor();
+    }
+
+    public void TurnOnAttractor()
     {
         if (!spriteRenderer)
         {
@@ -50,17 +66,17 @@ public class Weapon : MonoBehaviour, IPickuppable
             LeanTween.cancel(tweenID);
 
         Color outlineColour = spriteRenderer.material.GetColor("_OutlineColour");
-        tweenID = LeanTween.value(1, 0, 0.23f).setOnUpdate((float val) => 
+        tweenID = LeanTween.value(1, 0, 0.23f).setOnUpdate((float val) =>
         {
             spriteRenderer.material.SetColor("_OutlineColour", new Color(outlineColour.r, outlineColour.g, outlineColour.b, val));
         }).setLoopPingPong().id;
     }
 
-    public void StopAnimatingOutline()
+    public void TurnOffAttractor()
     {
         LeanTween.cancel(tweenID);
         tweenID = 0;
         Color outlineColour = spriteRenderer.material.GetColor("_OutlineColour");
-        spriteRenderer.material.SetColor("_OutlineColour", new Color(outlineColour.r, outlineColour.g, outlineColour.b, 1));        
+        spriteRenderer.material.SetColor("_OutlineColour", new Color(outlineColour.r, outlineColour.g, outlineColour.b, 1));
     }
 }

@@ -147,7 +147,11 @@ public class PlayerAttackCollider : AttackCollider
             if (doorRb)
             {
                 doorRb.AddForce((collider.transform.position - transform.parent.position).normalized * 500f, ForceMode2D.Force);
-                Debug.Log("Pushed door from kick!");
+                //LeanTween.value(0, 1, 3f)
+                //    .setOnUpdate((float val) => 
+                //    {
+                //        Debug.Log($"Door velocity is {doorRb.velocity} door velocity magn is {doorRb.velocity.magnitude}");
+                //    });
             }
         }
     }

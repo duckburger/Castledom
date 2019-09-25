@@ -3,12 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    #region Data Model
+
+    [Serializable]
+    public class ItemProximityEvent
+    {
+        [Serializable]
+        public enum ProximityEventType
+        {
+            Pickuppable, 
+            Dialogue,
+            Interactive
+        }
+
+        public Transform itemTransform;
+        public ProximityEventType type;
+
+        public ItemProximityEvent(Transform targetTransform, ProximityEventType eventType)
+        {
+            this.itemTransform = targetTransform;
+            this.type = eventType;
+        }
+    }
+
+    #endregion
+
     [SerializeField] UIAnnouncementBoardController announcementBoard;
-    [SerializeField] RectTransform pickupIcon;
-    [SerializeField] RectTransform speakIcon;
+    [Space]
+    [SerializeField] Image interactionIcon;
+    [SerializeField] Sprite talkIcon;
+    [SerializeField] Sprite pickUpIcon;
+    [SerializeField] Sprite useIcon;
+    [Space]
     [SerializeField] UIObjectivePointer objectivePointer;
     [SerializeField] UIObjectiveTextDisplay objectiveTextDisplay;
     [SerializeField] AudioSource uiAudioSource;
@@ -32,52 +62,79 @@ public class UIController : MonoBehaviour
 
     #endregion
 
+    #region Interaction Icon
+
+    public void AcceptPlayerProximityEvent(object eventData)
+    {
+        if (!interactionIcon)
+        {
+            Debug.LogError("No interaction icon connected to the UIController");
+            return;
+        }
+
+        ItemProximityEvent receivedEvent = (ItemProximityEvent)eventData;
+        if (receivedEvent == null)
+        {
+            Debug.LogError("Error in converting ItemProximityEvent data inside UIController");
+            return;
+        }
+
+        if (!interactionIcon.gameObject.activeSelf)
+            interactionIcon.gameObject.SetActive(true);
+
+        switch (receivedEvent.type)
+        {
+            case ItemProximityEvent.ProximityEventType.Pickuppable:
+                PositionPickupIcon(receivedEvent);
+                break;
+            case ItemProximityEvent.ProximityEventType.Dialogue:
+                PositionSpeakToIcon(receivedEvent);
+                break;
+            case ItemProximityEvent.ProximityEventType.Interactive:
+                PositionGenInteractionIcon(receivedEvent);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void TurnOffInteractionIcon()
+    {
+        if (interactionIcon.gameObject.activeSelf)
+            interactionIcon.gameObject.SetActive(false);
+    }
+
+    #endregion
 
     #region Item Pick Up Icon
 
-    public void PositionPickupIcon(object obj)
+    public void PositionPickupIcon(ItemProximityEvent data)
     {
-        if (!pickupIcon)
+        if (!useIcon)
             return;
 
-        Transform trans = (Transform)obj;
-        if (!pickupIcon.gameObject.activeSelf)
-            pickupIcon.gameObject.SetActive(true);
-        pickupIcon.position = mainCam.WorldToScreenPoint(trans.position);
+        interactionIcon.sprite = pickUpIcon;
+        interactionIcon.rectTransform.position = mainCam.WorldToScreenPoint(data.itemTransform.position);
     }
-
-    public void TurnOffPickupIcon()
-    {
-        if (pickupIcon.gameObject.activeSelf)
-            pickupIcon.gameObject.SetActive(false);
-    }
-
-
+   
     #endregion
 
     #region Speak To Icon
 
-    public void PositionSpeakToIcon(object obj)
+    public void PositionSpeakToIcon(ItemProximityEvent data)
     {
-        if (!speakIcon)
-            return;
-
-        Transform trans = (Transform)obj;
-        if (!speakIcon.gameObject.activeSelf)
-            speakIcon.gameObject.SetActive(true);
-        speakIcon.position = mainCam.WorldToScreenPoint(trans.position) + Vector3.up * 15f;
+        interactionIcon.sprite = talkIcon;
+        interactionIcon.rectTransform.position = mainCam.WorldToScreenPoint(data.itemTransform.position) + Vector3.up * 15f;
     }
 
-    public void TurnOnSpeakToIcon()
-    {
-        if (!speakIcon.gameObject.activeSelf)
-            speakIcon.gameObject.SetActive(true);
-    }
+    #endregion
 
-    public void TurnOffSpeakToIcon()
+    #region General Interaction Icon
+
+    public void PositionGenInteractionIcon(ItemProximityEvent data)
     {
-        if (speakIcon.gameObject.activeSelf)
-            speakIcon.gameObject.SetActive(false);
+        interactionIcon.sprite = useIcon;
+        interactionIcon.rectTransform.position = mainCam.WorldToScreenPoint(data.itemTransform.position);
     }
 
     #endregion

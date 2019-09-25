@@ -23,4 +23,13 @@ public class Coins : MonoBehaviour, IPickuppable
     {
         return amount;
     }
+
+    public GameObject GetWorldObject()
+    {
+        return this.gameObject;
+    }
+
+    public void TurnOnAttractor() { }
+
+    public void TurnOffAttractor() { }   
 }

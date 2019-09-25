@@ -7,4 +7,7 @@ public interface IPickuppable
     AudioClip PickupSound();
     object GetPickuppableObject();
     bool AutoPickupped();
+    GameObject GetWorldObject();
+    void TurnOnAttractor();
+    void TurnOffAttractor();
 }
