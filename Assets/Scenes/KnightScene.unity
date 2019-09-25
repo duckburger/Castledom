@@ -280,7 +280,7 @@ Transform:
   m_Children:
   - {fileID: 208387911}
   m_Father: {fileID: 1960072710}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!210 &54336127
 SortingGroup:
@@ -601,9 +601,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  uniqueID: 329288060582274872
+  prev: {fileID: 0}
+  next: {fileID: 0}
+  coll: {fileID: 0}
+  coll2D: {fileID: 108278046}
+  tr: {fileID: 108278041}
   updateError: 1
   checkTime: 0.2
+  prevBounds:
+    m_Center: {x: -9.310314, y: -1.1261194, z: 0}
+    m_Extent: {x: 0.26713133, y: 1.8574526, z: 10000}
+  prevRotation: {x: -0, y: -0, z: -0, w: 1}
+  prevEnabled: 0
+  lastCheckTime: -9999
 --- !u!1 &157253931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,7 +1450,7 @@ Transform:
   - {fileID: 350814320}
   - {fileID: 622912823}
   m_Father: {fileID: 1960072710}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &599347693
 Grid:
@@ -4304,7 +4314,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1960072710}
-  m_RootOrder: 6
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1039271991
 BoxCollider2D:
@@ -4430,7 +4440,7 @@ Transform:
   - {fileID: 887832183}
   - {fileID: 534710877}
   m_Father: {fileID: 1960072710}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1232235077
 GameObject:
@@ -4667,7 +4677,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 0.9528302, g: 0.83946925, b: 0.4269758, a: 1}
-  m_Intensity: 0.65
+  m_Intensity: 1
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
@@ -4722,7 +4732,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1960072710}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1564273422
 MonoBehaviour:
@@ -5242,7 +5252,7 @@ Transform:
   m_Children:
   - {fileID: 157253932}
   m_Father: {fileID: 1960072710}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1877073482
 Mesh:
@@ -5577,13 +5587,13 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1564273421}
   - {fileID: 599347692}
-  - {fileID: 54336126}
-  - {fileID: 1230541617}
-  - {fileID: 915112165}
-  - {fileID: 1876660439}
+  - {fileID: 1564273421}
   - {fileID: 1039271990}
+  - {fileID: 54336126}
+  - {fileID: 915112165}
+  - {fileID: 1230541617}
+  - {fileID: 1876660439}
   - {fileID: 1540899008}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -6477,6 +6487,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4749528345392325563, guid: 2a5459afb9170a04a9ac2897adc60236,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -123.70117
+      objectReference: {fileID: 0}
     - target: {fileID: 1290618529, guid: 2a5459afb9170a04a9ac2897adc60236, type: 3}
       propertyPath: m_Color.r
       value: 0
@@ -6754,6 +6769,21 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4000932800891247709, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52dfb5e1f2d77084581e203509e1fea6, type: 2}
+    - target: {fileID: 4000932801588046361, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52dfb5e1f2d77084581e203509e1fea6, type: 2}
+    - target: {fileID: 4000932799949694361, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52dfb5e1f2d77084581e203509e1fea6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97cc45e0f026e1b48a05fbe8906f1f30, type: 3}
 --- !u!1001 &6213838463950563563
