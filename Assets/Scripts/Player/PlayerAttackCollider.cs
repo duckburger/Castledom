@@ -21,9 +21,15 @@ public class PlayerAttackCollider : AttackCollider
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!kickMode)
+        {
             HandleRegularAttackCollision(other);
+        }
         else
+        {
             HandleKickAttackCollision(other);
+            RegisterDoorKick(other);
+        }
+
     }
 
     public override void HandleRegularAttackCollision(Collider2D collider)
@@ -130,4 +136,21 @@ public class PlayerAttackCollider : AttackCollider
         yield return new WaitForSeconds(minTimeBetweenAttacks);
         canRegisterAttack = true;
     }
+
+    #region Kicking Doors
+
+    void RegisterDoorKick(Collider2D collider)
+    {
+        if (collider.gameObject.layer == 14 && kickMode)
+        {
+            Rigidbody2D doorRb = collider.GetComponent<Rigidbody2D>();
+            if (doorRb)
+            {
+                doorRb.AddForce((collider.transform.position - transform.parent.position).normalized * 500f, ForceMode2D.Force);
+                Debug.Log("Pushed door from kick!");
+            }
+        }
+    }
+
+    #endregion
 }

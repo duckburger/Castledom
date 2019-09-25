@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b75270471ff9ae6468c8a215f15d7fd3
+guid: 01e6a92efb456904196df2c476d0d29e
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -10,7 +10,7 @@ ScriptedImporter:
   script: {fileID: 11500000, guid: c5b4995c739cb6c41b2bb4a01104e430, type: 3}
   textureSettings:
     textureType: 8
-    pixelsPerUnit: 32
+    pixelsPerUnit: 64
     meshType: 1
     extrudeEdges: 1
     spritePivot: {x: 0.5, y: 0.5}
