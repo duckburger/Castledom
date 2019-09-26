@@ -459,7 +459,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -555,7 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2fc16efdc15a6c4cbfebda7b33146e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canTalk: 1
+  canTalk: 0
   myDialogue: {fileID: 11400000, guid: 09a621fabbf968a4eb4c949ac349a4e0, type: 2}
   onDialogueActivated: {fileID: 11400000, guid: 1df8b0906f480c84cbd4ec3d727a9062,
     type: 2}

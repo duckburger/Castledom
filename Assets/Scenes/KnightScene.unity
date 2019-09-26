@@ -7553,15 +7553,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RegularSolider (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 879201020682937764, guid: 97cc45e0f026e1b48a05fbe8906f1f30,
-        type: 3}
-      propertyPath: canTalk
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1055663654, guid: 97cc45e0f026e1b48a05fbe8906f1f30, type: 3}
-      propertyPath: m_Volume
-      value: 0.4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97cc45e0f026e1b48a05fbe8906f1f30, type: 3}
 --- !u!114 &4082127101528558941 stripped
