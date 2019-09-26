@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(HingeJoint2D))]
-public class DoorMechanism : MonoBehaviour
+public class DoorMechanism : MonoBehaviour, IInteractiveObject
 {
     [SerializeField] Vector2 lockedLimitVals = Vector2.zero;
     [SerializeField] Vector2 unlockedLimitVals = new Vector2(-90f, 90f);
@@ -11,7 +11,9 @@ public class DoorMechanism : MonoBehaviour
     HingeJoint2D doorJoint;
     JointAngleLimits2D lockedLimits = new JointAngleLimits2D();
     JointAngleLimits2D unlockedLimits = new JointAngleLimits2D();
+    bool isUnlocked = true;
 
+    public bool IsUnlocked => isUnlocked;
 
     private void Start()
     {
@@ -23,15 +25,28 @@ public class DoorMechanism : MonoBehaviour
         unlockedLimits.max = unlockedLimitVals.y;
     }
 
+    public void Toggle()
+    {
+        if (isUnlocked)
+            LockDoor();
+        else
+            UnlockDoor();
+    }
+
     public void UnlockDoor()
     {
         doorJoint.limits = unlockedLimits;
+        isUnlocked = true;
     }
 
     public void LockDoor()
     {
         doorJoint.limits = lockedLimits;
+        isUnlocked = false;
     }
 
-
+    public void Interact()
+    {
+        Toggle();
+    }
 }

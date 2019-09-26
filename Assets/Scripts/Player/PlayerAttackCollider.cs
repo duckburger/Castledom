@@ -74,7 +74,7 @@ public class PlayerAttackCollider : AttackCollider
             return;
 
         Health hitEnemyHealth = collider.GetComponent<Health>();
-        if (hitEnemyHealth != null) //TODO: Add friend/foe for check
+        if (hitEnemyHealth != null) //TODO: Add friend/foe check
         {
             PlayHitSound(playerInventory.KickWeapon);
             float dmg = CalculateDamageAmount(collider, hitEnemyHealth, playerInventory.KickWeapon);
@@ -146,12 +146,8 @@ public class PlayerAttackCollider : AttackCollider
             Rigidbody2D doorRb = collider.GetComponent<Rigidbody2D>();
             if (doorRb)
             {
+                doorRb.GetComponent<DoorMechanism>().UnlockDoor();
                 doorRb.AddForce((collider.transform.position - transform.parent.position).normalized * 500f, ForceMode2D.Force);
-                //LeanTween.value(0, 1, 3f)
-                //    .setOnUpdate((float val) => 
-                //    {
-                //        Debug.Log($"Door velocity is {doorRb.velocity} door velocity magn is {doorRb.velocity.magnitude}");
-                //    });
             }
         }
     }
