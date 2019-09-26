@@ -4058,6 +4058,16 @@ CompositeCollider2D:
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
+  - m_Collider: {fileID: 626474487}
+    m_ColliderPaths:
+    - - X: 750655
+        Y: -7630529
+      - X: 750655
+        Y: 33025236
+      - X: -4190607
+        Y: 33025207
+      - X: -4190578
+        Y: -7630529
   - m_Collider: {fileID: 626474486}
     m_ColliderPaths:
     - - X: 1054181
@@ -4138,16 +4148,6 @@ CompositeCollider2D:
         Y: -28488687
       - X: 564604
         Y: -33632292
-  - m_Collider: {fileID: 626474487}
-    m_ColliderPaths:
-    - - X: 750655
-        Y: -7630529
-      - X: 750655
-        Y: 33025236
-      - X: -4190607
-        Y: 33025207
-      - X: -4190578
-        Y: -7630529
   m_CompositePaths:
     m_Paths:
     - - {x: 3.6060393, y: -3.413817}
@@ -4613,7 +4613,7 @@ GameObject:
   - component: {fileID: 876973020}
   - component: {fileID: 876973019}
   - component: {fileID: 876973018}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7393,6 +7393,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3378525051097374893, guid: c6fa33661b65d734d9c53830210f2e52,
+        type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2139220950, guid: c6fa33661b65d734d9c53830210f2e52, type: 3}
       propertyPath: onMovedAwayFromDialogueNPC
       value: 
@@ -7552,6 +7557,10 @@ PrefabInstance:
         type: 3}
       propertyPath: canTalk
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055663654, guid: 97cc45e0f026e1b48a05fbe8906f1f30, type: 3}
+      propertyPath: m_Volume
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97cc45e0f026e1b48a05fbe8906f1f30, type: 3}
