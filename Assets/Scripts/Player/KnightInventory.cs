@@ -30,13 +30,14 @@ public class KnightInventory : MonoBehaviour
         attackController.SetupAttacksFromHandWeapon(equippedWeapon);
     }
 
-    private void Start()
+    private void Awake()
     {
         mainCam = Camera.main;
         myRB = GetComponent<Rigidbody2D>();
         attackController = GetComponent<KnightAttackController>();
-        attackController.SetupAttacksFromHandWeapon(equippedWeapon); 
+        attackController.SetupAttacksFromHandWeapon(equippedWeapon);
     }
+
 
     private void Update()
     {
@@ -48,6 +49,8 @@ public class KnightInventory : MonoBehaviour
 
     private void DropEquippedWeapon()
     {
+        if (equippedWeapon == defaultWeapon)
+            return;
         Rigidbody2D rigidBody = Instantiate(equippedWeapon.prefab, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
         Vector2 throwForce = myRB.velocity + (Vector2)(Input.mousePosition - mainCam.WorldToScreenPoint(transform.position)).normalized * weaponThrowStrength;
         rigidBody.AddRelativeForce(throwForce, ForceMode2D.Impulse);

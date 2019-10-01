@@ -7,6 +7,7 @@ public class CameraControls : MonoBehaviour
     public static CameraControls Instance;
 
     [SerializeField] CinemachineVirtualCamera virtualCam;
+    [SerializeField] CameraZoom zoomControls;
 
     private void Awake()
     {
@@ -18,6 +19,8 @@ public class CameraControls : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        zoomControls = GetComponentInChildren<CameraZoom>();
     }
 
     public void ScreenShake()
@@ -31,4 +34,19 @@ public class CameraControls : MonoBehaviour
                 virtualCam.m_Lens.Dutch = val;
             });        
     }
+
+
+    #region Zoom Controls
+
+    public void LerpZoomToValue(float value)
+    {
+        zoomControls?.LerpToVal(value);
+    }
+
+    public void EnableZoomControls(bool enabled)
+    {
+        zoomControls?.Enable(enabled);
+    }
+
+    #endregion
 }

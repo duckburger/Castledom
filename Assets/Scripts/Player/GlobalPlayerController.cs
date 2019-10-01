@@ -7,6 +7,7 @@ public class GlobalPlayerController : MonoBehaviour
 {
    [SerializeField] GameObject player;
 
+    Health health;
     KnightMovement movement;
     KnightRotation rotation;
     KnightSounds sounds;
@@ -26,6 +27,7 @@ public class GlobalPlayerController : MonoBehaviour
             rigidBody = player.GetComponent<Rigidbody2D>();
             interactionDetector = player.GetComponentInChildren<KnightInteractionDetector>();
             interactionCollider = interactionDetector.GetComponent<CircleCollider2D>();
+            health = player.GetComponent<Health>();
         }
     }
 
@@ -83,6 +85,21 @@ public class GlobalPlayerController : MonoBehaviour
     {
         if (player)
             player.transform.position = newWorldPosition;
+    }
+
+    #endregion
+
+    #region Player Controls
+
+    public void SetPlayerHealth(float newVal)
+    {
+        if (!health)
+        {
+            Debug.LogError("Can't adjust health because didn't find the script on the player");
+            return;
+        }
+
+        health.SetHealthDirectly(newVal);
     }
 
     #endregion

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Threading.Tasks;
 
 [RequireComponent(typeof(HingeJoint2D))]
 public class DoorMechanism : MonoBehaviour, IInteractiveObject, IBreakable
@@ -18,6 +19,7 @@ public class DoorMechanism : MonoBehaviour, IInteractiveObject, IBreakable
     HingeJoint2D doorJoint;
     JointAngleLimits2D lockedLimits = new JointAngleLimits2D();
     JointAngleLimits2D unlockedLimits = new JointAngleLimits2D();
+    BoxCollider2D doorCollider;
     Rigidbody2D rb;
     Rigidbody2D[] brokenPiecesRBs;
 
@@ -45,6 +47,7 @@ public class DoorMechanism : MonoBehaviour, IInteractiveObject, IBreakable
         onLockStatusChanged += LockStatusChanged;
         doorJoint = GetComponent<HingeJoint2D>();
         rb = GetComponent<Rigidbody2D>();
+        doorCollider = GetComponent<BoxCollider2D>();
 
         lockedLimits.min = lockedLimitVals.x;
         lockedLimits.max = lockedLimitVals.y;
@@ -52,36 +55,58 @@ public class DoorMechanism : MonoBehaviour, IInteractiveObject, IBreakable
         unlockedLimits.max = unlockedLimitVals.y;
     }
 
-    public void Toggle()
+    public async void Toggle()
     {
         if (isUnlocked)
-            LockDoor();
+            await LockDoor();
         else
-            UnlockDoor();
+            await UnlockDoor();
     }
 
-    void LockStatusChanged(bool isUnlocked)
+    async void LockStatusChanged(bool isUnlocked)
     {
         if (isUnlocked)
-            UnlockDoor();
+            await UnlockDoor();
         else
-            LockDoor();
+            await LockDoor();
     }
 
-    public void UnlockDoor()
+    public async Task UnlockDoor()
     {
+        doorCollider.enabled = false;
         doorJoint.limits = unlockedLimits;
         isUnlocked = true;
         if (navmeshObstacle)
             navmeshObstacle.gameObject.SetActive(false);
+        await WaitForOpen();
     }
 
-    public void LockDoor()
+    async Task WaitForOpen()
     {
+        while (Mathf.Abs(doorJoint.jointAngle) < 80)
+        {
+            await Task.Delay(2);
+        }
+        doorCollider.enabled = true;
+    }
+
+    public async Task LockDoor()
+    {
+        doorCollider.enabled = false;
         doorJoint.limits = lockedLimits;
         isUnlocked = false;
         if (navmeshObstacle)
             navmeshObstacle.gameObject.SetActive(true);
+        await WaitForClose();
+    }
+
+    async Task WaitForClose()
+    {
+        while (Mathf.Abs(doorJoint.jointAngle) > 10)
+        {
+            await Task.Delay(2);           
+        }
+        doorCollider.enabled = true;
     }
 
     public void Interact()
@@ -104,12 +129,8 @@ public class DoorMechanism : MonoBehaviour, IInteractiveObject, IBreakable
         // Break joint
         doorJoint.enabled = false;
         gameObject.layer = 16;
-        // Spawn pieces
-        //if (brokenVersion)
-        //{
-        //    GameObject spawnedBroken = Instantiate(brokenVersion, transform.position, Quaternion.identity, transform.parent);
-        //    brokenPiecesRBs = spawnedBroken.GetComponentsInChildren<Rigidbody2D>();
-        //}
+        // Spawn particles
+ 
 
         // Make pieces fly
     }
@@ -122,7 +143,13 @@ public class DoorMechanism : MonoBehaviour, IInteractiveObject, IBreakable
     public void BreakWithForce(Vector2 incomingForce)
     {
         Break();
-        rb.AddForce(incomingForce, ForceMode2D.Force);        
-        //Destroy(gameObject);
+        rb.AddForce(incomingForce, ForceMode2D.Force);
+        StartCoroutine(DestroyTimer());
+    }
+
+    IEnumerator DestroyTimer()
+    {
+        yield return new WaitForSeconds(2.5f);
+        Destroy(gameObject);
     }
 }

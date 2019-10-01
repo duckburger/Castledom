@@ -140,7 +140,7 @@ public class PlayerAttackCollider : AttackCollider
 
     #region Kicking Doors
 
-    void RegisterBreakableKick(Collider2D collider)
+    async void RegisterBreakableKick(Collider2D collider)
     {
         IBreakable breakable = collider.GetComponent<IBreakable>();
         if (breakable != null)

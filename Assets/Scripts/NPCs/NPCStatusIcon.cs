@@ -20,6 +20,12 @@ public class NPCStatusIcon : MonoBehaviour
         animator.SetBool("isStunned", true);
     }
 
+    public void ShowAlertedStatus()
+    {
+        worldSpaceCanvas.enabled = true;
+        animator.SetBool("isAlerted", true);
+    }
+
 
     public void Disable()
     {

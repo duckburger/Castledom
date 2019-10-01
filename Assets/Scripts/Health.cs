@@ -25,11 +25,17 @@ public class Health : MonoBehaviour
     public Action onDied;
 
     public float CurrentHealth => currentHealth;
+    public float MaxHealth => maxHealth;
 
     private void Start()
     {
         currentHealth = maxHealth;
         aiController = GetComponent<NPCAI>();
+    }
+
+    public void SetHealthDirectly(float newVal)
+    {
+        currentHealth = newVal;
     }
 
 

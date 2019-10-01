@@ -5,6 +5,7 @@ public class NPCRegistry : MonoBehaviour
 {
     public static NPCRegistry Instance;
 
+    public NPCDataBase npcDatabase;
     List<GameObject> allNPCInScene = new List<GameObject>();
 
 

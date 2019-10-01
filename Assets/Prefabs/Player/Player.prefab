@@ -703,7 +703,7 @@ MonoBehaviour:
     type: 3}
   deadBodySprite: {fileID: -2694096634564985735, guid: 68aec8a319615be439071fe120dc994c,
     type: 3}
-  knockbackStrength: 100
+  knockbackStrength: 25
   destroyOnDeath: 0
 --- !u!1 &3378525051298982935
 GameObject:
@@ -816,7 +816,7 @@ MonoBehaviour:
   - {x: -0.14393264, y: 0.080910794, z: 0}
   m_ShapePathHash: -1387682179
   m_Mesh: {fileID: 0}
-  m_InstanceId: 17064
+  m_InstanceId: 44994
 --- !u!1 &3378525051839673584
 GameObject:
   m_ObjectHideFlags: 0

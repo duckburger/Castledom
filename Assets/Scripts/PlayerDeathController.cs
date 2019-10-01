@@ -48,7 +48,7 @@ public class PlayerDeathController : MonoBehaviour
 
     }
 
-    private async void  ProcessFirstDeath()
+    private async void ProcessFirstDeath()
     {
         // Show player knocked out, record a weapon they were carrying
 
@@ -68,16 +68,35 @@ public class PlayerDeathController : MonoBehaviour
 
         // Move player's body to the back room of the player's house
         playerController.MovePlayer(currentHouseController.HouseBackroomSpawn.position);
+        // Restore player's health
+        playerController.SetPlayerHealth(100);
         playerController.TurnOnPlayerObject();
-        currentHouseController.FadeMainRoof(false);
-        // Set up guards in the player house
-
+        currentHouseController?.FadeMainRoof(false);
+        // Set up guards in the player house and lock the back room door
+        currentHouseController?.ControlBackDoor(false);
+        CameraControls.Instance?.LerpZoomToValue(3.8f);
+        CameraControls.Instance?.EnableZoomControls(true);
+        for (int i = 0; i < currentHouseController.NpcPositionsForRespawn.Count; i++)
+        {
+            Instantiate(NPCRegistry.Instance.npcDatabase.GetRandomEnemy(1), currentHouseController.NpcPositionsForRespawn[i].position, Quaternion.identity, NPCRegistry.Instance.transform);
+        }
         // Drop the empire's aggression a bit
+
+
+        deathCount++;
     }
 
-    private void ProcessSecondDeath()
+    private async void ProcessSecondDeath()
     {
-        
+        AnnouncementBoardData secondDeathMessage = new AnnouncementBoardData();
+        secondDeathMessage.blackedOut = true;
+        AnnouncementBoardData.AnnouncementMessage firstMessage = new AnnouncementBoardData.AnnouncementMessage();
+        firstMessage.body = "You Are Dead!";
+        secondDeathMessage.messages.Add(firstMessage);
+        await Task.Delay(3000);
+        await UIController.Instance.DisplayMessageInAnnouncementBoard(secondDeathMessage);
+
+        deathCount = 0;
     }
   
 }

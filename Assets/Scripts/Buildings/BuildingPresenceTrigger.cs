@@ -57,7 +57,6 @@ public class BuildingPresenceTrigger : MonoBehaviour
         }
         if (rendererToFade.color.a < 1)
             return;
-        Debug.Log("Fading out!!!");
         LeanTween.value(1, 0, 0.23f)
             .setOnUpdate((float val) =>
             {

@@ -294,6 +294,7 @@ MonoBehaviour:
   combatRange: 1
   runSpeed: 4
   walkSpeed: 1.8
+  combatTarget: {fileID: 0}
   stamina: 100
   maxStamina: 100
   staminaRecoverySpeed: 10
@@ -318,7 +319,7 @@ MonoBehaviour:
     type: 3}
   deadBodySprite: {fileID: 9095710067589898960, guid: 3b0793d635c67884aa5a50e1979541d5,
     type: 3}
-  knockbackStrength: 100
+  knockbackStrength: 25
   destroyOnDeath: 1
 --- !u!114 &4000932799846560602
 MonoBehaviour:

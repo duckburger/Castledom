@@ -1,8 +1,8 @@
 tree("Root")
 	fallback
 		tree("Stunned")
-		tree("WalkTheRoad")
 		tree("Combat")
+		tree("WalkTheRoad")
 
 tree("WalkTheRoad")
 	while not inCombat

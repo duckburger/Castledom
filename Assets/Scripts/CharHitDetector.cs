@@ -41,12 +41,19 @@ public class CharHitDetector : MonoBehaviour
     {
         if (collision.gameObject.layer == 16) // Hit by an item
         {
-            Debug.Log($"{gameObject.name} collided with {collision.gameObject.name}. Collision force is {collision.relativeVelocity.sqrMagnitude}");
             if (collision.relativeVelocity.sqrMagnitude > 50f)
-            {
-                BloodSplat(collision.transform, 3);
-                lastHitBy = collision.transform;
-                health?.AdjustHealth(-collision.relativeVelocity.sqrMagnitude);
+            {                
+                ItemHitDetector itemHitDetector = collision.gameObject.GetComponent<ItemHitDetector>();
+                if (itemHitDetector)
+                {
+                    lastHitBy = itemHitDetector.lastHitBy;
+                }
+                else
+                {
+                    lastHitBy = collision.transform;
+                }
+                BloodSplat(lastHitBy, 3);
+                health?.AdjustHealth(-collision.relativeVelocity.sqrMagnitude / 2);
             }
         }
     }
@@ -71,7 +78,7 @@ public class CharHitDetector : MonoBehaviour
 
     void Die()
     {
-        Vector2 dirToHitter = transform.position - lastHitBy.position;
+        Vector2 dirToHitter = lastHitBy.up;
         float angleToHitter = Mathf.Atan2(dirToHitter.y, dirToHitter.x) * Mathf.Rad2Deg;
         // Spawn dead body sprite and direct it away from last attack
         MakeDeadBody(dirToHitter, angleToHitter);
@@ -95,6 +102,6 @@ public class CharHitDetector : MonoBehaviour
         rb.drag = 5;
         rb.mass = 6;
         rb.AddRelativeForce(dirToHitter * knockbackStrength, ForceMode2D.Impulse); // TODO: Make knockback depend on the weapon so it's more fun
-        // Destroy self
+        // Destroy body
     }
 }
