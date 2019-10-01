@@ -6,9 +6,11 @@ using Panda;
 
 public class NPCAI : MonoBehaviour
 {
+    [SerializeField] LayerMask hostileChars;
     [SerializeField] float combatRange = 3f;
     [SerializeField] float runSpeed = 2.5f;
     [SerializeField] float walkSpeed = 1.8f;
+    [SerializeField] Health combatTarget = null;
     [Space]
     [SerializeField] float stamina = 100f;
     [SerializeField] float maxStamina = 100f;
@@ -22,9 +24,8 @@ public class NPCAI : MonoBehaviour
     PolyNavAgent polynavAgent;
     Transform currentTarget;
     Health healthController;
-    NPCHitDetector hitDetector;
+    CharHitDetector hitDetector;
     NPCAnimator npcAnimator;
-    Health combatTarget = null;
 
     [Task] bool inCombat = false;
     [Task] bool recoveringStamina = false;
@@ -55,7 +56,7 @@ public class NPCAI : MonoBehaviour
     {
         polynavAgent = GetComponent<PolyNavAgent>();
         healthController = GetComponent<Health>();
-        hitDetector = GetComponent<NPCHitDetector>();
+        hitDetector = GetComponent<CharHitDetector>();
         npcAnimator = GetComponent<NPCAnimator>();
         npcRotator = GetComponent<NPCRotator>();
         statusIcon = GetComponentInChildren<NPCStatusIcon>();
@@ -101,7 +102,7 @@ public class NPCAI : MonoBehaviour
 
     public void ReactToAgression()
     {
-        if (!inCombat && hitDetector.LastHitBy.gameObject.layer == 10)
+        if (!inCombat && ((1 << hitDetector.LastHitBy.gameObject.layer) | hostileChars) == hostileChars)
         {
             inCombat = true;
             combatTarget = hitDetector.LastHitBy.GetComponentInParent<Health>();
@@ -109,8 +110,29 @@ public class NPCAI : MonoBehaviour
     }
 
     [Task]
+    bool CombatTargetAlive()
+    {
+        if (combatTarget)
+        {
+            if (combatTarget.CurrentHealth <= 0)
+            {
+                combatTarget = null;
+                inCombat = false;
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    [Task]
     bool WithinCombatRange()
     {
+        if (combatTarget == null || combatTarget.enabled == false || !combatTarget.gameObject.activeSelf)
+            return false;
         return Vector2.Distance(transform.position, combatTarget.transform.position) <= combatRange ? true : false;
     }
 
@@ -118,8 +140,14 @@ public class NPCAI : MonoBehaviour
     void ChaseCombatTarget() // TODO: Add speed change + Add stamina system??
     {
         npcAnimator.DeactivateAttack();
+        if (combatTarget == null || combatTarget.enabled == false || !combatTarget.gameObject.activeSelf)
+        {
+            Task.current.Complete(false);
+            return;
+        }
+
         if (polynavAgent.primeGoal != (Vector2)combatTarget.transform.position)
-            polynavAgent.SetDestination(combatTarget.transform.position);
+        polynavAgent.SetDestination(combatTarget.transform.position);
 
         if (polynavAgent.pathPending)
             Debug.Log($"{Task.current.debugInfo}");
@@ -131,6 +159,9 @@ public class NPCAI : MonoBehaviour
     void AttackTarget()
     {
         npcAnimator.ActivateAttack();
+        if (!CombatTargetAlive())
+            combatTarget = null;
+            
         Task.current.Succeed();
     }
 

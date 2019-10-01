@@ -21,11 +21,16 @@ public class KnightAttackController : MonoBehaviour
     public AudioClip CurrentPreSwingAudioClip => currentPreSwingAudioClip;
     public AudioClip CurrentSwingAudioClip => currentSwingAudioClip;
 
-    void Start()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
         knightRotator = GetComponent<KnightRotation>();
         knightMovement = GetComponent<KnightMovement>();
+        DeActivateAttackCollider();
+    }
+
+    private void OnEnable()
+    {
         DeActivateAttackCollider();
     }
 

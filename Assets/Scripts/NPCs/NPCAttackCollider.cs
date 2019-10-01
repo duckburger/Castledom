@@ -8,7 +8,7 @@ public class NPCAttackCollider : AttackCollider
 
     NPCSoundBoard npcSoundBoard;
 
-    private void Start()
+    private void Awake()
     {
         circleCollider = GetComponent<Collider2D>();
         npcSoundBoard = GetComponentInParent<NPCSoundBoard>();

@@ -25,12 +25,17 @@ public class KnightInventory : MonoBehaviour
     public WeaponStatFile EquippedWeapon => equippedWeapon;
     public WeaponStatFile KickWeapon => kickWeapon;
 
+    private void OnEnable()
+    {
+        attackController.SetupAttacksFromHandWeapon(equippedWeapon);
+    }
+
     private void Start()
     {
         mainCam = Camera.main;
         myRB = GetComponent<Rigidbody2D>();
         attackController = GetComponent<KnightAttackController>();
-        attackController.SetupAttacksFromHandWeapon(equippedWeapon); // TODO: Change this so there is only 1 attack or it passes all of them through
+        attackController.SetupAttacksFromHandWeapon(equippedWeapon); 
     }
 
     private void Update()

@@ -4,9 +4,12 @@ using UnityEngine;
 using System;
 using TMPro;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class UIController : MonoBehaviour
 {
+    public static UIController Instance;
+
     #region Data Model
 
     [Serializable]
@@ -47,6 +50,18 @@ public class UIController : MonoBehaviour
 
     Camera mainCam;
 
+    private void Awake()
+    {
+        if (!Instance)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         mainCam = Camera.main;
@@ -54,10 +69,10 @@ public class UIController : MonoBehaviour
 
     #region Announcement Board
 
-    public void DisplayMessageInAnnouncementBoard(AnnouncementBoardData message)
+    public async Task DisplayMessageInAnnouncementBoard(AnnouncementBoardData message)
     {
         announcementBoard?.Populate(message);
-        announcementBoard?.AnimateIn();
+        await announcementBoard?.AnimateIn();
     }
 
     #endregion

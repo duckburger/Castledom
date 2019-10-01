@@ -7,7 +7,9 @@ public class Health : MonoBehaviour
 {
     [SerializeField] bool player = false;
     [Space]
+    [SerializeField] ScriptableEvent onPlayerDied;
     [SerializeField] ScriptableEvent onPlayerHealthChanged;
+    [Space]
     [SerializeField] ScriptableEvent onCombatMoveMade;
     [Space]
     [SerializeField] float currentHealth;
@@ -22,11 +24,14 @@ public class Health : MonoBehaviour
     public Action onHealthDecreased;
     public Action onDied;
 
+    public float CurrentHealth => currentHealth;
+
     private void Start()
     {
         currentHealth = maxHealth;
         aiController = GetComponent<NPCAI>();
     }
+
 
     public void AdjustHealth(float amount)
     {
@@ -44,6 +49,8 @@ public class Health : MonoBehaviour
         {
             // No health left
             onDied?.Invoke();
+            if (player)
+                onPlayerDied?.Raise();
             return;
         }
 

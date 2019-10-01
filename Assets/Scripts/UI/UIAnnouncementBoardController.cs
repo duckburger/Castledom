@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using System.Threading.Tasks;
 
 [Serializable]
 public class AnnouncementBoardData
@@ -33,16 +34,24 @@ public class UIAnnouncementBoardController : MonoBehaviour
     float currentOnScreenTimer = 0;
 
 
-    public void AnimateIn()
+    public async Task AnimateIn()
     {
+        bool tweenCompleted = false;
         LeanTween.cancel(gameObject);
         LeanTween.alphaCanvas(canvasGroup, 1, 0.23f).setOnComplete(() => 
         {
             canvasGroup.blocksRaycasts = true;
             canvasGroup.interactable = true;
+            tweenCompleted = true;
         });
 
         blockControls?.Activate();
+
+        await Task.Run(() => 
+        {
+            while (!tweenCompleted)
+                Task.Delay(2);
+        });
     }
 
     public void AnimateOut()

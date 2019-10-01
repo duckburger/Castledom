@@ -12,11 +12,12 @@ public class PlayerAttackCollider : AttackCollider
     KnightSounds knightSounds;
 
 
-    private void Start()
+    private void Awake()
     {
         circleCollider = GetComponent<Collider2D>();
         knightSounds = GetComponentInParent<KnightSounds>();
     }
+
     
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -27,7 +28,7 @@ public class PlayerAttackCollider : AttackCollider
         else
         {
             HandleKickAttackCollision(other);
-            RegisterDoorKick(other);
+            RegisterBreakableKick(other);
         }
 
     }
@@ -124,7 +125,7 @@ public class PlayerAttackCollider : AttackCollider
 
     private void ProcessHitDetector(Collider2D collider)
     {
-        NPCHitDetector hitDetector = collider.GetComponent<NPCHitDetector>();
+        CharHitDetector hitDetector = collider.GetComponent<CharHitDetector>();
         if (hitDetector)
         {
             hitDetector.LastHitBy = transform; // Doing this so the assignment happens before the var is needed inside the function in Health
@@ -139,15 +140,23 @@ public class PlayerAttackCollider : AttackCollider
 
     #region Kicking Doors
 
-    void RegisterDoorKick(Collider2D collider)
+    void RegisterBreakableKick(Collider2D collider)
     {
-        if (collider.gameObject.layer == 14 && kickMode)
-        {
-            Rigidbody2D doorRb = collider.GetComponent<Rigidbody2D>();
-            if (doorRb)
+        IBreakable breakable = collider.GetComponent<IBreakable>();
+        if (breakable != null)
+        {            
+            if (breakable != null && breakable.Breakable())
             {
-                doorRb.GetComponent<DoorMechanism>().UnlockDoor();
-                doorRb.AddForce((collider.transform.position - transform.parent.position).normalized * 500f, ForceMode2D.Force);
+                breakable.BreakWithForce((collider.transform.position - transform.parent.position).normalized * 700f);
+            }
+        }
+
+        if (collider.gameObject.layer == 14)
+        {
+            DoorMechanism doorMechanism = collider.GetComponent<DoorMechanism>();
+            if (doorMechanism != null && doorMechanism.UnlockableByPlayer)
+            {
+                doorMechanism.UnlockDoor();
             }
         }
     }

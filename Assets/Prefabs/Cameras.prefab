@@ -190,13 +190,9 @@ MonoBehaviour:
   m_CameraCutEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Cinemachine.CinemachineBrain+BrainEvent, Cinemachine, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Cinemachine.CinemachineBrain+VcamActivatedEvent, Cinemachine, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &6213838465282765295
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,6 +203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6213838465282765294}
   - component: {fileID: 6213838465282765293}
+  - component: {fileID: 1512597195}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -243,6 +240,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCam: {fileID: 6213838465496999321}
+--- !u!114 &1512597195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6213838465282765295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f44479df30e3c6e47aa54c9a8be7b8a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackedEvent: {fileID: 11400000, guid: 651843a6a6849974c93043bf01211675, type: 2}
+  raiseResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6213838465496999327}
+        m_MethodName: LerpToVal
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1.9
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  raisedWithData:
+    m_PersistentCalls:
+      m_Calls: []
+  activateResponse:
+    m_PersistentCalls:
+      m_Calls: []
+  activateWithDataResponse:
+    m_PersistentCalls:
+      m_Calls: []
+  deactivateResponse:
+    m_PersistentCalls:
+      m_Calls: []
+  deactivateWithDataResponse:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6213838465496999322
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,8 +348,6 @@ MonoBehaviour:
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: Cinemachine.CinemachineBrain+VcamActivatedEvent, Cinemachine, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 6213838464802175184}
 --- !u!114 &6213838465496999327

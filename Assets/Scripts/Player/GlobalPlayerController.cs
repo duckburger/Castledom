@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GlobalPlayerController : MonoBehaviour
 {
    [SerializeField] GameObject player;
@@ -27,6 +28,8 @@ public class GlobalPlayerController : MonoBehaviour
             interactionCollider = interactionDetector.GetComponent<CircleCollider2D>();
         }
     }
+
+    #region Controls
 
     public void TurnOnPlayerControls()
     {
@@ -55,5 +58,33 @@ public class GlobalPlayerController : MonoBehaviour
         interactionDetector.enabled = false;
         interactionCollider.enabled = false;
     }
+
+    #endregion
+
+    #region Turning Player Obj On/Off
+
+    public void TurnOnPlayerObject()
+    {
+        if (player)
+            player.gameObject.SetActive(true);
+    }
+
+    public void TurnOffPlayerObject()
+    {
+        if (player)
+            player.gameObject.SetActive(false);
+    }
+
+    #endregion
+
+    #region Moving Player
+
+    public void MovePlayer(Vector2 newWorldPosition)
+    {
+        if (player)
+            player.transform.position = newWorldPosition;
+    }
+
+    #endregion
 
 }

@@ -138,7 +138,7 @@ public class KnightInteractionDetector : MonoBehaviour
     void CheckInteractive(Collider2D collider)
     {
         IInteractiveObject interactiveObject = collider.GetComponent<IInteractiveObject>();
-        if (interactiveObject != null)
+        if (interactiveObject != null && interactiveObject.Interactable())
         {
             UIController.ItemProximityEvent newEvent = new UIController.ItemProximityEvent(collider.transform, UIController.ItemProximityEvent.ProximityEventType.Interactive);
             onNearIneractiveObject?.ActivateWithData(newEvent);

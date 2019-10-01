@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 794496294}
   - component: {fileID: 794496295}
   - component: {fileID: 794496296}
-  m_Layer: 12
+  m_Layer: 18
   m_Name: NPCAttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,6 +288,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cdfa172308a332418335859dfde5ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hostileChars:
+    serializedVersion: 2
+    m_Bits: 134144
   combatRange: 1
   runSpeed: 4
   walkSpeed: 1.8
@@ -308,11 +311,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a4d4585b297b24ca1a355ddd75a2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitByLayers:
+    serializedVersion: 2
+    m_Bits: 131072
   bloodParticlesPrefab: {fileID: 9155770031381064098, guid: 80c7d3a470816e948a83c28eaa46700a,
     type: 3}
   deadBodySprite: {fileID: 9095710067589898960, guid: 3b0793d635c67884aa5a50e1979541d5,
     type: 3}
-  knockbackStrength: 55
+  knockbackStrength: 100
+  destroyOnDeath: 1
 --- !u!114 &4000932799846560602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,6 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 0
+  onPlayerDied: {fileID: 0}
   onPlayerHealthChanged: {fileID: 0}
   onCombatMoveMade: {fileID: 11400000, guid: ab93e7d9000e5464cb4204637ae71a89, type: 2}
   currentHealth: 0

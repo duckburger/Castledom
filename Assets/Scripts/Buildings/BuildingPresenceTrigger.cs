@@ -31,7 +31,7 @@ public class BuildingPresenceTrigger : MonoBehaviour
         }
     }
 
-    void FadeIn()
+    public void FadeIn()
     {
         if (!rendererToFade)
         {
@@ -48,7 +48,7 @@ public class BuildingPresenceTrigger : MonoBehaviour
             });
     }
 
-    void FadeOut()
+    public void FadeOut()
     {
         if (!rendererToFade)
         {

@@ -20,10 +20,10 @@ TagManager:
   - HostileNPCs
   - NavmeshObstacles
   - Doors
-  - 
-  - 
-  - 
-  - 
+  - Buildings
+  - DangerousDebris
+  - PlayerAttackCollider
+  - NPCAttackCollider
   - 
   - 
   - 

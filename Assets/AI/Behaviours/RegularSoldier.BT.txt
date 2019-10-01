@@ -12,10 +12,13 @@ tree("WalkTheRoad")
 tree("Combat")
 	while inCombat
 		fallback
+			while not CombatTargetAlive
+				Fail
 			while WithinCombatRange
-				parallel
-					AttackTarget	
-					RestoreStamina
+				while CombatTargetAlive	
+					parallel
+						AttackTarget	
+						RestoreStamina
 			while EnoughStaminaToRun
 				parallel
 					SpeedUpToRun

@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 2139220948}
   - component: {fileID: 2139220950}
   - component: {fileID: 2139220949}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: InteractionDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,8 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f9ed7c89b4ef9442b9df5cab1aa1167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onNearDialogueNPC: {fileID: 11400000, guid: 4f3938e46cbfcd44ba3b6da0aa4b647e, type: 2}
-  onMovedAwayFromDialogueNPC: {fileID: 11400000, guid: a1b6c0726f33cca4aaf3d2a2f3773ca0,
+  onNearIneractiveObject: {fileID: 11400000, guid: d2fe2be3b809772478775b21ec08f385,
     type: 2}
 --- !u!58 &2139220949
 CircleCollider2D:
@@ -143,7 +142,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2365768
+  m_Radius: 0.3
 --- !u!1 &3378525050749690253
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,8 +344,9 @@ GameObject:
   - component: {fileID: 3378525051097374867}
   - component: {fileID: 1900744984}
   - component: {fileID: 2537316410683312697}
+  - component: {fileID: 1900744995}
   m_Layer: 10
-  m_Name: Knight
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,13 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyRenderer: {fileID: 3378525051298982933}
-  pickuppableLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
   onWeaponUpdated: {fileID: 11400000, guid: 328b5d039ee655e42bdab6ff31ad597c, type: 2}
-  onNearPickuppable: {fileID: 11400000, guid: 33a7b1192eb55ff45ad21876ac51a73a, type: 2}
-  onMoveAwayFromPickuppable: {fileID: 11400000, guid: 95be46fc11a66234c9c00360766c62a7,
-    type: 2}
   equippedWeapon: {fileID: 11400000, guid: 89b92ce8866cf824b811dc54fbfc1ea3, type: 2}
   defaultWeapon: {fileID: 11400000, guid: 89b92ce8866cf824b811dc54fbfc1ea3, type: 2}
   kickWeapon: {fileID: 11400000, guid: 4888ab9b8d01dc840bfa500d18517318, type: 2}
@@ -433,7 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f10a5a2d67330a4181a90ce9f103026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableAttack: {fileID: 0}
+  availableAttacks: []
   attackCollider: {fileID: 3378525051839673590}
   attackDirArrow: {fileID: 1499219151}
   showAttackDirection: 1
@@ -683,12 +677,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 1
+  onPlayerDied: {fileID: 11400000, guid: 651843a6a6849974c93043bf01211675, type: 2}
   onPlayerHealthChanged: {fileID: 11400000, guid: 7c1c6b365d3cfea49a0da6e792dbb859,
     type: 2}
   onCombatMoveMade: {fileID: 11400000, guid: ab93e7d9000e5464cb4204637ae71a89, type: 2}
   currentHealth: 0
   maxHealth: 100
   armored: 0
+--- !u!114 &1900744995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3378525051097374887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0a4d4585b297b24ca1a355ddd75a2a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitByLayers:
+    serializedVersion: 2
+    m_Bits: 262144
+  bloodParticlesPrefab: {fileID: 9155770031381064098, guid: 80c7d3a470816e948a83c28eaa46700a,
+    type: 3}
+  deadBodySprite: {fileID: -2694096634564985735, guid: 68aec8a319615be439071fe120dc994c,
+    type: 3}
+  knockbackStrength: 100
+  destroyOnDeath: 0
 --- !u!1 &3378525051298982935
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,6 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3378525051298982934}
   - component: {fileID: 3378525051298982933}
+  - component: {fileID: 530992833}
   m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
@@ -774,6 +791,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &530992833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3378525051298982935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.19907719, y: -0.104543805, z: 0}
+  - {x: 0.18332148, y: -0.10454363, z: 0}
+  - {x: 0.19907719, y: 0.080910385, z: 0}
+  - {x: -0.14393264, y: 0.080910794, z: 0}
+  m_ShapePathHash: -1387682179
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 17064
 --- !u!1 &3378525051839673584
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,7 +828,7 @@ GameObject:
   - component: {fileID: 3378525051839673591}
   - component: {fileID: 3378525051839673589}
   - component: {fileID: 3378525051839673590}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
