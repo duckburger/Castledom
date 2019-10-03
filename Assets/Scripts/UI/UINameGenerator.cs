@@ -21,7 +21,6 @@ public class UINameGenerator : MonoBehaviour
         sceneSwitcher = FindObjectOfType<SceneSwitcher>();
     }
 
-
     #region AnimateIn / Out
 
     public void AnimateIn()

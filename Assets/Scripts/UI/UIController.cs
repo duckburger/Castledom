@@ -5,7 +5,7 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 using System.Threading.Tasks;
-
+using System.Threading;
 public class UIController : MonoBehaviour
 {
     public static UIController Instance;
@@ -69,10 +69,11 @@ public class UIController : MonoBehaviour
 
     #region Announcement Board
 
-    public async Task DisplayMessageInAnnouncementBoard(AnnouncementBoardData message)
+    public async Task DisplayMessageInAnnouncementBoard(AnnouncementBoardData message, CancellationToken ct = default)
     {
+        ct.ThrowIfCancellationRequested();
         announcementBoard?.Populate(message);
-        await announcementBoard?.AnimateIn();
+        await announcementBoard?.AnimateIn(ct);
     }
 
     #endregion

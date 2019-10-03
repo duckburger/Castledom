@@ -87,13 +87,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297762506}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -1.44, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 578250705}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &1880612647
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,7 +762,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 3851720893065561410, guid: 92d8a3702bdea84459402be54b0dbe9d,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -813,7 +813,7 @@ MonoBehaviour:
   - {x: 1.2307348, y: 3.7408063, z: 0}
   m_ShapePathHash: -107176309
   m_Mesh: {fileID: 0}
-  m_InstanceId: 16998
+  m_InstanceId: 44122
 --- !u!114 &2483888678718011897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,8 +832,11 @@ MonoBehaviour:
   - {fileID: 146622652}
   - {fileID: 1880612648}
   - {fileID: 1969941637}
+  doorParent: {fileID: 2483888677963004327}
   backDoorMechanism: {fileID: 2483888677811402155}
   frontDoorMechanism: {fileID: 2483888678551693514}
+  doorPrefab: {fileID: 3937142531677523493, guid: b8ebbbefe827b764398987411b9fbc2f,
+    type: 3}
 --- !u!1 &2483888678802980774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1979,11 +1982,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2483888677963004327}
     m_Modifications:
-    - target: {fileID: 3937142531677523493, guid: b8ebbbefe827b764398987411b9fbc2f,
-        type: 3}
-      propertyPath: m_Name
-      value: StorageDoor_Whole
-      objectReference: {fileID: 0}
     - target: {fileID: 3937142531677523490, guid: b8ebbbefe827b764398987411b9fbc2f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2038,6 +2036,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3937142531677523493, guid: b8ebbbefe827b764398987411b9fbc2f,
+        type: 3}
+      propertyPath: m_Name
+      value: StorageDoor_Vert_Whole
       objectReference: {fileID: 0}
     - target: {fileID: 3937142531353473370, guid: b8ebbbefe827b764398987411b9fbc2f,
         type: 3}

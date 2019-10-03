@@ -25,11 +25,10 @@ public class KnightAttackController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         knightRotator = GetComponent<KnightRotation>();
-        knightMovement = GetComponent<KnightMovement>();
-        DeActivateAttackCollider();
+        knightMovement = GetComponent<KnightMovement>();       
     }
 
-    private void OnEnable()
+    private void Start()
     {
         DeActivateAttackCollider();
     }

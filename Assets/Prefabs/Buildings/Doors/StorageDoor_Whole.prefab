@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 3937142531677523489}
   - component: {fileID: 3937142531677523488}
   - component: {fileID: 3937142531677523491}
+  - component: {fileID: 6110653567040213711}
   m_Layer: 14
   m_Name: StorageDoor_Whole
   m_TagString: Untagged
@@ -251,3 +252,16 @@ MonoBehaviour:
   brokenVersion: {fileID: 1203611599605146600, guid: 162d15098fbd6f644a26f78ae7836dfc,
     type: 3}
   navmeshObstacle: {fileID: 3937142531353473370}
+--- !u!114 &6110653567040213711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3937142531677523493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1cda501118989488f551b5f77852bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lastHitBy: {fileID: 0}

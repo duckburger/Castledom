@@ -91,6 +91,7 @@ public class CharHitDetector : MonoBehaviour
     private void MakeDeadBody(Vector2 dirToHitter, float angle)
     {
         GameObject deadBody = new GameObject($"{gameObject.name}'s corpse", typeof(SpriteRenderer), typeof(Rigidbody2D));
+        BloodSplat(deadBody.transform, 3);
         deadBody.transform.eulerAngles += new Vector3(0, 0, angle - 90f);
         deadBody.transform.position = transform.position;
         SpriteRenderer rend = deadBody.GetComponent<SpriteRenderer>();

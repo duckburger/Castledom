@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using System.Threading.Tasks;
+using System.Threading;
 
 [Serializable]
 public class AnnouncementBoardData
@@ -34,12 +35,14 @@ public class UIAnnouncementBoardController : MonoBehaviour
     float currentOnScreenTimer = 0;
 
 
-    public async Task AnimateIn()
+    public async Task AnimateIn(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
         bool tweenCompleted = false;
         LeanTween.cancel(gameObject);
         LeanTween.alphaCanvas(canvasGroup, 1, 0.23f).setOnComplete(() => 
         {
+            ct.ThrowIfCancellationRequested();
             canvasGroup.blocksRaycasts = true;
             canvasGroup.interactable = true;
             tweenCompleted = true;

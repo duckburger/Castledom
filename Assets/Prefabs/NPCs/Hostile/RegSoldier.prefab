@@ -1,5 +1,90 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &174953580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 174953581}
+  - component: {fileID: 174953582}
+  - component: {fileID: 174953583}
+  - component: {fileID: 2066537750353194124}
+  m_Layer: 12
+  m_Name: NearbyEventBroadcaster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &174953581
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174953580}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4000932799846560613}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &174953582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174953580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 139d259f79a763748acd7fa029cb50f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notificationMask:
+    serializedVersion: 2
+    m_Bits: 4096
+--- !u!58 &174953583
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174953580}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 5
+--- !u!50 &2066537750353194124
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174953580}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &794496293
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,6 +321,7 @@ Transform:
   - {fileID: 4000932800891247708}
   - {fileID: 4000932801588046360}
   - {fileID: 1481044880}
+  - {fileID: 174953581}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -69.025}
@@ -291,10 +377,11 @@ MonoBehaviour:
   hostileChars:
     serializedVersion: 2
     m_Bits: 134144
-  combatRange: 1
+  combatRange: 1.5
   runSpeed: 4
   walkSpeed: 1.8
   combatTarget: {fileID: 0}
+  alertNearbyIfAttacked: 1
   stamina: 100
   maxStamina: 100
   staminaRecoverySpeed: 10
@@ -430,9 +517,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scripts:
   - {fileID: 4900000, guid: 4838a9e6bba4af34ca8a6c5bf75581de, type: 3}
+  - {fileID: 4900000, guid: 0c5a0109e29d2314ca90d430e7d7d859, type: 3}
   autoReset: 1
   tickOn: 0
   sourceInfos:
+  - isFoldout: 1
+    breakPoints: 
+    breakPointStatuses: 
+    collapsedLines: 
+    btScript: 
   - isFoldout: 1
     breakPoints: 
     breakPointStatuses: 

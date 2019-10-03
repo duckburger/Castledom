@@ -9,20 +9,21 @@ public class UIEscapeMenu : MonoBehaviour
     [Space]
     [SerializeField] ScriptableEvent onGamePaused;
 
-    CanvasGroup cg;
+    Canvas canvas;
     CurrentGameData currentGameData;
+
+    bool lockedOnScreen = false;
 
     private void Start()
     {
-        cg = GetComponent<CanvasGroup>();
-
+        canvas = GetComponent<Canvas>();
         currentGameData = FindObjectOfType<CurrentGameData>();
 
         if (currentGameData == null)
         {
             // Generate a game data
             currentGameData = new GameObject("CurrentGameData", typeof(CurrentGameData)).GetComponent<CurrentGameData>();
-            AnimateIn();
+            AnimateIn(true);
             saveLoadMenu.AnimateIn();
             saveLoadMenu.DisableBackButton();
         }
@@ -30,9 +31,9 @@ public class UIEscapeMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!lockedOnScreen && Input.GetKeyDown(KeyCode.Escape))
         {
-            if (cg.alpha <= 0)
+            if (!canvas.enabled)
                 AnimateIn();
             else
                 AnimateOut();
@@ -42,27 +43,26 @@ public class UIEscapeMenu : MonoBehaviour
 
     #region Animate In / Out
 
-    public void AnimateIn()
+    public void AnimateIn(bool locked = false)
     {
-        if (!cg)
+        if (!canvas)
             return;
 
-        cg.blocksRaycasts = true;
-        cg.interactable = true;
+        canvas.enabled = true;
 
-        LeanTween.alphaCanvas(cg, 1, 0.23f);
         onGamePaused?.Activate();
+
+        if (locked)
+            lockedOnScreen = true;
     }
 
     public void AnimateOut()
     {
-        if (!cg)
+        if (!canvas)
             return;
 
-        cg.blocksRaycasts = false;
-        cg.interactable = false;
+        canvas.enabled = false;
 
-        LeanTween.alphaCanvas(cg, 0, 0.18f);
         onGamePaused?.Deactivate();
     }
 

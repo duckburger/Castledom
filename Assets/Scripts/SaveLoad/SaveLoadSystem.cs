@@ -12,6 +12,7 @@ public static class SaveLoadSystem
     {
         public string timeSaved;
         public PlayerSaveData playerData;
+        public List<PlayerSaveData> pastOffspring = new List<PlayerSaveData>();
     }
 
     [Serializable]

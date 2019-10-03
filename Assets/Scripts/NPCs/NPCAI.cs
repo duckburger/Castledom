@@ -11,7 +11,8 @@ public class NPCAI : MonoBehaviour
     [SerializeField] float runSpeed = 2.5f;
     [SerializeField] float walkSpeed = 1.8f;
     [SerializeField] Health combatTarget = null;
-    [Space]
+    [SerializeField] bool alertNearbyIfAttacked = false;
+    [Space(10)]
     [SerializeField] float stamina = 100f;
     [SerializeField] float maxStamina = 100f;
     [SerializeField] float staminaRecoverySpeed = 0.5f;
@@ -26,6 +27,7 @@ public class NPCAI : MonoBehaviour
     Health healthController;
     CharHitDetector hitDetector;
     NPCAnimator npcAnimator;
+    NPCNearbyEventBroadcaster eventBroadcaster;
 
     [Task] bool inCombat = false;
     [Task] bool recoveringStamina = false;
@@ -61,6 +63,7 @@ public class NPCAI : MonoBehaviour
         npcRotator = GetComponent<NPCRotator>();
         statusIcon = GetComponentInChildren<NPCStatusIcon>();
         npcAttackCollider = GetComponentInChildren<NPCAttackCollider>();
+        eventBroadcaster = GetComponentInChildren<NPCNearbyEventBroadcaster>();
 
         healthController.onHealthDecreased += ReactToAgression;
     }
@@ -89,7 +92,6 @@ public class NPCAI : MonoBehaviour
     [Task]
     void GoToDestination()
     {
-        //if (polynavAgent.pathPending)
         if (polynavAgent.pathPending)
             Debug.Log($"{Task.current.debugInfo}");
         else
@@ -100,12 +102,25 @@ public class NPCAI : MonoBehaviour
 
     #region Agressive Behaviour
 
+    public void ReactToAggression(Health attacker, bool indirect = false)
+    {
+        if (!inCombat)
+        {
+            inCombat = true;
+            combatTarget = attacker;
+            if (eventBroadcaster && alertNearbyIfAttacked && indirect)
+                eventBroadcaster.BroadcastAttackReaction(combatTarget);
+        }
+    }
+
     public void ReactToAgression()
     {
         if (!inCombat && ((1 << hitDetector.LastHitBy.gameObject.layer) | hostileChars) == hostileChars)
         {
             inCombat = true;
             combatTarget = hitDetector.LastHitBy.GetComponentInParent<Health>();
+            if (eventBroadcaster && alertNearbyIfAttacked)
+                eventBroadcaster.BroadcastAttackReaction(combatTarget);
         }
     }
 

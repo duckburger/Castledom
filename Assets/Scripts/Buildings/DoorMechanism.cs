@@ -42,7 +42,7 @@ public class DoorMechanism : MonoBehaviour, IInteractiveObject, IBreakable
         IsUnlocked = isUnlocked;
     }
 
-    private void Start()
+    private void Awake()
     {
         onLockStatusChanged += LockStatusChanged;
         doorJoint = GetComponent<HingeJoint2D>();

@@ -36,6 +36,8 @@ public class Health : MonoBehaviour
     public void SetHealthDirectly(float newVal)
     {
         currentHealth = newVal;
+        if (player)
+            SendPlayerHealthEvent();
     }
 
 
