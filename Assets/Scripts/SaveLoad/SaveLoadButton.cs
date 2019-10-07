@@ -24,6 +24,14 @@ public class SaveLoadButton : MonoBehaviour
         dateText.gameObject.SetActive(true);
 
         nameText.text = data.playerData.playerName;
-        dateText.text = DateTime.Parse(data.timeSaved).ToUniversalTime().ToString();
+        try
+        {
+            dateText.text = DateTime.Parse(data.timeSaved).ToUniversalTime().ToString();
+        }
+        catch (Exception)
+        {
+
+            throw new Exception("Coudln't parse date/time fromt he loaded save");
+        }       
     }
 }

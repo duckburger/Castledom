@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class UIEscapeMenu : MonoBehaviour
 {
     [SerializeField] UISaveLoadScreen saveLoadMenu;
+    [SerializeField] UINameGenerator nameGeneratorMenu;
     [Space]
     [SerializeField] ScriptableEvent onGamePaused;
 
@@ -83,6 +84,17 @@ public class UIEscapeMenu : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+    }
+
+    public void OpenOffspringGenerator()
+    {
+        if (!nameGeneratorMenu)
+        {
+            Debug.LogError("No name generator connected to the Esc menu");
+            return;
+        }
+        nameGeneratorMenu?.AnimateIn(null, true);
+        AnimateIn(true); // Turning on this canvas because the name generator is inside
     }
 
     #endregion

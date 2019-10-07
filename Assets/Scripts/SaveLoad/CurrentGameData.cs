@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CurrentGameData : MonoBehaviour
 {
@@ -35,7 +36,24 @@ public class CurrentGameData : MonoBehaviour
         currentData = newData;
     }
 
-    public void AssignNewCharacterName(string name)
+    public void AssignNewCharacterName(string charName)
+    {
+        if (currentData != null && !SaveLoadSystem.CheckIfSaveFileExists(charName))
+        {
+            if (currentData.playerData == null)
+            {
+                currentData.playerData = new SaveLoadSystem.PlayerSaveData();
+            }
+            currentData.playerData.playerName = charName;
+            SaveLoadSystem.SaveData(currentData);
+        }
+        else
+        {
+            Debug.LogError("Current data is empty, or found a duplicate name in save folder");
+        }
+    }
+
+    public void ReplaceCharWithOffspring(string offspringName)
     {
         if (currentData != null && !SaveLoadSystem.CheckIfSaveFileExists(name))
         {
@@ -43,8 +61,14 @@ public class CurrentGameData : MonoBehaviour
             {
                 currentData.playerData = new SaveLoadSystem.PlayerSaveData();
             }
-            currentData.playerData.playerName = name;
-            SaveLoadSystem.SaveData(currentData);
+            SaveLoadSystem.KnightGameData oldData = currentData;
+            SaveLoadSystem.KnightGameData newData = new SaveLoadSystem.KnightGameData();
+            newData.pastOffspring.Add(oldData.playerData);
+            newData.playerData = new SaveLoadSystem.PlayerSaveData();
+            newData.playerData.playerName = offspringName;
+            newData.timeSaved = DateTime.Now.ToString("O");
+            currentData = newData;
+            SaveLoadSystem.SaveOffspringData(newData);
         }
         else
         {

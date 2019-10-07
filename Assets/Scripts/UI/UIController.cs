@@ -72,8 +72,8 @@ public class UIController : MonoBehaviour
     public async Task DisplayMessageInAnnouncementBoard(AnnouncementBoardData message, CancellationToken ct = default)
     {
         ct.ThrowIfCancellationRequested();
-        announcementBoard?.Populate(message);
-        await announcementBoard?.AnimateIn(ct);
+        announcementBoard?.AnimateIn(ct);
+        await announcementBoard?.Populate(message);
     }
 
     #endregion

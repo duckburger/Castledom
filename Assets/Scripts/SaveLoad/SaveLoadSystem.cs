@@ -65,6 +65,28 @@ public static class SaveLoadSystem
         stream.Close();
     }
 
+    public static void SaveOffspringData(KnightGameData updatedPlayerData)
+    {
+        BinaryFormatter bFormatter = new BinaryFormatter();
+        string filePath = Path.Combine(Application.persistentDataPath, $"SaveFiles/{updatedPlayerData.pastOffspring[updatedPlayerData.pastOffspring.Count - 1].playerName}.road");
+
+        FileStream stream = new FileStream(filePath, FileMode.Open);
+
+        KnightGameData previouslySavedData = bFormatter.Deserialize(stream) as KnightGameData;
+        if (previouslySavedData != null)
+        {
+            previouslySavedData = updatedPlayerData;
+        }
+        stream.Close();
+        File.Delete(filePath);
+
+        string newFilePath = Path.Combine(Application.persistentDataPath, $"SaveFiles/{previouslySavedData.playerData.playerName}.road");
+
+        FileStream newStream = new FileStream(newFilePath, FileMode.Create);
+        bFormatter.Serialize(newStream, previouslySavedData);
+        newStream.Close();
+    }
+
     public static KnightGameData LoadData(string charName)
     {
         BinaryFormatter bFormatter = new BinaryFormatter();

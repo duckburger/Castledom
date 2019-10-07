@@ -16,6 +16,7 @@ public class PlayerDeathController : MonoBehaviour
     [Space]
     [SerializeField] GameObject playerBodyPrefab;
 
+    UIEscapeMenu escapeMenu;
     PlayerHouse currentHouseController;
     CancellationTokenSource tokenSource;
 
@@ -28,6 +29,8 @@ public class PlayerDeathController : MonoBehaviour
 
         if (!currentHouseController)
             Debug.LogError("Not player house found in the scene!");
+
+        escapeMenu = FindObjectOfType<UIEscapeMenu>();
     }
 
     private void OnApplicationQuit()
@@ -123,10 +126,10 @@ public class PlayerDeathController : MonoBehaviour
             secondDeathMessage.messages.Add(secondMessage);
             secondDeathMessage.messages.Add(thirdMessage);
             await Task.Delay(3000, ct);
-            await UIController.Instance.DisplayMessageInAnnouncementBoard(secondDeathMessage, ct);            
+            await UIController.Instance.DisplayMessageInAnnouncementBoard(secondDeathMessage, ct);
             // Show "Create offspring" screen
-
             // Move old player data into ancestor list
+            escapeMenu?.OpenOffspringGenerator();
             // Put a random weapoin into a chest in your house + a percentage of player's money
             // Spawn offspring - new player - in the house
             // Explain the situation

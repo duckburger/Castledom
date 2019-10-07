@@ -63,11 +63,13 @@ public class UISaveLoadScreen : MonoBehaviour
         }
 
         SaveLoadSystem.KnightGameData[] retrievedData = SaveLoadSystem.RetrieveSaveFiles();
-        
+        int index;
         for (int i = 0; i < retrievedData.Length; i++)
         {
+            index = i;
             if (retrievedData[i] != null)
             {
+               
                 SaveLoadSystem.KnightGameData data = SaveLoadSystem.LoadData(retrievedData[i].playerData.playerName);
                 saveLoadButtons[i].GetComponent<SaveLoadButton>().PopulateAsLoad(retrievedData[i]);
                 saveLoadButtons[i].onClick.RemoveAllListeners();
@@ -88,14 +90,17 @@ public class UISaveLoadScreen : MonoBehaviour
                 overwriteButtons[i].onClick.RemoveAllListeners();
                 overwriteButtons[i].onClick.AddListener(() => 
                 {
-                    // TODO: Add a modal to confirm
-                    saveLoadButtons[i].GetComponent<SaveLoadButton>().PopulateAsSave(i);
-                    SaveLoadSystem.DeleteCharacterData(data.playerData.playerName);
-                    CurrentGameData.Instance?.ClearCurrentData();
-                    SaveLoadSystem.KnightGameData newData = new SaveLoadSystem.KnightGameData();
-                    newData.timeSaved = DateTime.Now.ToString("O");
-                    CurrentGameData.Instance.AssignCurrentData(newData);
-                    nameGenScreen?.AnimateIn();
+                    // TODO: Add a modal to confirm                    
+                    nameGenScreen?.AnimateIn(() => 
+                    {
+                        saveLoadButtons[index].GetComponent<SaveLoadButton>().PopulateAsSave(index);
+                        SaveLoadSystem.DeleteCharacterData(data.playerData.playerName);
+                        CurrentGameData.Instance?.ClearCurrentData();
+                        SaveLoadSystem.KnightGameData newData = new SaveLoadSystem.KnightGameData();
+                        newData.timeSaved = DateTime.Now.ToString("O");
+                        CurrentGameData.Instance.AssignCurrentData(newData);
+                        overwriteButtons[index].gameObject.SetActive(false);
+                    });
                 });
             }
             else

@@ -34,6 +34,7 @@ public class UIAnnouncementBoardController : MonoBehaviour
     Coroutine messageTimer;
     float currentOnScreenTimer = 0;
 
+    bool showingMessage = false;
 
     public async Task AnimateIn(CancellationToken ct)
     {
@@ -60,6 +61,7 @@ public class UIAnnouncementBoardController : MonoBehaviour
     public void AnimateOut()
     {
         LeanTween.cancel(gameObject);
+        showingMessage = false;
         LeanTween.alphaCanvas(canvasGroup, 0, 0.23f).setOnComplete(() => 
         {
             canvasGroup.blocksRaycasts = false;
@@ -74,7 +76,7 @@ public class UIAnnouncementBoardController : MonoBehaviour
 
     }
 
-    public void Populate(AnnouncementBoardData messageData)
+    public async Task Populate(AnnouncementBoardData messageData)
     {
         messageQueue.Clear();
         for (int i = 0; i < messageData.messages.Count; i++)
@@ -108,6 +110,15 @@ public class UIAnnouncementBoardController : MonoBehaviour
         {
             ShowContinueButton(false);
         }
+
+        showingMessage = true;
+
+        await Task.Run(() => 
+        {
+            while (showingMessage)
+                Task.Delay(20);
+        });
+
     }
 
     public void ShowNextMessage()
