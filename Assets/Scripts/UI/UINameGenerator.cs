@@ -108,7 +108,9 @@ public class UINameGenerator : MonoBehaviour
             {
                 if (continueCallback != null)
                     continueCallback?.Invoke();
-                CurrentGameData.Instance?.ReplaceCharWithOffspring(nameInputField.text);                
+                CurrentGameData.Instance?.ReplaceCharWithOffspring(nameInputField.text);
+                AnimateOut();
+                sceneSwitcher?.SwitchToSceneAsync(1);
             }
             
         }
