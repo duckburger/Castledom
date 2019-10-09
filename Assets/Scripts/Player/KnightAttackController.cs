@@ -8,11 +8,11 @@ public class KnightAttackController : MonoBehaviour
     [Space(10)]
     [SerializeField] PlayerAttackCollider attackCollider;
     [SerializeField] GameObject attackDirArrow;
+    [SerializeField] Animator animator;
     [SerializeField] bool showAttackDirection = true;
 
     KnightMovement knightMovement;
     KnightRotation knightRotator;
-    Animator animator;
     AudioClip currentPreSwingAudioClip;
     AudioClip currentSwingAudioClip;
     int currentWeaponLayer = -1;
@@ -23,7 +23,8 @@ public class KnightAttackController : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        if (!animator)
+            animator = GetComponent<Animator>();
         knightRotator = GetComponent<KnightRotation>();
         knightMovement = GetComponent<KnightMovement>();       
     }

@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
+using System;
+using System.Threading.Tasks;
 
 [RequireComponent(typeof(Grid))]
 public class Pathfinder : MonoBehaviour
 {
-    [Header("TEST STUFF")]
-    public Transform seeker;
-    public Transform target;
-
     Grid grid;
 
     private void Awake()
@@ -17,56 +15,68 @@ public class Pathfinder : MonoBehaviour
         grid = GetComponent<Grid>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            FindPath(seeker.position, target.position);
-    }
 
-    void FindPath(Vector3 startPosition, Vector3 targetPosition)
+    async Task<(Vector3[], bool)> FindPathAsync(Vector3 startPosition, Vector3 targetPosition)
     {
         Stopwatch stopWatch = new Stopwatch();
         stopWatch.Start();
+
+        Vector3[] waypoints = new Vector3[0];
+        bool pathFound = false;
+
         Node startNode = grid.NodeFromWorldPosition(startPosition);
         Node targetNode = grid.NodeFromWorldPosition(targetPosition);
 
-        Heap<Node> openSet = new Heap<Node>(grid.MaxSize); // Open set is a HEAP because that is more performant instead of a massive comparison loop
-        HashSet<Node> closedSet = new HashSet<Node>();
-        openSet.Add(startNode);
-
-        while (openSet.Count > 0)
+        if (startNode.walkable && targetNode.walkable)
         {
-            Node currentNode = openSet.RemoveFirst();
-            closedSet.Add(currentNode);
+            Heap<Node> openSet = new Heap<Node>(grid.MaxSize); // Open set is a HEAP because that is more performant instead of a massive comparison loop
+            HashSet<Node> closedSet = new HashSet<Node>();
+            openSet.Add(startNode);
 
-            if (currentNode == targetNode)
+            while (openSet.Count > 0)
             {
-                stopWatch.Stop();
-                print($"Path found {stopWatch.ElapsedMilliseconds} ms");
-                RetracePath(startNode, targetNode);
-                return;
-            }
+                Node currentNode = openSet.RemoveFirst();
+                closedSet.Add(currentNode);
 
-            foreach (Node neighbour in grid.GetNeighbours(currentNode))
-            {
-                if (!neighbour.walkable || closedSet.Contains(neighbour))
-                    continue;
-
-                int movementCostToNeighbour = currentNode.gCost + GetDirectCost(currentNode, neighbour);
-                if (movementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+                if (currentNode == targetNode)
                 {
-                    neighbour.gCost = movementCostToNeighbour;
-                    neighbour.hCost = GetDirectCost(neighbour, targetNode);
-                    neighbour.parent = currentNode;
+                    stopWatch.Stop();
+                    pathFound = true;
+                    print($"Path found {stopWatch.ElapsedMilliseconds} ms");
+                    break;
+                }
 
-                    if (!openSet.Contains(neighbour))
-                        openSet.Add(neighbour); // Adding all potential nodes to OPEN list here, to sift through at the start of the while loop
+                foreach (Node neighbour in grid.GetNeighbours(currentNode))
+                {
+                    if (!neighbour.walkable || closedSet.Contains(neighbour))
+                        continue;
+
+                    int movementCostToNeighbour = currentNode.gCost + GetDirectCost(currentNode, neighbour);
+                    if (movementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+                    {
+                        neighbour.gCost = movementCostToNeighbour;
+                        neighbour.hCost = GetDirectCost(neighbour, targetNode);
+                        neighbour.parent = currentNode;
+
+                        if (!openSet.Contains(neighbour))
+                            openSet.Add(neighbour); // Adding all potential nodes to OPEN list here, to sift through at the start of the while loop
+                    }
                 }
             }
+
+            if (pathFound)
+                waypoints = await RetracePath(startNode, targetNode);
+            return (waypoints, pathFound);
         }
+        return (null, false);
     }
 
-    void RetracePath(Node startNode, Node endNode)
+    public async Task<(Vector3[], bool)> StartFindPathAsync(Vector3 pathStart, Vector3 pathEnd)
+    {
+        return await FindPathAsync(pathStart, pathEnd);
+    }
+
+    async Task<Vector3[]> RetracePath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
@@ -77,11 +87,28 @@ public class Pathfinder : MonoBehaviour
             currentNode = currentNode.parent;
         }
 
-        path.Reverse();
-
-        UnityEngine.Debug.Log("Found path, spitting it out");
-        grid.path = path;
+        Vector3[] waypoints = await SimplifyPath(path);
+        Array.Reverse(waypoints);
+        return waypoints;
     }
+
+    async Task<Vector3[]> SimplifyPath(List<Node> path)
+    {
+        List<Vector3> waypoints = new List<Vector3>();
+        Vector2 directionOld = Vector2.zero;
+
+        for (int i = 1; i < path.Count; i++)
+        {
+            Vector2 directionNew = new Vector2(path[i-1].gridX - path[i].gridX, path[i-1].gridY - path[i].gridY);
+            if (directionNew != directionOld)
+            {
+                waypoints.Add(path[i].worldPosition);
+            }
+            directionOld = directionNew;
+        }
+        return waypoints.ToArray();
+    }
+
 
     int GetDirectCost(Node nodeA, Node nodeB)
     {

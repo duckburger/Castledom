@@ -5,7 +5,7 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
     public bool workIn2D;
-    public bool onlyPathGizmos = true;
+    public bool displayGridGizmos = true;
     public LayerMask unwalkableMask;
     public Vector2 gridWorldSize;
     [Range(0.05f, 5f)]
@@ -21,7 +21,7 @@ public class Grid : MonoBehaviour
 
     #region Start / Awake
 
-    private void Start()
+    private void Awake()
     {
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
@@ -131,54 +131,25 @@ public class Grid : MonoBehaviour
 
     public List<Node> path = new List<Node>();
     private void OnDrawGizmos()
-    {
-        if (onlyPathGizmos)
+    {       
+        if (!workIn2D)
         {
-            if (grid != null && path != null)
-            {
-                foreach (Node node in grid)
-                {
-                    if (path.Contains(node))
-                    {
-                        Gizmos.color = Color.yellow;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                    Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
-                }
-            }
+            Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
         }
         else
         {
-            if (!workIn2D)
-            {
-                Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
-            }
-            else
-            {
-                Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));
-            }
+            Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));
+        }
 
-            if (grid != null)
+        if (displayGridGizmos && grid != null)
+        {
+            foreach (Node node in grid)
             {
-                foreach (Node node in grid)
-                {
-                    Gizmos.color = node.walkable ? Color.white : Color.red;
-                    if (path != null)
-                    {
-                        if (path.Contains(node))
-                        {
-                            Gizmos.color = Color.yellow;
-                        }
-                    }
+                Gizmos.color = node.walkable ? Color.white : Color.red;
+                Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
 
-                    Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
-
-                }
             }
-        }        
+        }     
     }
 
     #endregion
