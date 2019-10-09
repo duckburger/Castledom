@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
 [RequireComponent(typeof(Grid))]
 public class Pathfinder : MonoBehaviour
@@ -18,31 +19,30 @@ public class Pathfinder : MonoBehaviour
 
     private void Update()
     {
-        FindPath(seeker.position, target.position);
+        if (Input.GetKeyDown(KeyCode.Space))
+            FindPath(seeker.position, target.position);
     }
 
     void FindPath(Vector3 startPosition, Vector3 targetPosition)
     {
+        Stopwatch stopWatch = new Stopwatch();
+        stopWatch.Start();
         Node startNode = grid.NodeFromWorldPosition(startPosition);
         Node targetNode = grid.NodeFromWorldPosition(targetPosition);
 
-        List<Node> openSet = new List<Node>();
+        Heap<Node> openSet = new Heap<Node>(grid.MaxSize); // Open set is a HEAP because that is more performant instead of a massive comparison loop
         HashSet<Node> closedSet = new HashSet<Node>();
         openSet.Add(startNode);
+
         while (openSet.Count > 0)
         {
-            Node currentNode = openSet[0];
-            for (int i = 1; i < openSet.Count; i++)
-            {
-                if (openSet[i].fCost < currentNode.fCost || openSet[i].fCost == currentNode.fCost && openSet[i].hCost < currentNode.hCost) // Changing the current set if one of the open neighbours has a lower cost
-                    currentNode = openSet[i];
-            }
-
-            openSet.Remove(currentNode);
+            Node currentNode = openSet.RemoveFirst();
             closedSet.Add(currentNode);
 
             if (currentNode == targetNode)
             {
+                stopWatch.Stop();
+                print($"Path found {stopWatch.ElapsedMilliseconds} ms");
                 RetracePath(startNode, targetNode);
                 return;
             }
@@ -60,7 +60,7 @@ public class Pathfinder : MonoBehaviour
                     neighbour.parent = currentNode;
 
                     if (!openSet.Contains(neighbour))
-                        openSet.Add(neighbour);
+                        openSet.Add(neighbour); // Adding all potential nodes to OPEN list here, to sift through at the start of the while loop
                 }
             }
         }
@@ -79,7 +79,7 @@ public class Pathfinder : MonoBehaviour
 
         path.Reverse();
 
-        Debug.Log("Found path, spitting it out");
+        UnityEngine.Debug.Log("Found path, spitting it out");
         grid.path = path;
     }
 
@@ -89,7 +89,7 @@ public class Pathfinder : MonoBehaviour
         int distanceY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
 
         if (distanceX > distanceY)
-            return 14 * distanceY + 10 * (distanceX - distanceY);
+            return 14 * distanceY + 10 * (distanceX - distanceY); // 14 is diagonal cost per tile and 10 is vert/horiz cost per tile+
         else
             return 14 * distanceX + 10 * (distanceY - distanceX);
     }

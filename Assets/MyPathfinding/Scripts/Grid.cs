@@ -5,6 +5,7 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
     public bool workIn2D;
+    public bool onlyPathGizmos = true;
     public LayerMask unwalkableMask;
     public Vector2 gridWorldSize;
     [Range(0.05f, 5f)]
@@ -69,6 +70,11 @@ public class Grid : MonoBehaviour
         }
     }
 
+    public int MaxSize
+    {
+        get => gridSizeX * gridSizeY;
+    }
+
     #endregion
 
     #region Computing Path
@@ -126,32 +132,53 @@ public class Grid : MonoBehaviour
     public List<Node> path = new List<Node>();
     private void OnDrawGizmos()
     {
-        if (!workIn2D)
+        if (onlyPathGizmos)
         {
-            Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));        
-        }
-        else
-        {
-            Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));           
-        }
-
-        if (grid != null)
-        {
-            foreach (Node node in grid)
+            if (grid != null && path != null)
             {
-                Gizmos.color = node.walkable ? Color.white : Color.red;
-                if (path != null)
+                foreach (Node node in grid)
                 {
                     if (path.Contains(node))
                     {
                         Gizmos.color = Color.yellow;
                     }
+                    else
+                    {
+                        continue;
+                    }
+                    Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
                 }
-
-                Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
-                
             }
         }
+        else
+        {
+            if (!workIn2D)
+            {
+                Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+            }
+            else
+            {
+                Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));
+            }
+
+            if (grid != null)
+            {
+                foreach (Node node in grid)
+                {
+                    Gizmos.color = node.walkable ? Color.white : Color.red;
+                    if (path != null)
+                    {
+                        if (path.Contains(node))
+                        {
+                            Gizmos.color = Color.yellow;
+                        }
+                    }
+
+                    Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+
+                }
+            }
+        }        
     }
 
     #endregion
