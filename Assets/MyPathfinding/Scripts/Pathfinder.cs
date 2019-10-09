@@ -51,15 +51,17 @@ public class Pathfinder : MonoBehaviour
                     if (!neighbour.walkable || closedSet.Contains(neighbour))
                         continue;
 
-                    int movementCostToNeighbour = currentNode.gCost + GetDirectCost(currentNode, neighbour);
-                    if (movementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+                    int neighbourGCost = currentNode.gCost + GetDirectCost(currentNode, neighbour) + neighbour.movementPenalty; // Determines the current gCost of this neighbour
+                    if (neighbourGCost < neighbour.gCost || !openSet.Contains(neighbour))
                     {
-                        neighbour.gCost = movementCostToNeighbour;
+                        neighbour.gCost = neighbourGCost;
                         neighbour.hCost = GetDirectCost(neighbour, targetNode);
                         neighbour.parent = currentNode;
 
                         if (!openSet.Contains(neighbour))
                             openSet.Add(neighbour); // Adding all potential nodes to OPEN list here, to sift through at the start of the while loop
+                        else
+                            openSet.UpdateItem(neighbour);
                     }
                 }
             }

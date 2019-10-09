@@ -42,8 +42,25 @@ public class PathNavigator : MonoBehaviour
                 currentWaypoint = path[targetIndex];
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed);
+            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
             yield return null;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (path != null)
+        {
+            for (int i = targetIndex; i < path.Length; i++)
+            {
+                Gizmos.color = Color.black;
+                Gizmos.DrawCube(path[i], Vector3.one * 0.2f);
+
+                if (i == targetIndex)
+                    Gizmos.DrawLine(transform.position, path[i]);
+                else
+                    Gizmos.DrawLine(path[i - 1], path[i]);
+            }
         }
     }
 }

@@ -10,12 +10,14 @@ public class Grid : MonoBehaviour
     public Vector2 gridWorldSize;
     [Range(0.05f, 5f)]
     public float nodeRadius;
+    public TerrainType[] walkableRegions;
     Node[,] grid;
     [Space]
     [Header("TEST STUFF")]
     public Transform playerTransform;
 
-
+    Dictionary<int, int> walkableRegionsDictionary = new Dictionary<int, int>();
+    LayerMask walkableMask;
     float nodeDiameter;
     int gridSizeX, gridSizeY;
 
@@ -26,6 +28,12 @@ public class Grid : MonoBehaviour
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
+
+        foreach (TerrainType tType in walkableRegions)
+        {
+            walkableMask |= tType.terrainMask;
+            walkableRegionsDictionary.Add((int)Mathf.Log(tType.terrainMask.value, 2), tType.terrainPenalty);
+        }
 
         GenerateGrid();
     }
@@ -52,20 +60,47 @@ public class Grid : MonoBehaviour
         {
             for (int y = 0; y < gridSizeY; y++)
             {
-                Vector3 worldPos = Vector3.zero;
-                bool walkable = true;
+                Vector3 nodeWorldPos = Vector3.zero;
+                bool isWalkable = true;
                 if (workIn2D)
                 {
-                    worldPos = bottomLeftCorner + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius);
-                    walkable = !(Physics2D.OverlapCircle(worldPos, nodeRadius, unwalkableMask));
+                    nodeWorldPos = bottomLeftCorner + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius);
+                    isWalkable = !(Physics2D.OverlapCircle(nodeWorldPos, nodeRadius, unwalkableMask));
                 }
                 else
                 {
-                    worldPos = bottomLeftCorner + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
-                    walkable = !(Physics.CheckSphere(worldPos, nodeRadius, unwalkableMask));
+                    nodeWorldPos = bottomLeftCorner + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
+                    isWalkable = !(Physics.CheckSphere(nodeWorldPos, nodeRadius, unwalkableMask));
                 }
-                
-                grid[x, y] = new Node(walkable, worldPos, x, y);
+
+                int movementPenalty = 0;
+
+                // Raycast to find movement penalty of the layer
+                if (isWalkable)
+                {
+                    
+                    if (workIn2D)
+                    {
+                        RaycastHit2D hit2D;
+                        hit2D = Physics2D.Raycast(nodeWorldPos + (Vector3.back * 20), Vector3.forward);
+                        if (hit2D)
+                        {
+                            walkableRegionsDictionary.TryGetValue(hit2D.collider.gameObject.layer, out movementPenalty);
+                        }
+                    }
+                    else
+                    {
+                        Ray ray = new Ray();
+                        RaycastHit hit;
+                        ray = new Ray(nodeWorldPos + (Vector3.up * 50), Vector3.down);
+                        if (Physics.Raycast(ray, out hit, 100f, walkableMask))
+                        {
+                            walkableRegionsDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
+                        }
+                    }                                     
+                }
+
+                grid[x, y] = new Node(isWalkable, nodeWorldPos, x, y, movementPenalty);
             }
         }
     }
@@ -153,4 +188,11 @@ public class Grid : MonoBehaviour
     }
 
     #endregion
+
+    [System.Serializable]
+    public class TerrainType
+    {
+        public LayerMask terrainMask;
+        public int terrainPenalty;
+    }
 }

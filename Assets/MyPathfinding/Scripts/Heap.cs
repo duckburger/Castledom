@@ -6,10 +6,10 @@ using System;
 public class Heap<T> where T : IHeapItem<T>
 {
     T[] items;
-    int currentItemCount;
+    int itemCount;
     public int Count
     {
-        get => currentItemCount;
+        get => itemCount;
     }
 
     public Heap(int maxSize)
@@ -19,17 +19,17 @@ public class Heap<T> where T : IHeapItem<T>
 
     public void Add(T newItem)
     {
-        newItem.HeapIndex = currentItemCount;
-        items[currentItemCount] = newItem;
+        newItem.HeapIndex = itemCount;
+        items[itemCount] = newItem;
         SortUp(newItem);
-        currentItemCount++;
+        itemCount++;
     }
 
     public T RemoveFirst()
     {
         T firstItem = items[0];
-        currentItemCount--;
-        items[0] = items[currentItemCount];
+        itemCount--;
+        items[0] = items[itemCount];
         items[0].HeapIndex = 0;
         SortDown(items[0]);
         return firstItem;
@@ -53,11 +53,11 @@ public class Heap<T> where T : IHeapItem<T>
             int childIndexRight = item.HeapIndex * 2 + 2;
             int swapIndex = 0;
 
-            if (childIndexLeft < currentItemCount)
+            if (childIndexLeft < itemCount) // Has a left child (which is usually smallest)
             {
                 swapIndex = childIndexLeft;
 
-                if (childIndexRight < currentItemCount)
+                if (childIndexRight < itemCount) // Has a right child as well (which is usually largest)
                 {
                     if (items[childIndexLeft].CompareTo(items[childIndexRight]) < 0)
                     {
@@ -89,7 +89,7 @@ public class Heap<T> where T : IHeapItem<T>
         while (true)
         {
             T parentItem = items[parentIndex];
-            if (item.CompareTo(parentItem) > 0) // If the item is still above its parent in the heap, keep swapping 
+            if (item.CompareTo(parentItem) > 0) // If the item is still above its parent in its actual VALUE, keep swapping 
             {
                 Swap(item, parentItem);
             }
