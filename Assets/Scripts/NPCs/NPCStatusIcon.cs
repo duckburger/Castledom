@@ -7,11 +7,20 @@ public class NPCStatusIcon : MonoBehaviour
     Canvas worldSpaceCanvas;
     Animator animator;
 
+    NPCVision visionController;
+
     private void Awake()
     {
         worldSpaceCanvas = GetComponent<Canvas>();
         animator = GetComponent<Animator>();
         worldSpaceCanvas.worldCamera = Camera.main;
+        visionController = GetComponentInParent<NPCVision>();
+        if (visionController)
+        {
+            visionController.onPreAlerted += ShowPreAlertedStatus;
+            visionController.onAlerted += ShowAlertedStatus;
+            visionController.onAlertCancelled += LoseAlertStatus;
+        }
     }
 
     public void ShowStunnedStatus()
@@ -19,6 +28,20 @@ public class NPCStatusIcon : MonoBehaviour
         worldSpaceCanvas.enabled = true;
         animator.SetBool("isStunned", true);
     }
+
+    public void ShowPreAlertedStatus()
+    {
+        worldSpaceCanvas.enabled = true;
+        animator.SetTrigger("preAlert");
+    }
+
+    public void LoseAlertStatus()
+    {
+        worldSpaceCanvas.enabled = false;
+        animator.SetBool("isAlerted", false);
+        animator.Play("Idle");
+    }
+    
 
     public void ShowAlertedStatus()
     {

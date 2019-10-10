@@ -11,6 +11,7 @@ public class NPCAI : MonoBehaviour
     [SerializeField] float runSpeed = 2.5f;
     [SerializeField] float walkSpeed = 1.8f;
     [SerializeField] Health combatTarget = null;
+    [SerializeField] Vector2? targetLastKnownPos = null;
     [SerializeField] bool alertNearbyIfAttacked = false;
     [Space(10)]
     [SerializeField] float stamina = 100f;
@@ -19,6 +20,7 @@ public class NPCAI : MonoBehaviour
     [SerializeField] float sprintStaminaDepletion = 0.5f;
     [SerializeField] bool isRunning = false;
 
+    NPCVision visionController;
     NPCAttackCollider npcAttackCollider;
     NPCStatusIcon statusIcon;
     NPCRotator npcRotator;
@@ -39,6 +41,8 @@ public class NPCAI : MonoBehaviour
         get => isStunned;
         set => isStunned = value;
     }
+
+    public bool InCombat => inCombat;
 
     Coroutine stunTimer = null;
 
@@ -64,6 +68,7 @@ public class NPCAI : MonoBehaviour
         statusIcon = GetComponentInChildren<NPCStatusIcon>();
         npcAttackCollider = GetComponentInChildren<NPCAttackCollider>();
         eventBroadcaster = GetComponentInChildren<NPCNearbyEventBroadcaster>();
+        visionController = GetComponentInChildren<NPCVision>();
 
         healthController.onHealthDecreased += ReactToAgression;
     }
@@ -100,9 +105,9 @@ public class NPCAI : MonoBehaviour
 
     #endregion
 
-    #region Agressive Behaviour
+    #region Combat
 
-    public void ReactToAggression(Health attacker, bool indirect = false)
+    public void SetInCombatExternally(Health attacker, bool indirect = false)
     {
         if (!inCombat)
         {
@@ -110,6 +115,7 @@ public class NPCAI : MonoBehaviour
             combatTarget = attacker;
             if (eventBroadcaster && alertNearbyIfAttacked && indirect)
                 eventBroadcaster.BroadcastAttackReaction(combatTarget);
+            visionController?.ShowVisionCone(false);
         }
     }
 
@@ -121,7 +127,16 @@ public class NPCAI : MonoBehaviour
             combatTarget = hitDetector.LastHitBy.GetComponentInParent<Health>();
             if (eventBroadcaster && alertNearbyIfAttacked)
                 eventBroadcaster.BroadcastAttackReaction(combatTarget);
+            visionController?.ImmediatelyAlertExternal();
+            visionController?.ShowVisionCone(false);
         }
+    }
+
+    public void LoseSightOfCombatTarget()
+    {
+        inCombat = false;
+        targetLastKnownPos = combatTarget.transform.position;
+        combatTarget = null;
     }
 
     [Task]
@@ -144,12 +159,24 @@ public class NPCAI : MonoBehaviour
     }
 
     [Task]
+    bool HasLastKnownPosition()
+    {
+        return targetLastKnownPos != null;
+    }
+
+    [Task]
+    void SetLastKnownAsTarget()
+    {
+        polynavAgent?.SetDestination((Vector2)targetLastKnownPos);        
+    }
+
+    [Task]
     bool WithinCombatRange()
     {
         if (combatTarget == null || combatTarget.enabled == false || !combatTarget.gameObject.activeSelf)
             return false;
         return Vector2.Distance(transform.position, combatTarget.transform.position) <= combatRange ? true : false;
-    }
+    }    
 
     [Task]
     void ChaseCombatTarget() // TODO: Add speed change + Add stamina system??
@@ -162,13 +189,14 @@ public class NPCAI : MonoBehaviour
         }
 
         if (polynavAgent.primeGoal != (Vector2)combatTarget.transform.position)
-        polynavAgent.SetDestination(combatTarget.transform.position);
+            polynavAgent.SetDestination(combatTarget.transform.position);
 
         if (polynavAgent.pathPending)
             Debug.Log($"{Task.current.debugInfo}");
         else
             Task.current.Succeed();
     }
+    
 
     [Task]
     void AttackTarget()
@@ -270,6 +298,7 @@ public class NPCAI : MonoBehaviour
         statusIcon?.Disable();
         npcRotator?.EnableRotator(true);
         isStunned = false;
+        visionController?.ImmediatelyAlertExternal();
     }
 
     #endregion

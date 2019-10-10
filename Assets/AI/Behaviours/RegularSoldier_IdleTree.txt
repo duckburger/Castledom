@@ -1,0 +1,2 @@
+tree("IdleSoldier")
+	Succeed

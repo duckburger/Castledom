@@ -1,24 +1,29 @@
 tree("Combat")
-	while inCombat
-		fallback
-			while not CombatTargetAlive
-				Fail
-			while WithinCombatRange
-				while CombatTargetAlive	
-					parallel
-						ChaseCombatTarget
-						AttackTarget	
-						RestoreStamina
-			while EnoughStaminaToRun
-				parallel
-					SpeedUpToRun
-					ChaseCombatTarget
-					DepleteStamina
-			while recoveringStamina
-				sequence
-					repeat
+	fallback
+		while HasLastKnownPosition
+			sequence
+				SetLastKnownAsTarget
+				GoToDestination
+		while inCombat
+			fallback
+				while not CombatTargetAlive
+					Fail
+				while WithinCombatRange
+					while CombatTargetAlive	
 						parallel
-							SlowDownToWalk
-							RestoreStamina
 							ChaseCombatTarget
+							AttackTarget	
+							RestoreStamina
+				while EnoughStaminaToRun
+					parallel
+						SpeedUpToRun
+						ChaseCombatTarget
+						DepleteStamina
+				while recoveringStamina
+					sequence
+						repeat
+							parallel
+								SlowDownToWalk
+								RestoreStamina
+								ChaseCombatTarget
 			

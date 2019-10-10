@@ -427,10 +427,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f10a5a2d67330a4181a90ce9f103026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onPlayerEnteredStealth: {fileID: 11400000, guid: 9994878c20f830045bdc3df2a0e5e464,
+    type: 2}
   availableAttacks: []
   attackCollider: {fileID: 3378525051839673590}
   attackDirArrow: {fileID: 1499219151}
+  animator: {fileID: 3378525051097374884}
   showAttackDirection: 1
+  isSneaking: 0
 --- !u!114 &3378525051097374892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,7 +820,7 @@ MonoBehaviour:
   - {x: -0.14393264, y: 0.080910794, z: 0}
   m_ShapePathHash: -1387682179
   m_Mesh: {fileID: 0}
-  m_InstanceId: 44994
+  m_InstanceId: -1354
 --- !u!1 &3378525051839673584
 GameObject:
   m_ObjectHideFlags: 0

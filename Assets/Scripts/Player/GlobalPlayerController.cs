@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class GlobalPlayerController : MonoBehaviour
 {
-   [SerializeField] GameObject player;
+    public static GlobalPlayerController Instance;
+
+    [SerializeField] GameObject player;
 
     Health health;
     KnightMovement movement;
@@ -16,8 +18,20 @@ public class GlobalPlayerController : MonoBehaviour
     KnightInteractionDetector interactionDetector;
     CircleCollider2D interactionCollider;
 
+    public static Transform PlayerTransform => Instance.player.transform;
+    public static Health PlayerHealth => Instance.health;
+
     private void Awake()
     {
+        if (!Instance)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+
         if (player)
         {
             movement = player.GetComponent<KnightMovement>();

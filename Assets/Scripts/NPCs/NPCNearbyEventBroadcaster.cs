@@ -11,7 +11,7 @@ public class NPCNearbyEventBroadcaster : MonoBehaviour
     {
         for (int i = 0; i < nearbyNPCs.Count; i++)
         {
-            nearbyNPCs[i].ReactToAggression(attacker);
+            nearbyNPCs[i].SetInCombatExternally(attacker);
         }
     }
 

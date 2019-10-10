@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class KnightAttackController : MonoBehaviour
 {
+    [SerializeField] ScriptableEvent onPlayerEnteredStealth;
+    [Space]
     [SerializeField] KnightAttack[] availableAttacks;
     [Space(10)]
     [SerializeField] PlayerAttackCollider attackCollider;
@@ -11,6 +13,7 @@ public class KnightAttackController : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] bool showAttackDirection = true;
 
+    [SerializeField] bool isSneaking = false;
     KnightMovement knightMovement;
     KnightRotation knightRotator;
     AudioClip currentPreSwingAudioClip;
@@ -60,6 +63,20 @@ public class KnightAttackController : MonoBehaviour
 
     void Update()
     {
+        // SNEAKING CHECK
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            isSneaking = true;
+            animator?.SetBool("isSneaking", true);
+            onPlayerEnteredStealth?.Activate();
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            isSneaking = false;
+            animator?.SetBool("isSneaking", false);
+            onPlayerEnteredStealth?.Deactivate();
+        }
+
         // PRIMARY ATTACK
         if (Input.GetMouseButtonDown(0))
             PrimaryPreSwing();
@@ -90,7 +107,7 @@ public class KnightAttackController : MonoBehaviour
     void PrimaryPreSwing()
     {
         currentAttackIndex = availableAttacks[0].attackSelectorIndex;
-        animator.SetInteger("attackSelector", currentAttackIndex);
+        animator?.SetInteger("attackSelector", currentAttackIndex);
         animator?.SetBool("preSwing", true);
         if (showAttackDirection && attackDirArrow)
             attackDirArrow.SetActive(true);

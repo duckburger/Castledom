@@ -104,5 +104,13 @@ public class CharHitDetector : MonoBehaviour
         rb.mass = 6;
         rb.AddRelativeForce(dirToHitter * knockbackStrength, ForceMode2D.Impulse); // TODO: Make knockback depend on the weapon so it's more fun
         // Destroy body
+        StartCoroutine(DestroyDeadBody(deadBody));
+
+    }
+
+    IEnumerator DestroyDeadBody(GameObject deadBody)
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(deadBody);
     }
 }

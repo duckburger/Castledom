@@ -57,5 +57,11 @@ ScriptedImporter:
   - animationName: playerKick
     loopTime: 1
     about: "Animation Type:\tForward\r\nAnimation:\tFrom: 61; To: 68"
+  - animationName: playerDead
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 69; To: 69"
+  - animationName: stealth_idle_unarmed
+    loopTime: 1
+    about: "Animation Type:\tForward\r\nAnimation:\tFrom: 70; To: 70"
   atlas: {instanceID: 0}
   importType: 0

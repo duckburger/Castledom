@@ -11,6 +11,7 @@ public class Grid : MonoBehaviour
     [Range(0.05f, 5f)]
     public float nodeRadius;
     public TerrainType[] walkableRegions;
+    public int unwalkableProximityPenalty = 10;
     Node[,] grid;
     [Space]
     [Header("TEST STUFF")]
@@ -20,6 +21,9 @@ public class Grid : MonoBehaviour
     LayerMask walkableMask;
     float nodeDiameter;
     int gridSizeX, gridSizeY;
+
+    int penaltyMax = int.MinValue;
+    int penaltyMin = int.MaxValue;
 
     #region Start / Awake
 
@@ -76,31 +80,87 @@ public class Grid : MonoBehaviour
                 int movementPenalty = 0;
 
                 // Raycast to find movement penalty of the layer
-                if (isWalkable)
+                if (workIn2D)
                 {
-                    
-                    if (workIn2D)
+                    RaycastHit2D hit2D;
+                    hit2D = Physics2D.Raycast(nodeWorldPos + (Vector3.back * 20), Vector3.forward);
+                    if (hit2D)
                     {
-                        RaycastHit2D hit2D;
-                        hit2D = Physics2D.Raycast(nodeWorldPos + (Vector3.back * 20), Vector3.forward);
-                        if (hit2D)
-                        {
-                            walkableRegionsDictionary.TryGetValue(hit2D.collider.gameObject.layer, out movementPenalty);
-                        }
+                        walkableRegionsDictionary.TryGetValue(hit2D.collider.gameObject.layer, out movementPenalty);
                     }
-                    else
+                }
+                else
+                {
+                    Ray ray = new Ray();
+                    RaycastHit hit;
+                    ray = new Ray(nodeWorldPos + (Vector3.up * 50), Vector3.down);
+                    if (Physics.Raycast(ray, out hit, 100f, walkableMask))
                     {
-                        Ray ray = new Ray();
-                        RaycastHit hit;
-                        ray = new Ray(nodeWorldPos + (Vector3.up * 50), Vector3.down);
-                        if (Physics.Raycast(ray, out hit, 100f, walkableMask))
-                        {
-                            walkableRegionsDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
-                        }
-                    }                                     
+                        walkableRegionsDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
+                    }
                 }
 
+                if (!isWalkable)
+                    movementPenalty += unwalkableProximityPenalty;
+                
                 grid[x, y] = new Node(isWalkable, nodeWorldPos, x, y, movementPenalty);
+            }
+        }
+
+        BlurPenaltyMap(3);
+
+    }
+
+    void BlurPenaltyMap(int cellsToBlur)
+    {
+        int kernelSize = cellsToBlur * 2 + 1; // How many cells are in a modified "kernel" (which is a grid around the modified node)
+        int kernelExtents = cellsToBlur; // How many cells there are in between the center of the kernel and the edges
+
+        int[,] horizPenaltiesPass = new int[gridSizeX, gridSizeY];
+        int[,] verticalPenaltiesPass = new int[gridSizeX, gridSizeY];
+
+        for (int y = 0; y < gridSizeY; y++) // Doing vertical first
+        {
+            for (int x = -kernelExtents; x <= kernelExtents; x++)
+            {
+                int sampleX = Mathf.Clamp(x, 0, kernelExtents);
+                horizPenaltiesPass[0, y] += grid[sampleX, y].movementPenalty; // This copies the edge number to create a fake number beyond the grid's extents
+            }
+
+            for (int x = 1; x < gridSizeX; x++)
+            {
+                int removeIndex = Mathf.Clamp(x - kernelExtents - 1, 0, gridSizeX); // Getting the node that's just been removed from the kernel to use it in addition
+                int addIndex = Mathf.Clamp(x + kernelExtents, 0, gridSizeX - 1); // Getting the node that's just entered the kernel extents
+
+                horizPenaltiesPass[x, y] = horizPenaltiesPass[x - 1, y] - grid[removeIndex, y].movementPenalty + grid[addIndex, y].movementPenalty; 
+            }
+        }
+
+        for (int x = 0; x < gridSizeX; x++) // Doing vertical first
+        {
+            for (int y = -kernelExtents; y <= kernelExtents; y++)
+            {
+                int sampleY = Mathf.Clamp(y, 0, kernelExtents);
+                verticalPenaltiesPass[x, 0] += horizPenaltiesPass[x, sampleY]; // This copies the edge number to create a fake number beyond the grid's extents
+            }
+
+            int finalBlurredValue = Mathf.RoundToInt((float)verticalPenaltiesPass[x, 0] / Mathf.Pow(kernelSize, 2)); // Pow of 2 because we need to comvine vertical and horizontal passes
+            grid[x, 0].movementPenalty = finalBlurredValue;
+
+            for (int y = 1; y < gridSizeY; y++)
+            {
+                int removeIndex = Mathf.Clamp(y - kernelExtents - 1, 0, gridSizeY); // Getting the node that's just been removed from the kernel to use it in addition
+                int addIndex = Mathf.Clamp(y + kernelExtents, 0, gridSizeY - 1); // Getting the node that's just entered the kernel extents
+
+                verticalPenaltiesPass[x, y] = verticalPenaltiesPass[x, y - 1] - horizPenaltiesPass[x, removeIndex] + horizPenaltiesPass[x, addIndex];
+                finalBlurredValue = Mathf.RoundToInt((float)verticalPenaltiesPass[x, y] / Mathf.Pow(kernelSize, 2)); // Pow of 2 because we need to comvine vertical and horizontal passes
+                grid[x, y].movementPenalty = finalBlurredValue;
+
+                if (finalBlurredValue > penaltyMax)
+                    penaltyMax = finalBlurredValue;
+                if (finalBlurredValue < penaltyMin)
+                    penaltyMin = finalBlurredValue;
+
             }
         }
     }
@@ -180,7 +240,9 @@ public class Grid : MonoBehaviour
         {
             foreach (Node node in grid)
             {
-                Gizmos.color = node.walkable ? Color.white : Color.red;
+                Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(penaltyMin, penaltyMax, node.movementPenalty));
+
+                Gizmos.color = node.walkable ? Gizmos.color : Color.red;
                 Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
 
             }
