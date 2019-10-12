@@ -19,40 +19,33 @@ public class NPCStatusIcon : MonoBehaviour
         {
             visionController.onPreAlerted += ShowPreAlertedStatus;
             visionController.onAlerted += ShowAlertedStatus;
-            visionController.onAlertCancelled += LoseAlertStatus;
+            visionController.onAlertCancelled += Disable;
+            visionController.onLostSightOfTarget += ShowPreAlertedStatus;
         }
     }
 
     public void ShowStunnedStatus()
     {
         worldSpaceCanvas.enabled = true;
-        animator.SetBool("isStunned", true);
+        animator?.Play("StatusIcon_Stunned");
     }
 
     public void ShowPreAlertedStatus()
     {
         worldSpaceCanvas.enabled = true;
-        animator.SetTrigger("preAlert");
-    }
-
-    public void LoseAlertStatus()
-    {
-        worldSpaceCanvas.enabled = false;
-        animator.SetBool("isAlerted", false);
-        animator.Play("Idle");
-    }
-    
+        animator?.Play("StatusIcon_PreAlert");
+    }    
 
     public void ShowAlertedStatus()
     {
         worldSpaceCanvas.enabled = true;
-        animator.SetBool("isAlerted", true);
+        animator?.Play("StatusIcon_Alerted");
     }
 
 
     public void Disable()
     {
-        animator.SetBool("isStunned", false);
+        animator?.Play("Idle");
         worldSpaceCanvas.enabled = false;
     }
 }

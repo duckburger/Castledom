@@ -31,6 +31,8 @@ public class NPCAI : MonoBehaviour
     NPCAnimator npcAnimator;
     NPCNearbyEventBroadcaster eventBroadcaster;
 
+    Vector2? preCombatPosition = null;
+
     [Task] bool inCombat = false;
     [Task] bool recoveringStamina = false;
     [Task] bool isStunned = false;
@@ -91,16 +93,19 @@ public class NPCAI : MonoBehaviour
             Debug.LogError("No road spawner found in the scene");
             Task.current.Fail();
         }
-
     }
 
     [Task]
     void GoToDestination()
     {
-        if (polynavAgent.pathPending)
+        if (polynavAgent.hasPath && (Vector2)transform.position != polynavAgent.primeGoal)
+        {
             Debug.Log($"{Task.current.debugInfo}");
+        }        
         else
+        {
             Task.current.Succeed();
+        }
     }
 
     #endregion
@@ -113,6 +118,7 @@ public class NPCAI : MonoBehaviour
         {
             inCombat = true;
             combatTarget = attacker;
+            preCombatPosition = transform.position;
             if (eventBroadcaster && alertNearbyIfAttacked && indirect)
                 eventBroadcaster.BroadcastAttackReaction(combatTarget);
             visionController?.ShowVisionCone(false);
@@ -125,20 +131,14 @@ public class NPCAI : MonoBehaviour
         {
             inCombat = true;
             combatTarget = hitDetector.LastHitBy.GetComponentInParent<Health>();
+            preCombatPosition = transform.position;
             if (eventBroadcaster && alertNearbyIfAttacked)
                 eventBroadcaster.BroadcastAttackReaction(combatTarget);
             visionController?.ImmediatelyAlertExternal();
             visionController?.ShowVisionCone(false);
         }
     }
-
-    public void LoseSightOfCombatTarget()
-    {
-        inCombat = false;
-        targetLastKnownPos = combatTarget.transform.position;
-        combatTarget = null;
-    }
-
+   
     [Task]
     bool CombatTargetAlive()
     {
@@ -147,7 +147,7 @@ public class NPCAI : MonoBehaviour
             if (combatTarget.CurrentHealth <= 0)
             {
                 combatTarget = null;
-                inCombat = false;
+                inCombat = false;                
                 return false;
             }
             else
@@ -157,19 +157,7 @@ public class NPCAI : MonoBehaviour
         }
         return false;
     }
-
-    [Task]
-    bool HasLastKnownPosition()
-    {
-        return targetLastKnownPos != null;
-    }
-
-    [Task]
-    void SetLastKnownAsTarget()
-    {
-        polynavAgent?.SetDestination((Vector2)targetLastKnownPos);        
-    }
-
+    
     [Task]
     bool WithinCombatRange()
     {
@@ -206,6 +194,87 @@ public class NPCAI : MonoBehaviour
             combatTarget = null;
             
         Task.current.Succeed();
+    }
+
+    #endregion
+
+    #region Search and Combat Transitions
+
+    [Task]
+    void ExitCombat()
+    {
+        inCombat = false;
+        combatTarget = null;
+        Task.current.Succeed();
+    }
+
+    [Task]
+    void LoseLastKnownPosition()
+    {
+        targetLastKnownPos = null;
+        Task.current.Succeed();
+    }
+
+    public void LoseSightOfCombatTarget()
+    {
+        if (combatTarget)
+        {
+            inCombat = false;
+            targetLastKnownPos = combatTarget.transform.position;
+            combatTarget = null;
+            visionController.Searching = true;
+        }
+    }
+
+    [Task]
+    bool HasLastKnownPosition()
+    {
+        return targetLastKnownPos != null;
+    }
+
+    [Task]
+    bool HasReachedLastKnown()
+    {
+        if (targetLastKnownPos != null)
+            return transform.position == targetLastKnownPos;
+        else
+            return false;
+    }
+
+    [Task]
+    void SetLastKnownAsTarget()
+    {
+        if (targetLastKnownPos != null)
+        {
+            polynavAgent?.SetDestination((Vector2)targetLastKnownPos);
+            Task.current.Succeed();
+        }
+        else
+        {
+            Task.current.Fail();
+        }
+    }
+
+    [Task]
+    void ChooseRandomNearLastKnown()
+    {
+        if (targetLastKnownPos != null)
+        {
+            Vector2? newTarget = targetLastKnownPos += new Vector2?(new Vector2(UnityEngine.Random.Range(-3, 3), UnityEngine.Random.Range(-3, 3)));
+            polynavAgent?.SetDestination((Vector2)newTarget);
+            Task.current.Succeed();
+        }
+    }
+
+    [Task]
+    void SetPreCombatPositionAsTarget()
+    {
+        if (preCombatPosition != null)
+        {
+            polynavAgent?.SetDestination((Vector2)preCombatPosition);
+            visionController.Searching = false;
+            Task.current.Succeed();
+        }
     }
 
     #endregion

@@ -18,6 +18,7 @@ public class NPCVision : MonoBehaviour
     public event Action onPreAlerted;
     public event Action onAlerted;
     public event Action onAlertCancelled;
+    public event Action onLostSightOfTarget;
 
     RaycastHit2D losRaycastHit;
     NPCAI aiController;
@@ -29,11 +30,14 @@ public class NPCVision : MonoBehaviour
     Vector2 toPlayer;
     float distToPlayer;
     bool isAlerted = false;
+    bool searching = false;
 
     bool hasLOS = false;
     float losTimer = 0f;
 
     Coroutine alertCoroutine;
+
+    public bool Searching { get => searching; set => searching = value; }
 
     private void OnValidate()
     {
@@ -125,9 +129,9 @@ public class NPCVision : MonoBehaviour
             }            
         }
 
-        if (alertCoroutine != null && !aiController.InCombat)
+        if (alertCoroutine != null && !aiController.InCombat && !searching)
         {
-            if (visionAngle / 2 < playerAngle || -(visionAngle / 2) > playerAngle || distToPlayer > visionDistance)
+            if (isAlerted && visionAngle / 2 < playerAngle || -(visionAngle / 2) > playerAngle || distToPlayer > visionDistance)
             {
                 isAlerted = false;
                 StopCoroutine(alertCoroutine);
@@ -152,7 +156,7 @@ public class NPCVision : MonoBehaviour
 
     void CheckLineOfSight()
     {
-        losRaycastHit = Physics2D.Raycast(body.position, toPlayer, visionDistance * 2, visionLayerMask);
+        losRaycastHit = Physics2D.Raycast(body.position, toPlayer, visionDistance * 4, visionLayerMask);
         if (losRaycastHit && losRaycastHit.collider.gameObject.layer == 10) // Checking only for player right now
         {
             hasLOS = true;
@@ -164,24 +168,22 @@ public class NPCVision : MonoBehaviour
             losTimer += Time.deltaTime;
             if (losTimer > timeToLoseTarget)
             {
-                onAlertCancelled?.Invoke();
-                onPreAlerted?.Invoke();
-                isAlerted = false;
+                onLostSightOfTarget?.Invoke();
                 aiController?.LoseSightOfCombatTarget();
                 ShowVisionCone(true);
-                Debug.Log("Lost sight of player");                
+                Debug.Log("Lost sight of player");
             }
         }
     }
 
     private void OnDrawGizmos()
     {
-        if (hasLOS)
+        if (hasLOS && body && player)
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(body.position, player.position);
         }
-        else
+        else if (body && player)
         {
             if (losRaycastHit)
             {

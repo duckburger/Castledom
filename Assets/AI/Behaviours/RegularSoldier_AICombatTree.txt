@@ -1,9 +1,20 @@
 tree("Combat")
 	fallback
 		while HasLastKnownPosition
-			sequence
-				SetLastKnownAsTarget
-				GoToDestination
+			while not HasReachedLastKnown
+				sequence
+					SetLastKnownAsTarget
+					GoToDestination
+					repeat 3
+						sequence
+							ChooseRandomNearLastKnown
+							GoToDestination
+							Wait 2.0
+					sequence
+						ExitCombat
+						LoseLastKnownPosition
+						SetPreCombatPositionAsTarget
+						GoToDestination
 		while inCombat
 			fallback
 				while not CombatTargetAlive
