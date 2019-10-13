@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NPCVision : MonoBehaviour
-{
+{   
     [SerializeField] LayerMask visionLayerMask;
+    [SerializeField] int visionArchSegments = 20;
     [SerializeField] float timeToLoseTarget = 5f;
     [SerializeField] float visionAngle = 45f;
     [SerializeField] float visionDistance = 1.5f;
     [SerializeField] float preAlertDuration = 1f;
     [SerializeField] Transform body;
     [SerializeField] LineRenderer lineRenderer;
+    [SerializeField] MeshFilter meshFilter;
     [SerializeField] bool isOn = true;
     [SerializeField] bool isShowingVisionCone = true;
 
@@ -25,12 +27,14 @@ public class NPCVision : MonoBehaviour
     Transform player;
     Vector2 leftEdge;
     Vector2 rightEdge;
+    List<Vector2> archCastPoints = new List<Vector2>();
 
-    float playerAngle;
+    float angleToPlayer;
     Vector2 toPlayer;
     float distToPlayer;
     bool isAlerted = false;
     bool searching = false;
+    Mesh viewMesh;
 
     bool hasLOS = false;
     float losTimer = 0f;
@@ -61,6 +65,9 @@ public class NPCVision : MonoBehaviour
         player = GlobalPlayerController.PlayerTransform;
         if (lineRenderer)
             lineRenderer.useWorldSpace = false;
+        viewMesh = new Mesh();
+        viewMesh.name = "View Mesh";
+        meshFilter.mesh = viewMesh;
     }
 
     private void Update()
@@ -68,11 +75,12 @@ public class NPCVision : MonoBehaviour
         if (!isOn || !player)
             return;
 
-        DrawVisionArch();
+
+        DrawVisionArchMesh();
         DetectPlayer();
 
         if (isAlerted)
-            CheckLineOfSight();
+            CheckLineOfSightInChase();
     }
 
    
@@ -106,8 +114,45 @@ public class NPCVision : MonoBehaviour
         lineRenderer.SetPosition(4, body.localPosition);
     }
 
+    void DrawVisionArchMesh()
+    {
+        float angleStep = visionAngle / visionArchSegments;
+        List<Vector2> points = new List<Vector2>();
+
+        for (int i = 0; i <= visionArchSegments; i++)
+        {
+            float angle = -visionAngle / 2 + angleStep * i;
+            ViewCastInfo castInfo = ViewCast(angle);
+            points.Add(castInfo.point);
+        }
+
+        int vertexCount = points.Count + 1;
+        Vector3[] vertices = new Vector3[vertexCount];
+        int[] triangles = new int[(vertexCount - 2) * 3];
+
+        vertices[0] = Vector3.zero;
+        for (int i = 0; i < vertexCount - 1; i++)
+        {
+            vertices[i + 1] = body.InverseTransformPoint(points[i]);
+
+            if (i < vertexCount - 2)
+            {
+                triangles[i * 3] = 0;
+                triangles[i * 3 + 1] = i + 1;
+                triangles[i * 3 + 2] = i + 2;
+            }
+        }
+
+        viewMesh.Clear();
+        viewMesh.vertices = vertices;
+        viewMesh.triangles = triangles;
+        viewMesh.RecalculateNormals();
+    }
+
     private void DetectPlayer()
     {
+        return;
+
         if (!player)
         {
             Debug.LogError("No player found");
@@ -116,12 +161,12 @@ public class NPCVision : MonoBehaviour
 
         toPlayer = player.position - body.position;
         distToPlayer = toPlayer.magnitude;
-        playerAngle = Vector2.SignedAngle(body.up.normalized, toPlayer.normalized);
+        angleToPlayer = Vector2.SignedAngle(body.up.normalized, toPlayer.normalized);
 
 
-        if (distToPlayer <= visionDistance && !isAlerted)
+        if (distToPlayer <= visionDistance && CheckPlayerLineOfSightSimple() && !isAlerted)
         {
-            if (visionAngle / 2 > playerAngle || -(visionAngle / 2) < playerAngle)
+            if (visionAngle / 2 > angleToPlayer || -(visionAngle / 2) < angleToPlayer)
             {
                 isAlerted = true;
                 onPreAlerted?.Invoke();
@@ -131,7 +176,7 @@ public class NPCVision : MonoBehaviour
 
         if (alertCoroutine != null && !aiController.InCombat && !searching)
         {
-            if (isAlerted && visionAngle / 2 < playerAngle || -(visionAngle / 2) > playerAngle || distToPlayer > visionDistance)
+            if (isAlerted && visionAngle / 2 < angleToPlayer || -(visionAngle / 2) > angleToPlayer || distToPlayer > visionDistance)
             {
                 isAlerted = false;
                 StopCoroutine(alertCoroutine);
@@ -154,7 +199,20 @@ public class NPCVision : MonoBehaviour
         }
     }
 
-    void CheckLineOfSight()
+    bool CheckPlayerLineOfSightSimple()
+    {
+        losRaycastHit = Physics2D.Raycast(body.position, toPlayer, visionDistance, visionLayerMask);
+        if (losRaycastHit && losRaycastHit.collider.gameObject.layer == 10) // Checking only for player right now
+        {
+            return true;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    void CheckLineOfSightInChase()
     {
         losRaycastHit = Physics2D.Raycast(body.position, toPlayer, visionDistance * 4, visionLayerMask);
         if (losRaycastHit && losRaycastHit.collider.gameObject.layer == 10) // Checking only for player right now
@@ -198,5 +256,39 @@ public class NPCVision : MonoBehaviour
         }
             
     }
+
+    #region Data model
+
+    ViewCastInfo ViewCast(float angle)
+    {
+        Vector2 direction = Quaternion.Euler(0, 0, angle) * body.up;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, visionDistance, visionLayerMask);
+        if (hit)
+        {
+            return new ViewCastInfo(true, hit.point, hit.distance, angle);
+        }
+        else
+        {
+            return new ViewCastInfo(false, (Vector2)transform.position + direction * visionDistance, visionDistance, angle);
+        }
+    }
+
+    public struct ViewCastInfo
+    {
+        public bool hit;
+        public Vector2 point;
+        public float distance;
+        public float angle;
+
+        public ViewCastInfo(bool _hit, Vector2 _point, float _distance, float _angle)
+        {
+            hit = _hit;
+            point = _point;
+            distance = _distance;
+            angle = _angle;
+        }
+    }
+
+    #endregion
 
 }
