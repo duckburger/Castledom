@@ -262,14 +262,14 @@ public class NPCVision : MonoBehaviour
     ViewCastInfo ViewCast(float angle)
     {
         Vector2 direction = Quaternion.Euler(0, 0, angle) * body.up;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, visionDistance, visionLayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(body.position, direction, visionDistance, visionLayerMask);
         if (hit)
         {
             return new ViewCastInfo(true, hit.point, hit.distance, angle);
         }
         else
         {
-            return new ViewCastInfo(false, (Vector2)transform.position + direction * visionDistance, visionDistance, angle);
+            return new ViewCastInfo(false, (Vector2)body.position + direction * visionDistance, visionDistance, angle);
         }
     }
 
