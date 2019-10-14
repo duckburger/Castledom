@@ -51,6 +51,7 @@ public class NPCVision : MonoBehaviour
     public void ShowVisionCone(bool enabled)
     {
         isShowingVisionCone = enabled;
+        viewMesh?.Clear();
     }
 
     public void ImmediatelyAlertExternal()
@@ -75,55 +76,44 @@ public class NPCVision : MonoBehaviour
         if (!isOn || !player)
             return;
 
-
-        DrawVisionArchMesh();
+        if (isShowingVisionCone)
+            DrawVisionArchMesh();
         DetectPlayer();
 
         if (isAlerted)
             CheckLineOfSightInChase();
     }
-
-   
-    void DrawVisionArch()
-    {
-        if (!body)
-        {
-            Debug.LogError("Connect body to NPCVision");
-            return;
-        }
-
-        leftEdge = Quaternion.Euler(0, 0, -visionAngle / 2) * body.up.normalized * visionDistance;
-        rightEdge = Quaternion.Euler(0, 0, visionAngle / 2) * body.up.normalized * visionDistance;
-
-        Debug.DrawRay(body.position, leftEdge);       
-        Debug.DrawRay(body.position, rightEdge);
-
-        if (!lineRenderer || !isShowingVisionCone)
-        {
-            lineRenderer.enabled = false;
-            return;
-        }
-
-        if (!lineRenderer.enabled)
-            lineRenderer.enabled = true;
-        lineRenderer.positionCount = 5;
-        lineRenderer.SetPosition(0, body.localPosition);
-        lineRenderer.SetPosition(1, leftEdge);
-        lineRenderer.SetPosition(2, body.up.normalized * visionDistance);
-        lineRenderer.SetPosition(3, rightEdge);
-        lineRenderer.SetPosition(4, body.localPosition);
-    }
-
+      
     void DrawVisionArchMesh()
     {
         float angleStep = visionAngle / visionArchSegments;
         List<Vector2> points = new List<Vector2>();
+        ViewCastInfo oldCastInfo = new ViewCastInfo();
 
         for (int i = 0; i <= visionArchSegments; i++)
         {
             float angle = -visionAngle / 2 + angleStep * i;
             ViewCastInfo castInfo = ViewCast(angle);
+
+            if (i > 0)
+            {
+                bool edgeDstThresholdExceeded = Mathf.Abs(oldCastInfo.distance - castInfo.distance) > 0.5f;
+                if (castInfo.hit != oldCastInfo.hit || (oldCastInfo.hit && castInfo.hit && edgeDstThresholdExceeded))
+                {
+                    EdgeInfo edge = FindEdge(oldCastInfo, castInfo);
+                    if (edge.pointA != Vector2.zero)
+                    {
+                        points.Add(edge.pointA);
+                    }
+                    if (edge.pointB != Vector2.zero)
+                    {
+                        points.Add(edge.pointB);
+                    }
+                }
+            }
+
             points.Add(castInfo.point);
+            oldCastInfo = castInfo;
         }
 
         int vertexCount = points.Count + 1;
@@ -147,12 +137,40 @@ public class NPCVision : MonoBehaviour
         viewMesh.vertices = vertices;
         viewMesh.triangles = triangles;
         viewMesh.RecalculateNormals();
+
+        transform.eulerAngles = body.eulerAngles;
+    }
+
+    EdgeInfo FindEdge(ViewCastInfo minCast, ViewCastInfo maxCast)
+    {
+        float minAngle = minCast.angle;
+        float maxAngle = maxCast.angle;
+        Vector2 minPoint = Vector2.zero;
+        Vector2 maxPoint = Vector2.zero;
+
+        for (int i = 0; i < 4; i++)
+        {
+            float avgAngle = (minAngle + maxAngle) / 2;
+            ViewCastInfo newViewCast = ViewCast(avgAngle);
+
+            bool edgeDstThresholdExceeded = Mathf.Abs(minCast.distance - newViewCast.distance) > 0.5f;
+            if (newViewCast.hit == minCast.hit && !edgeDstThresholdExceeded)
+            {
+                minAngle = avgAngle;
+                minPoint = newViewCast.point;
+            }
+            else
+            {
+                maxAngle = avgAngle;
+                maxPoint = newViewCast.point;
+            }
+        }
+
+        return new EdgeInfo(minPoint, maxPoint);
     }
 
     private void DetectPlayer()
     {
-        return;
-
         if (!player)
         {
             Debug.LogError("No player found");
@@ -286,6 +304,18 @@ public class NPCVision : MonoBehaviour
             point = _point;
             distance = _distance;
             angle = _angle;
+        }
+    }
+
+    public struct EdgeInfo
+    {
+        public Vector2 pointA;
+        public Vector2 pointB;
+
+        public EdgeInfo(Vector2 _pointA, Vector2 _pointB)
+        {
+            pointA = _pointA;
+            pointB = _pointB;
         }
     }
 
