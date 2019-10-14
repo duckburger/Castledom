@@ -5,13 +5,13 @@ tree("Combat")
 				sequence
 					SetLastKnownAsTarget
 					GoToDestination
+					ExitCombat
 					repeat 3
 						sequence
 							ChooseRandomNearLastKnown
 							GoToDestination
 							Wait 2.0
 					sequence
-						ExitCombat
 						LoseLastKnownPosition
 						SetPreCombatPositionAsTarget
 						GoToDestination

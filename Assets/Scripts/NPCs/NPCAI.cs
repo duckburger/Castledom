@@ -100,7 +100,7 @@ public class NPCAI : MonoBehaviour
     {
         if (polynavAgent.hasPath && (Vector2)transform.position != polynavAgent.primeGoal)
         {
-            Debug.Log($"{Task.current.debugInfo}");
+            return;
         }        
         else
         {
@@ -205,6 +205,7 @@ public class NPCAI : MonoBehaviour
     {
         inCombat = false;
         combatTarget = null;
+        visionController?.ShowVisionCone(true);
         Task.current.Succeed();
     }
 
@@ -218,10 +219,9 @@ public class NPCAI : MonoBehaviour
     public void LoseSightOfCombatTarget()
     {
         if (combatTarget)
-        {
-            inCombat = false;
+        {        
             targetLastKnownPos = combatTarget.transform.position;
-            combatTarget = null;
+            ExitCombat();
             visionController.Searching = true;
         }
     }

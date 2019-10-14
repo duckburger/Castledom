@@ -32,7 +32,6 @@ public class KnightRotation : MonoBehaviour
         }        
 
         bodyToLegsAngle = Quaternion.Angle(knightBody.rotation, knightLegs.rotation);
-        // Debug.LogError($"Angle between body and legs is {bodyToLegsAngle}");
 
         if (knightLegs && Mathf.Abs(Input.GetAxis("Horizontal")) > 0 || Mathf.Abs(Input.GetAxis("Vertical")) > 0)
         {

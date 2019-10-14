@@ -234,7 +234,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cd0d6da148e3c80439c96958328d3a62, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -890,7 +890,7 @@ MonoBehaviour:
   timeToLoseTarget: 3
   visionAngle: 90
   visionDistance: 3
-  preAlertDuration: 1
+  preAlertDuration: 0.4
   body: {fileID: 4000932800891247708}
   lineRenderer: {fileID: 535860520}
   meshFilter: {fileID: 535860523}
