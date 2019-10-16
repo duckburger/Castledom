@@ -1,7 +1,7 @@
 tree("Combat")
 	fallback
 		while HasLastKnownPosition
-			while not HasReachedLastKnown
+			while not HasReachedLastKnown				
 				sequence
 					SetLastKnownAsTarget
 					GoToDestination
@@ -18,23 +18,17 @@ tree("Combat")
 		while inCombat
 			fallback
 				while not CombatTargetAlive
-					Fail
+					sequence
+						TurnOffRun
+						Fail
 				while WithinCombatRange
 					while CombatTargetAlive	
 						parallel
-							ChaseCombatTarget
+							GoToDestination
 							AttackTarget	
-							RestoreStamina
-				while EnoughStaminaToRun
-					parallel
-						SpeedUpToRun
-						ChaseCombatTarget
-						DepleteStamina
-				while recoveringStamina
-					sequence
-						repeat
-							parallel
-								SlowDownToWalk
-								RestoreStamina
-								ChaseCombatTarget
-			
+				while not WithinCombatRange
+					while CombatTargetAlive
+						parallel
+							TurnOnRun
+							ChooseCombatTargetAsDestination
+							GoToDestination

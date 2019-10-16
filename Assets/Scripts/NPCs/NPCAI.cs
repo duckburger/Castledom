@@ -37,7 +37,9 @@ public class NPCAI : MonoBehaviour
     [Task] bool recoveringStamina = false;
     [Task] bool isStunned = false;
 
+    public bool RecoveringStamina => recoveringStamina;
     public bool IsRunning => isRunning;
+    public float Stamina => stamina;
     public bool IsStunned
     {
         get => isStunned;
@@ -57,8 +59,7 @@ public class NPCAI : MonoBehaviour
             else
                 return null;
         }
-    }
-      
+    }      
 
     private void Awake()
     {
@@ -75,6 +76,32 @@ public class NPCAI : MonoBehaviour
         healthController.onHealthDecreased += ReactToAgression;
     }
 
+    private void Update()
+    {
+        if (isRunning && !recoveringStamina)
+        {
+            SpeedUp();
+            stamina -= Time.deltaTime * sprintStaminaDepletion;
+            stamina = Mathf.Clamp(stamina, 0, maxStamina);            
+        }
+
+        if (stamina <= 0)
+        {
+            SlowDown();
+            recoveringStamina = true;
+        }
+
+        if (recoveringStamina)
+        {
+            SlowDown();
+            stamina += Time.deltaTime * staminaRecoverySpeed;
+            stamina = Mathf.Clamp(stamina, 0, maxStamina);
+            if (Mathf.Approximately(stamina, maxStamina))
+                recoveringStamina = false;
+            else
+                recoveringStamina = true;
+        }        
+    }
 
     #region Walking
 
@@ -167,22 +194,17 @@ public class NPCAI : MonoBehaviour
     }    
 
     [Task]
-    void ChaseCombatTarget() // TODO: Add speed change + Add stamina system??
+    void ChooseCombatTargetAsDestination()
     {
-        npcAnimator.DeactivateAttack();
-        if (combatTarget == null || combatTarget.enabled == false || !combatTarget.gameObject.activeSelf)
+        if (combatTarget)
         {
-            Task.current.Complete(false);
-            return;
+            AssignDestination(combatTarget.transform);
         }
-
-        if (polynavAgent.primeGoal != (Vector2)combatTarget.transform.position)
-            polynavAgent.SetDestination(combatTarget.transform.position);
-
-        if (polynavAgent.pathPending)
-            Debug.Log($"{Task.current.debugInfo}");
         else
-            Task.current.Succeed();
+        {
+            Task.current.Fail();
+        }
+        
     }
     
 
@@ -288,46 +310,30 @@ public class NPCAI : MonoBehaviour
     }
 
     [Task]
-    void RestoreStamina()
-    {
-        stamina += Time.deltaTime * staminaRecoverySpeed;
-        stamina = Mathf.Clamp(stamina, 0, maxStamina);        
-        if (stamina == maxStamina)
-            recoveringStamina = false;
-        else
-            recoveringStamina = true;
-        Task.current.Succeed();
-    }
-
-    [Task]
-    void DepleteStamina()
-    {
-        if (isRunning)
-        {
-            stamina -= Time.deltaTime * sprintStaminaDepletion;
-            stamina = Mathf.Clamp(stamina, 0, maxStamina);
-            if (stamina <= 0)
-            {
-                recoveringStamina = true;
-            }
-            Task.current.Succeed();
-        }       
-    }
-
-    [Task]
-    void SpeedUpToRun()
+    void TurnOnRun()
     {
         isRunning = true;
-        polynavAgent.maxSpeed = Mathf.Lerp(polynavAgent.maxSpeed, runSpeed, Time.deltaTime * 25f);
+        while (!Mathf.Approximately(polynavAgent.maxSpeed, runSpeed))
+            polynavAgent.maxSpeed = Mathf.Lerp(polynavAgent.maxSpeed, runSpeed, Time.deltaTime * 25f);
         Task.current.Succeed();
     }
 
     [Task]
-    void SlowDownToWalk()
+    void TurnOffRun()
     {
         isRunning = false;
         polynavAgent.maxSpeed = walkSpeed;
         Task.current.Succeed();
+    }
+
+    void SlowDown()
+    {
+        polynavAgent.maxSpeed = walkSpeed;
+    }
+
+    void SpeedUp()
+    {
+        polynavAgent.maxSpeed = Mathf.Lerp(polynavAgent.maxSpeed, runSpeed, Time.deltaTime * 25f);
     }
 
     #endregion

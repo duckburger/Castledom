@@ -34,14 +34,21 @@ public class NPCAnimator : MonoBehaviour
         if (navAgent.hasPath)
         {
             animator.SetBool("isWalking", true);
-            if (npcAI.IsRunning)
+
+            if (npcAI.IsRunning && !npcAI.RecoveringStamina)
+            {
                 sprintParticles?.Play();
+            }
             else
+            {
+                sprintParticles?.Pause();
                 sprintParticles?.Clear();
+            }
         }
         else
         {
             animator.SetBool("isWalking", false);
+
             sprintParticles?.Pause();
             sprintParticles?.Clear();
         }
