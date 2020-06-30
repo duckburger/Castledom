@@ -143,6 +143,7 @@ public class NPCAI : MonoBehaviour
     {
         if (!inCombat)
         {
+            targetLastKnownPos = null;
             inCombat = true;
             combatTarget = attacker;
             preCombatPosition = transform.position;
@@ -228,8 +229,9 @@ public class NPCAI : MonoBehaviour
         inCombat = false;
         combatTarget = null;
         visionController?.ShowVisionCone(true);
+        npcAnimator?.DeactivateAttack();          
         Task.current.Succeed();
-    }
+    }    
 
     [Task]
     void LoseLastKnownPosition()
@@ -243,7 +245,12 @@ public class NPCAI : MonoBehaviour
         if (combatTarget)
         {        
             targetLastKnownPos = combatTarget.transform.position;
-            ExitCombat();
+
+            inCombat = false;
+            combatTarget = null;
+            visionController?.ShowVisionCone(true);
+            npcAnimator?.DeactivateAttack();
+
             visionController.Searching = true;
         }
     }
